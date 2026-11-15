@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SafuClick Scam Arena · scammer vs builder, Kane referees</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 ui-sans-serif,system-ui,sans-serif;background:#07090d;color:#e6edf3}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse at 20% 0%,#3f1d1d 0%,transparent 50%),radial-gradient(ellipse at 80% 0%,#052e16 0%,transparent 50%),#07090d;z-index:-1}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px 80px}a{color:#86efac}
+h1{margin:0;font-size:32px;letter-spacing:-.04em}h1 span{color:#22c55e}
+.sub{opacity:.7;margin:6px 0 22px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin:18px 0 24px}
+.side{border:1px solid #30363d;border-radius:16px;padding:16px 18px;background:#0d1117}.side.bad{border-color:#7f1d1d}.side.good{border-color:#14532d}
+.side h2{margin:0 0 4px;font-size:18px}.side p{margin:0;opacity:.7;font-size:13px}
+.mid{font-weight:800;color:#facc15;text-align:center;font-size:13px}
+.live{background:#111827;border:1px solid #374151;border-radius:12px;padding:10px 14px;margin-bottom:18px;font-size:13px;min-height:42px}
+.meta{display:flex;gap:16px;flex-wrap:wrap;opacity:.7;font-size:13px;margin-bottom:16px}
+.round{border:1px solid #30363d;border-radius:18px;padding:18px;margin:0 0 16px;background:#0d1117}
+.round h3{margin:0 0 6px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.tag{border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800}
+.caught,.fixed{background:#052e16;color:#86efac}.kaneonly{background:#1c1917;color:#fbbf24}.missed,.open{background:#450a0a;color:#fca5a5}
+.taunt{font-style:italic;color:#fca5a5;margin:8px 0}
+.pitch{opacity:.85;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.vs{grid-template-columns:1fr}}
+.box{background:#010409;border:1px solid #21262d;border-radius:12px;padding:12px}
+.box h4{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+ol.tl{list-style:none;padding:0;margin:0;max-height:220px;overflow:auto}
+ol.tl li{position:relative;padding:0 0 8px 18px;border-left:2px solid #21262d;font-size:12px}
+ol.tl li.on{border-left-color:#22c55e;color:#fff}ol.tl li:before{content:'';position:absolute;left:-4px;top:5px;width:6px;height:6px;border-radius:50%;background:#30363d}
+ol.tl li.on:before{background:#22c55e}
+button{font:inherit;cursor:pointer;border:1px solid #30363d;background:#161b22;color:#e6edf3;border-radius:9px;padding:6px 10px}
+.why{font-size:13px;margin:4px 0}.foot{opacity:.45;font-size:12px;margin-top:28px}
+</style></head><body><div class="bg"></div><div class="wrap">
+  <div><a href="/">← checker</a></div>
+  <h1>Scam <span>Arena</span></h1>
+  <div class="sub">A closed loop: the scammer plants a trap, Kane CLI referees it with a mock wallet, the builder hardens the rules, Kane re-checks. Built for the demo — and honest about what it flags.</div>
+  <div class="vs">
+    <div class="side bad"><h2>😈 Scammer</h2><p>Plants and evolves traps on the gym’s loop slot.</p></div>
+    <div class="mid">KANE<br>REFEREE</div>
+    <div class="side good"><h2>🛠 Builder</h2><p>Turns Kane’s report into deterministic rules.</p></div>
+  </div>
+  <div class="live" id="live">Loading arena…</div>
+  <div class="meta" id="meta"></div>
+  <div id="rounds"></div>
+  <div class="foot">SafuClick, powered by Kane CLI. Flags known trap patterns seen on a run; not a guarantee of safety (sites can cloak or fingerprint test wallets). Recorded loops can be replayed here without spending credits.</div>
+</div>
+<script>
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tag=o=>{const t=(o||'').toLowerCase();const cls=t.includes('fixed')||t==='caught'?'caught':t.includes('kane')?'kaneonly':t.includes('missed')||t.includes('open')?'missed':'';return `<span class="tag ${cls}">${esc(o||'')}</span>`};
+function reasons(v){return (v?.reasons||[]).map(r=>`<div class="why">✖ ${esc(r.detail)}</div>`).join('')||'<div class="why">No known trap patterns.</div>'}
+function timeline(steps,id){if(!steps||!steps.length)return '<div class="why">No Kane steps saved for this bout.</div>';
+ return `<ol class="tl" id="${id}">${steps.map((s,i)=>`<li data-i="${i}"><b>${esc(s.step)}</b> · ${esc(s.remark||'')}</li>`).join('')}</ol><button data-play="${id}">Replay Kane’s steps</button>`}
+function bout(ev,label,id){if(!ev)return '';const v=ev.verdict||ev;const steps=ev.kane?.steps||[];
+ return `<div class="box"><h4>${label} · ${esc(v.verdict||'')}</h4>${reasons(v)}<div class="why">Kane: ${esc(ev.kane?.status||'')} · ${esc(ev.kane?.one_liner||'')}</div>${timeline(steps,id)}</div>`}
+
+async function load(){
+  const a=await (await fetch('/api/arena')).json();
+  const live=a.live;
+  document.getElementById('live').innerHTML=live&&live.phase&&live.phase!=='idle'
+    ? `<b>Live:</b> ${esc(live.phase)}${live.round?` · round ${live.round}`:''}${live.move?` · ${esc(live.move)}`:''}${live.taunt?` — “${esc(live.taunt)}”`:''}${(live.steps&&live.steps.length)?` · ${live.steps.length} Kane steps so far`:''}`
+    : 'No live loop right now. Showing the last recorded fight (0 credits to replay).';
+  document.getElementById('meta').innerHTML=`<span>Source: ${esc(a.source)}</span><span>Kane credits (that loop): ${Number(a.credits||0).toFixed(1)}</span><span>${a.history.length} rounds</span>${a.finishedAt?`<span>Finished ${esc(a.finishedAt)}</span>`:''}`;
+  document.getElementById('rounds').innerHTML=(a.history||[]).map((h,i)=>`<article class="round">
+    <h3>Round ${esc(h.round)} · 😈 ${esc(h.move)} ${tag(h.outcome)}</h3>
+    <p class="pitch">${esc(h.pitch||'')}</p>
+    ${h.taunt?`<p class="taunt">“${esc(h.taunt)}”</p>`:''}
+    <div class="grid">
+      ${bout(h.first,'First pass','r'+i+'a')}
+      ${h.builder?`<div class="box"><h4>Builder · rules v${esc(h.rulesBefore)} → v${esc(h.builder.rulesAfter)}</h4>${(h.builder.changes||[]).map(c=>`<div class="why">+ ${esc(c)}</div>`).join('')}${h.recheck?bout(h.recheck,'Kane re-check','r'+i+'b'):''}</div>`:`<div class="box"><h4>Builder</h4><div class="why">Sat this one out — deterministic rules already caught it.</div></div>`}
+    </div>
+  </article>`).join('')||'<p>No rounds yet. Run <code>npm run loop -- --rounds 3 --fresh</code> and watch this page.</p>';
+}
+document.addEventListener('click',e=>{
+  const id=e.target?.dataset?.play; if(!id)return;
+  const items=[...document.querySelectorAll('#'+id+' li')];
+  items.forEach(li=>li.classList.remove('on'));
+  let i=0; const tick=()=>{if(i>=items.length)return; items[i].classList.add('on'); items[i].scrollIntoView({block:'nearest'}); i++; setTimeout(tick,420)}; tick();
+});
+load(); setInterval(load, 2500);
+</script></body></html>

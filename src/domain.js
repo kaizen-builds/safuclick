@@ -8,7 +8,7 @@ export function levenshtein(a, b) {
   return dp[a.length][b.length];
 }
 
-const label = (host) => host.replace(/\.(localhost|com|org|io|xyz|app|finance|exchange|net)$/i, '').split('.').pop();
+const label = (host) => host.replace(/\.(localhost|com|org|io|xyz|app|finance|exchange|net|info|site|icu|top|cc|fun|dev|live|bid|network|co)$/i, '').split('.').pop();
 
 export function checkDomain(rawUrl, allowlist, rules) {
   const u = new URL(rawUrl);

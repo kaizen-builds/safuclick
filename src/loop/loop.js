@@ -8,6 +8,7 @@ import { check } from '../check.js';
 import { plant } from './scammer.js';
 import { writeFixPrompt, build } from './builder.js';
 import { red, green, yellow, bold, dim, cyan } from '../report.js';
+import { writeLive } from '../live.js';
 
 const LOOP = path.join(STATE, 'loop');
 const banner = (s) => console.log('\n' + bold('╔' + '═'.repeat(70) + '╗\n║ ' + s.padEnd(69) + '║\n╚' + '═'.repeat(70) + '╝'));
@@ -28,6 +29,7 @@ export async function runLoop({ rounds = 2, promote = false, fresh = false, maxS
   const gym = await startGym({ quiet: true });
   const history = []; let move = 0; let credits = 0;
 
+  writeLive({ phase: 'loop-start', mode: 'loop', rounds, steps: [], history });
   banner(`SafuClick closed loop · ${rounds} round(s) · rules v${readJSON(rulesFile).version} · powered by Kane CLI`);
   console.log(dim('  😈 scammer plants traps · 🤖 Kane CLI drives the page + mock wallet · 🛠 builder hardens the checker'));
 
@@ -36,16 +38,19 @@ export async function runLoop({ rounds = 2, promote = false, fresh = false, maxS
     const m = plant(move, { rules, history });
     banner(`ROUND ${round} · 😈 scammer plays "${m.name}"`);
     console.log(`  ${m.pitch}`);
+    if (m.taunt) console.log(`  😈 ${yellow(m.taunt)}`);
     console.log(dim(`  planted on ${m.url} (hot-reloaded, no restart)`));
+    writeLive({ phase: 'planted', mode: 'loop', round, move: m.name, pitch: m.pitch, taunt: m.taunt, url: m.url, steps: [], history });
 
+    writeLive({ phase: 'kane', mode: 'loop', round, move: m.name, pitch: m.pitch, taunt: m.taunt, url: m.url, steps: [], history });
     const first = await referee(m, rulesFile, { maxSteps }, `(rules v${rules.version})`);
     credits += Number(first.kane.credits_consumed || 0);
-    const entry = { round, move: m.name, pitch: m.pitch, url: m.url, rulesBefore: rules.version, first: summarize(first.verdict) };
+    const entry = { round, move: m.name, pitch: m.pitch, taunt: m.taunt, url: m.url, rulesBefore: rules.version, first: summarize(first.verdict) };
 
     if (ruleCaught(first.verdict)) {
       entry.outcome = 'CAUGHT';
       console.log(`  ${green('✔ CAUGHT')} by deterministic rules${kaneCaught(first.verdict) ? ' and by Kane' : ''}. 😈 scammer must evolve.`);
-      history.push(entry); move++; continue;
+      history.push(entry); writeJSON(path.join(LOOP, 'history.json'), { finishedAt: null, credits, history }); writeLive({ phase: 'round-done', round, move: m.name, outcome: entry.outcome, history }); move++; continue;
     }
 
     entry.outcome = kaneCaught(first.verdict) ? 'KANE-ONLY' : 'MISSED';
@@ -67,10 +72,13 @@ export async function runLoop({ rounds = 2, promote = false, fresh = false, maxS
     entry.outcome += ruleCaught(second.verdict) ? ' → FIXED' : ' → STILL OPEN';
     console.log(ruleCaught(second.verdict) ? `  ${green('✔ FIXED')}: Kane re-ran the trap and the hardened rules flag it.` : `  ${red('✖ still open')}: next round the builder tries again.`);
     history.push(entry);
+    writeJSON(path.join(LOOP, 'history.json'), { finishedAt: null, credits, history });
+    writeLive({ phase: 'round-done', round, move: m.name, outcome: entry.outcome, history });
     if (ruleCaught(second.verdict)) move++; else round--; // retry same move if not fixed
     if (history.length > rounds * 2) break;
   }
 
+  writeLive({ phase: 'scoreboard', mode: 'loop', credits, history });
   banner('SCOREBOARD');
   for (const h of history) console.log(`  R${h.round}  ${h.move.padEnd(20)} ${h.outcome.includes('FIXED') || h.outcome === 'CAUGHT' ? green(h.outcome) : red(h.outcome)}  ${dim('rules v' + h.rulesBefore + (h.builder ? ' → v' + h.builder.rulesAfter : ''))}`);
   console.log(`  Kane credits used this loop: ${credits.toFixed(1)}`);

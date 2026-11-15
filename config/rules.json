@@ -42,5 +42,10 @@
       "spender",
       "secret words"
     ]
+  },
+  "realSite": {
+    "flagSeedInKaneOrHtml": true,
+    "flagSuspiciousRedirect": true,
+    "walletConnectIsSignalOnly": true
   }
 }

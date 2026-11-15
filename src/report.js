@@ -13,9 +13,19 @@ export function terminalCard(v) {
     out.push(bold('  Why:'));
     for (const r of v.reasons) out.push(`   ${red('✖')} ${r.detail} ${dim('[' + r.id + ' · ' + r.source + ']')}`);
   }
+  if (v.signals && v.signals.length) {
+    out.push(bold('  Signals:'));
+    for (const s of v.signals) out.push(`   ${cyan('·')} ${s.detail} ${dim('[' + s.id + ']')}`);
+  }
   if (v.note) out.push(`   ${yellow('?')} ${v.note}`);
   out.push(bold('  Evidence:'));
-  out.push(`   domain     ${v.host} ${v.officialDomain ? green('(official allowlist)') : yellow('(not on allowlist)')}`);
+  if (v.mode === 'real-site') out.push(`   mode       ${cyan('real-site')} (observe only, no mock wallet)`);
+  out.push(`   domain     ${v.host} ${v.officialDomain ? green('(official allowlist)') : yellow('(not on known-good list)')}`);
+  if (v.probe) {
+    if (v.probe.finalUrl && v.probe.finalUrl !== v.url) out.push(`   final url  ${v.probe.finalUrl}`);
+    if (v.probe.title) out.push(`   title      ${v.probe.title}`);
+    if (v.probe.status) out.push(`   http       ${v.probe.status}${v.probe.blocked ? yellow('  (cloaked/blocked?)') : ''}`);
+  }
   out.push(`   wallet     ${v.walletSummary.requests.join(' → ') || 'no wallet requests'}`);
   for (const t of v.walletSummary.transactions) out.push(`   tx         ${t.label}: ${t.amountHuman}${t.kind === 'approve' ? ' → spender ' + t.spender : ''} (contract ${t.to})`);
   if (v.kane) {
@@ -32,8 +42,9 @@ export function markdown(v) {
   const icon = v.verdict === 'TRAP FLAGGED' ? '🚨' : v.verdict === 'INCONCLUSIVE' ? '❔' : '✅';
   const l = [`### ${icon} SafuClick: ${v.verdict}`, '', `**URL:** \`${v.url}\``, ''];
   if (v.reasons.length) { l.push('**Why:**'); for (const r of v.reasons) l.push(`- ${r.detail} \`${r.id}\` (${r.source})`); l.push(''); }
+  if (v.signals && v.signals.length) { l.push('**Signals:**'); for (const s of v.signals) l.push(`- ${s.detail} \`${s.id}\``); l.push(''); }
   if (v.note) l.push(`> ${v.note}`, '');
-  l.push('**Evidence**', '', `| | |`, `|---|---|`, `| Domain | \`${v.host}\` ${v.officialDomain ? '(official)' : '(not on allowlist)'} |`,
+  l.push('**Evidence**', '', `| | |`, `|---|---|`, `| Mode | ${v.mode === 'real-site' ? 'real-site (observe only)' : 'gym / mock wallet'} |`, `| Domain | \`${v.host}\` ${v.officialDomain ? '(official)' : '(not on known-good list)'} |`,
     `| Wallet requests | ${v.walletSummary.requests.join(' → ') || 'none'} |`);
   for (const t of v.walletSummary.transactions) l.push(`| Transaction | ${t.label}: **${t.amountHuman}**${t.kind === 'approve' ? ` → spender \`${t.spender}\`` : ''} (contract \`${t.to}\`) |`);
   if (v.kane) l.push(`| Kane CLI | ${v.kane.status}: ${v.kane.one_liner || ''} |`, `| Kane credits | ${v.kane.credits ? Number(v.kane.credits).toFixed(1) : 'n/a'} |`, `| Kane report | ${v.kane.test_url ? `[open](${v.kane.test_url})` : 'n/a'} |`);

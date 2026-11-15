@@ -16,7 +16,8 @@
             "amount": "max"
           }
         ]
-      }
+      },
+      "taunt": "UI says Swap 10 USDC. The wallet sees MAX_UINT. Do your rules even look at the calldata?"
     },
     {
       "name": "poisoned-approve",
@@ -33,7 +34,8 @@
             "amount": "5000000000000"
           }
         ]
-      }
+      },
+      "taunt": "Fine, no more unlimited. How about 5,000,000 USDC to a spender that copies your official router\u2019s first and last characters?"
     },
     {
       "name": "delayed-seed",
@@ -54,7 +56,8 @@
             "button": "Re-sync"
           }
         ]
-      }
+      },
+      "taunt": "No seed prompt on load \u2014 scanners see a clean page. After you connect: \u201ctype your 12 secret words to re-sync.\u201d No \u201cseed\u201d. No \u201cmnemonic\u201d. Catch that."
     }
   ]
 }

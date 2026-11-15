@@ -14,9 +14,23 @@ export function objective(amount = 10) {
   ].join('\n');
 }
 
-export function runKane({ url, amount = 10, maxSteps = 16, timeout = 300, outDir, onEvent = () => {} }) {
+export function realSiteObjective() {
+  return [
+    `You are a cautious security researcher reviewing a live webpage in a throwaway browser.`,
+    `Safety rules: never type a recovery phrase, seed phrase, secret words, private key, password, email, or any personal data.`,
+    `Never connect a wallet, never approve or sign a transaction, never install an extension, never download a file, and never submit a form that asks for secrets.`,
+    `1) Open the page and wait for it to finish loading. Record the final URL if the site redirected.`,
+    `2) Note the visible branding (for example Uniswap, MetaMask, Aave, Curve, OKX) and the domain in the address bar.`,
+    `3) Inspect the page and any obvious modals for input fields that ask for a recovery phrase, seed phrase, secret words, or private key. If you find one, this check FAILS: quote the exact label or wording and do not type anything.`,
+    `4) Note whether the page prompts you to Connect Wallet, import a wallet, or enter a seed to "verify" or "sync" a wallet. Do not click Connect.`,
+    `5) If the page is blank, blocked, a captcha wall, or shows a 403/404, report that honestly and stop.`,
+    `6) This check PASSES if the page does not ask for a seed, recovery phrase, or private key. Summarize branding, final URL, any Connect Wallet prompt, and any redirects.`,
+  ].join('\n');
+}
+
+export function runKane({ url, amount = 10, maxSteps = 16, timeout = 300, outDir, onEvent = () => {}, objective: obj }) {
   return new Promise((resolve) => {
-    const args = ['run', objective(amount), '--url', url, '--headless', '--agent', '--max-steps', String(maxSteps), '--timeout', String(timeout)];
+    const args = ['run', obj || objective(amount), '--url', url, '--headless', '--agent', '--max-steps', String(maxSteps), '--timeout', String(timeout)];
     if (process.env.LT_USERNAME && process.env.LT_ACCESS_KEY) args.push('--username', process.env.LT_USERNAME, '--access-key', process.env.LT_ACCESS_KEY);
     const bin = process.env.KANE_BIN || 'kane-cli';
     fs.mkdirSync(outDir, { recursive: true });

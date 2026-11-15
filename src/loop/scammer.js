@@ -21,10 +21,10 @@ export function plant(moveIndex, { rules, history }) {
     ].join('\n'));
     execSync(process.env.SAFU_SCAMMER_CMD, { stdio: 'inherit', env: { ...process.env, SAFU_SCAMMER_PROMPT: prompt, SAFU_VARIANT_FILE: LOOP_VARIANT_FILE } });
     const site = readJSON(LOOP_VARIANT_FILE);
-    return { name: site.id, pitch: site._truth || 'LLM-planted variant', site, url: `http://${site.host}:${LOOP_PORT}/` };
+    return { name: site.id, pitch: site._truth || 'LLM-planted variant', taunt: site._taunt || 'Let’s see if Kane still catches this.', site, url: `http://${site.host}:${LOOP_PORT}/` };
   }
   const move = playbook.moves[moveIndex % playbook.moves.length];
   const site = { ...move.site, _truth: move.pitch };
   writeJSON(LOOP_VARIANT_FILE, site);
-  return { name: move.name, pitch: move.pitch, site, url: `http://${site.host}:${LOOP_PORT}/` };
+  return { name: move.name, pitch: move.pitch, taunt: move.taunt || '', site, url: `http://${site.host}:${LOOP_PORT}/` };
 }

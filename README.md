@@ -35,7 +35,16 @@ npm run check -- --replay docs/runs/loop/02-poisoned-approve-first
 
 `*.localhost` resolves to 127.0.0.1 in Chrome, so the gym can serve "different domains" with no DNS setup. Each check costs about **10 to 36 Kane credits** (see [real runs](#-what-kane-caught-real-runs)).
 
-Web UI: `npm run ui`, then open http://127.0.0.1:4200.
+Web UI: `npm run ui`, then open http://127.0.0.1:4200. The Scam Arena (scammer vs builder scoreboard + Kane step timeline) is at http://127.0.0.1:4200/arena.
+
+Real-site mode (no mock wallet — Kane only *observes* a live page, never connects or types secrets):
+
+```bash
+npm run check -- --real-site https://app.uniswap.org
+```
+
+Every check also writes a shareable SafuCard (`card.svg`) into the run folder. Re-render one with `npx safuclick card <runDir>`. A clean real-site result is still not a guarantee of safety: sites can cloak or fingerprint test browsers.
+
 
 ![Web UI verdict](docs/img/ui-verdict.png)
 

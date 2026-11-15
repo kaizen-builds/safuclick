@@ -36,5 +36,10 @@
       "did not match",
       "mismatch"
     ]
+  },
+  "realSite": {
+    "flagSeedInKaneOrHtml": true,
+    "flagSuspiciousRedirect": true,
+    "walletConnectIsSignalOnly": true
   }
 }

@@ -78,7 +78,7 @@ export function build({ round, move, fixPrompt, rulesFile, evidence }) {
   }
   // Regression fixture from the real Kane run + wallet log, so the catch is locked in.
   const fx = p('test', 'fixtures', 'regressions', `${move.name}.json`);
-  writeJSON(fx, { name: move.name, url: evidence.url, intendedAmount: evidence.intendedAmount, kane: evidence.kane, walletLog: evidence.walletLog, expect: 'TRAP FLAGGED', expectRuleSource: true });
+  writeJSON(fx, { name: move.name, url: evidence.url, intendedAmount: evidence.intendedAmount, kane: evidence.kane, walletLog: evidence.walletLog, expect: 'TRAP FLAGGED', expectRuleSource: true, minRulesVersion: readJSON(rulesFile).version });
   let testsOk = true;
   try { execSync('node --test test/*.test.js', { cwd: ROOT, stdio: 'pipe', env: { ...process.env, SAFU_RULES: rulesFile } }); } catch (e) { testsOk = false; changes.push('⚠ tests failed:\n' + String(e.stdout).slice(-800)); }
   return { changes, testsOk, fixture: fx, rules: readJSON(rulesFile) };
