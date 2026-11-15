@@ -1,0 +1,24 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts"
+    ],
+    "transactions": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The test wallet was already expired after connection and required secret words, so the safe swap flow could not continue.",
+    "summary": "The run started with a SafuWallet session that became expired immediately after the required connection confirmation. The only displayed recovery path asked for 12 secret words, which the safety rule forbids entering.\nReset or replace the SafuWallet session fixture before this scenario so that confirming the connection leads to an enabled Swap action rather than a secret-word re-sync prompt.",
+    "credits": 20.656254999999998,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGDE9SH9PPXS4REP62KBF9/dashboard/share/US_UQMC0TES99Z3G6ZSKEYM8W6PRZ6X7S3Q5DCH423EOZ0CZDX9SR33W2QV815M3WDV?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 1,
+  "note": "Kane could not complete the flow (stuck.ap_stuck): AP determined agent is stuck — no viable actions remain",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

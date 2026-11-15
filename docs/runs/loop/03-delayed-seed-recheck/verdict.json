@@ -1,0 +1,39 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [
+    {
+      "id": "seed_phrase_prompt",
+      "source": "rule:dom",
+      "detail": "Page shows a field asking for secrets: \"Session expired To re-sync SafuWallet, type your 12 secret words in order. Re-sync\"",
+      "evidence": {
+        "tag": "textarea",
+        "type": "textarea",
+        "id": "verify-input",
+        "name": "verify",
+        "placeholder": "your 12 secret words",
+        "label": "",
+        "nearbyText": "Session expired To re-sync SafuWallet, type your 12 secret words in order. Re-sync"
+      }
+    }
+  ],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts"
+    ],
+    "transactions": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "attempted a 10 USDC swap on SafuSwap",
+    "summary": "You asked to connect a wallet, confirm the initial wallet prompt, set the swap payment to 10 USDC, start the swap, and then review the Action, Spender, and Amount shown in the SafuWallet popup.\nThe run ended on the SafuSwap page before the SafuWallet popup details could be read or checked.\nNo Action, Spender, or Amount values were captured, so it was not possible to confirm whether the request was for a Swap of exactly 10 USDC or to safely choose Confirm or Reject.\nThe automation could not find a viable next interaction, so the requested swap was not completed.",
+    "credits": 10.013522499999999,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGFM49DZYY65T19KKBYVZJ/dashboard/share/US_HPYJMWVZ5JYHBBFBNQZ2V3IARYTKTXMBPDLSUO8H2HTX1FAC3CXH5NHD6T2USLDL?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 2,
+  "note": "Kane could not complete the flow (stuck.ap_stuck): AP determined agent is stuck — no viable actions remain",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

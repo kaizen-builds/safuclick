@@ -1,0 +1,92 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [
+    {
+      "id": "excessive_approval",
+      "source": "rule:wallet",
+      "detail": "Approval of 5,000,000 USDC is 500000x the 10 USDC the user intended",
+      "evidence": {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee",
+        "amountRaw": "5000000000000",
+        "amountHuman": "5,000,000 USDC",
+        "unlimited": false
+      }
+    },
+    {
+      "id": "address_poisoning",
+      "source": "rule:wallet",
+      "detail": "Spender 0x5afe9d…ffee imitates SafuSwap Router (official) 0x5afe5a…ffee (same prefix/suffix, different address)",
+      "evidence": {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee",
+        "amountRaw": "5000000000000",
+        "amountHuman": "5,000,000 USDC",
+        "unlimited": false
+      }
+    },
+    {
+      "id": "unknown_spender",
+      "source": "rule:wallet",
+      "detail": "Approval spender 0x5afe9d…ffee is not a known router",
+      "evidence": {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee",
+        "amountRaw": "5000000000000",
+        "amountHuman": "5,000,000 USDC",
+        "unlimited": false
+      }
+    },
+    {
+      "id": "kane_assertion_failed",
+      "source": "kane",
+      "detail": "Kane's check failed: The swap flow sent the wallet a token-spending approval request with a much larger amount, rather than the requested swap transaction. Do not approve this request. Change the swap flow so SafuWallet receives an Action of “Swap” with an Amount of exactly “10 US",
+      "evidence": {
+        "status": "failed",
+        "reason_code": "assertion_error.confirmed_product_bug",
+        "matched": "unlimited"
+      }
+    }
+  ],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee",
+        "amountRaw": "5000000000000",
+        "amountHuman": "5,000,000 USDC",
+        "unlimited": false
+      }
+    ]
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "Clicking Swap for 10 USDC opened a wallet request to approve token spending for 5,000,000 USDC instead of a 10 USDC swap.",
+    "summary": "The swap flow sent the wallet a token-spending approval request with a much larger amount, rather than the requested swap transaction.\nDo not approve this request. Change the swap flow so SafuWallet receives an Action of “Swap” with an Amount of exactly “10 USDC”; add a check that blocks any approval or amount different from the user’s requested swap.\nevidence: error_ui_text: Action: Approve token spending\nevidence: error_ui_text: Amount: 5,000,000 USDC",
+    "credits": 21.361057499999998,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGBBJMN0H62EN1ZV2QEN7V/dashboard/share/US_YQNG893UWDZHZJPQ1962B9NH6KEQCAHVN0ALBYBKHREXPZ298L0PJ15EOEX2VCAN?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 1,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

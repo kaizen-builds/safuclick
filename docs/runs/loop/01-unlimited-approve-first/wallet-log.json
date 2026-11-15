@@ -1,0 +1,110 @@
+[
+  {
+    "run": "78ab61dd",
+    "seq": 1,
+    "ts": "2026-11-15T21:01:10.161Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 2,
+    "ts": "2026-11-15T21:01:10.181Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 1,
+    "ts": "2026-11-15T21:01:17.281Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 2,
+    "ts": "2026-11-15T21:01:17.282Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 3,
+    "ts": "2026-11-15T21:01:30.844Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 4,
+    "ts": "2026-11-15T21:01:36.523Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 5,
+    "ts": "2026-11-15T21:01:49.858Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "method": "eth_sendTransaction",
+    "params": [
+      {
+        "from": "0x7e57000000000000000000000000000000000001",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "data": "0x095ea7b3000000000000000000000000d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2deadffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    ]
+  },
+  {
+    "run": "78ab61dd",
+    "seq": 6,
+    "ts": "2026-11-15T21:01:49.859Z",
+    "type": "tx_decoded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=78ab61dd",
+    "decoded": {
+      "kind": "approve",
+      "label": "Approve token spending",
+      "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "token": "USDC",
+      "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+      "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "amountHuman": "UNLIMITED USDC",
+      "unlimited": true
+    }
+  }
+]

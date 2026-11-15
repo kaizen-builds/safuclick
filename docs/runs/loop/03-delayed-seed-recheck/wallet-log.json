@@ -1,0 +1,93 @@
+[
+  {
+    "run": "d731e33f",
+    "seq": 1,
+    "ts": "2026-11-15T21:05:48.094Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "d731e33f",
+    "seq": 2,
+    "ts": "2026-11-15T21:05:48.114Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "d731e33f",
+    "seq": 1,
+    "ts": "2026-11-15T21:05:54.983Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "d731e33f",
+    "seq": 2,
+    "ts": "2026-11-15T21:05:54.984Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "d731e33f",
+    "seq": 3,
+    "ts": "2026-11-15T21:06:09.070Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "d731e33f",
+    "seq": 4,
+    "ts": "2026-11-15T21:06:12.996Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "d731e33f",
+    "seq": 5,
+    "ts": "2026-11-15T21:06:13.599Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=d731e33f",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "your 12 secret words",
+      "label": "",
+      "nearbyText": "Session expired To re-sync SafuWallet, type your 12 secret words in order. Re-sync"
+    }
+  }
+]

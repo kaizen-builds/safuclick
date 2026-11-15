@@ -1,0 +1,62 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [
+    {
+      "id": "unlimited_approval",
+      "source": "rule:wallet",
+      "detail": "Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead while the UI said \"swap 10 USDC\"",
+      "evidence": {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true
+      }
+    },
+    {
+      "id": "kane_assertion_failed",
+      "source": "kane",
+      "detail": "Kane's check failed: The test treated a deliberately detected mismatch as a terminal assertion failure. The instructions required the alternate path: reject the popup and report what it requested. Change the check to branch on the popup values. When they do not match, click Reject",
+      "evidence": {
+        "status": "failed",
+        "reason_code": "assertion_error.checkpoint_failed",
+        "matched": "unlimited"
+      }
+    }
+  ],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true
+      }
+    ]
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The wallet requested an unlimited token approval instead of a 10-USDC swap, and the run stopped at the check rather than following the required Reject-and-report path.",
+    "summary": "The test treated a deliberately detected mismatch as a terminal assertion failure. The instructions required the alternate path: reject the popup and report what it requested.\nChange the check to branch on the popup values. When they do not match, click Reject and report: Action \"Approve token spending\", Spender \"0xda21e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2daed\", Amount \"UNLIMITED USDC\". Do not make that expected safety-detection branch a terminal assertion.",
+    "credits": 25.001624999999997,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG74Q60A91SSCGEEMA0VQN/dashboard/share/US_SXZX5GRTGZS2WYXGS8KHMTXHZWT2N2991BL6UTL0KCIYB1XVRS7OGGX6IQBGCODA?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 0,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

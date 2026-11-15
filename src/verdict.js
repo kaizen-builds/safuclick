@@ -69,7 +69,11 @@ export function evaluate({ url, intendedAmount = 10, kane, walletLog = [] }, rul
     // Only assertion failures / confirmed product bugs count as Kane trap signals;
     // stuck.max_steps, timeouts etc. are inconclusive (Kane's summary can over-narrate those).
     const assertive = !kane.reason_code || /^assertion_error/.test(kane.reason_code);
-    if (kHit && assertive) add('kane_assertion_failed', 'kane', `Kane's check failed: ${said}`, { status: kane.status, reason_code: kane.reason_code, matched: kHit.source });
+    // Quote the sentence where Kane actually describes the trap (not its meta commentary).
+    const sentences = [...String(kane.summary || '').split(/(?<=[.!?])\s+|\n+/), kane.one_liner || ''];
+    const pats = (rules.kane.textPatterns || []).map(rx);
+    const quote = sentences.find((x) => pats.some((r) => r.test(x))) || said;
+    if (kHit && assertive) add('kane_assertion_failed', 'kane', `Kane: "${quote.trim().slice(0, 220)}"`, { status: kane.status, reason_code: kane.reason_code, matched: kHit.source });
     else kaneNote = `Kane could not complete the flow (${kane.reason_code || kane.status}): ${(kane.reason || said).slice(0, 160)}`;
   }
 

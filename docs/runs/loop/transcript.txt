@@ -1,0 +1,176 @@
+
+╔══════════════════════════════════════════════════════════════════════╗
+║ SafuClick closed loop · 3 round(s) · rules v0 · powered by Kane CLI  ║
+╚══════════════════════════════════════════════════════════════════════╝
+  😈 scammer plants traps · 🤖 Kane CLI drives the page + mock wallet · 🛠 builder hardens the checker
+
+╔══════════════════════════════════════════════════════════════════════╗
+║ ROUND 1 · 😈 scammer plays "unlimited-approve"                       ║
+╚══════════════════════════════════════════════════════════════════════╝
+  Compromised frontend on the REAL domain: 'Swap 10 USDC' secretly asks for approve(drainer, MAX_UINT256).
+  planted on http://safuswap.localhost:4110/ (hot-reloaded, no restart)
+
+  🤖 Kane referee (rules v0) → http://safuswap.localhost:4110/
+  🤖 Kane CLI is driving http://safuswap.localhost:4110/ in headless Chrome (run 78ab61dd)…
+     step  2 · navigate: Navigate to http://safuswap.localhost:4110/?safu_run=78ab61dd
+     step  3 · click: Clicking Connect Wallet in the top-right header
+     step  4 · click: Clicking Confirm in the SafuWallet popup
+     step  5 · analyze: the "You pay" amount is 10 USDC
+     step  6 · assert: the "You pay" amount is 10 USDC
+     step  7 · click: Clicking the Swap button
+     step  8 · analyze: ANALYZE(textual_visual, 'the popup Amount is exactly "10 USDC" (not UNLIMITED an
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚨  TRAP FLAGGED   http://safuswap.localhost:4110/
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Why:
+   ✖ Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead while the UI said "swap 10 USDC" [unlimited_approval · rule:wallet]
+   ✖ Kane's check failed: The test treated a deliberately detected mismatch as a terminal assertion failure. The instructions required the alternate path: reject the popup and report what it requested. Change the check to branch on the popup values. When they do not match, click Reject [kane_assertion_failed · kane]
+  Evidence:
+   domain     safuswap.localhost (official allowlist)
+   wallet     eth_requestAccounts → eth_sendTransaction
+   tx         Approve token spending: UNLIMITED USDC → spender 0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead (contract 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)
+   kane       failed · The wallet requested an unlimited token approval instead of a 10-USDC swap, and the run stopped at the check rather than following the required Reject-and-report path.
+   credits    25.0
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG74Q60A91SSCGEEMA0VQN/dashboard/share/US_SXZX5GRTGZS2WYXGS8KHMTXHZWT2N2991BL6UTL0KCIYB1XVRS7OGGX6IQBGCODA?type=summary&agentView=true&fqdn=summary-page
+  rules v0 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✔ CAUGHT by deterministic rules and by Kane. 😈 scammer must evolve.
+
+╔══════════════════════════════════════════════════════════════════════╗
+║ ROUND 2 · 😈 scammer plays "poisoned-approve"                        ║
+╚══════════════════════════════════════════════════════════════════════╝
+  Evolved: dodge the MAX_UINT rule with a 5,000,000 USDC approval, to a spender that copies the official router's first and last characters (address poisoning).
+  planted on http://safuswap.localhost:4110/ (hot-reloaded, no restart)
+
+  🤖 Kane referee (rules v0) → http://safuswap.localhost:4110/
+  🤖 Kane CLI is driving http://safuswap.localhost:4110/ in headless Chrome (run 15aae9b8)…
+     step  2 · navigate: Navigate to http://safuswap.localhost:4110/?safu_run=15aae9b8
+     step  3 · click: Clicking Connect Wallet in the top-right corner
+     step  4 · click: Clicking Confirm in the SafuWallet popup
+     step  5 · click: Clicking the Swap button beneath the You pay amount
+     step  6 · analyze: ANALYZE(textual_visual, 'the popup Action, Spender and Amount lines are saved as
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚨  TRAP FLAGGED   http://safuswap.localhost:4110/
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Why:
+   ✖ Kane's check failed: The SafuWallet request did not match the requested 10 USDC swap: it asked to approve token spending for 5,000,000 USDC. The automation treated that expected safety-check outcome as a terminal assertion, rather than taking the instructed next step to reject it  [kane_assertion_failed · kane]
+  Evidence:
+   domain     safuswap.localhost (official allowlist)
+   wallet     eth_requestAccounts → eth_sendTransaction
+   tx         Approve token spending: 5,000,000 USDC → spender 0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee (contract 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)
+   kane       failed · The run stopped on the popup check instead of following the required mismatch path and rejecting the unsafe request.
+   credits    20.5
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG97KZZSBQ2XGVQK4THC1S/dashboard/share/US_T9ZMITPYTW4LFP4G804JV55KMU7EWU9MUV1VCMAV5GTBY22FFXCDS0Y5ZH5WO7A6?type=summary&agentView=true&fqdn=summary-page
+  rules v0 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ⚠ KANE-ONLY: Kane's own check flagged it, but no deterministic rule did. Handing Kane's report to the builder.
+  📝 fix prompt → .safuclick/loop/prompts/round-2-fix.md
+  🛠 builder (scripted, LLM-free) is patching…
+     + approval.maxAllowanceRatio = 10 (approvals > 10x the intended swap are flagged)
+     + approval.requireKnownSpender = true (spender must be an allowlisted router)
+     + approval.flagAddressPoisoning = true (same prefix/suffix as a known router)
+     + kane.textPatterns += "approv"
+     + kane.textPatterns += "spender"
+     ✔ unit + regression tests pass · rules v0 → v1
+
+  🤖 Kane referee re-check (rules v1) → http://safuswap.localhost:4110/
+  🤖 Kane CLI is driving http://safuswap.localhost:4110/ in headless Chrome (run 4dbdb5ce)…
+     step  2 · navigate: Navigate to http://safuswap.localhost:4110/?safu_run=4dbdb5ce
+     step  3 · click: Clicking Connect Wallet to connect the SafuWallet test wallet
+     step  4 · click: Clicking Confirm in the SafuWallet popup to confirm wallet connection
+     step  5 · click: Clicking the Swap button
+     step  6 · analyze: ANALYZE(textual_visual, "the popup's action, spender, and amount is saved as {{p
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚨  TRAP FLAGGED   http://safuswap.localhost:4110/
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Why:
+   ✖ Approval of 5,000,000 USDC is 500000x the 10 USDC the user intended [excessive_approval · rule:wallet]
+   ✖ Spender 0x5afe9d…ffee imitates SafuSwap Router (official) 0x5afe5a…ffee (same prefix/suffix, different address) [address_poisoning · rule:wallet]
+   ✖ Approval spender 0x5afe9d…ffee is not a known router [unknown_spender · rule:wallet]
+   ✖ Kane's check failed: The swap flow sent the wallet a token-spending approval request with a much larger amount, rather than the requested swap transaction. Do not approve this request. Change the swap flow so SafuWallet receives an Action of “Swap” with an Amount of exactly “10 US [kane_assertion_failed · kane]
+  Evidence:
+   domain     safuswap.localhost (official allowlist)
+   wallet     eth_requestAccounts → eth_sendTransaction
+   tx         Approve token spending: 5,000,000 USDC → spender 0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee (contract 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)
+   kane       failed · Clicking Swap for 10 USDC opened a wallet request to approve token spending for 5,000,000 USDC instead of a 10 USDC swap.
+   credits    21.4
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGBBJMN0H62EN1ZV2QEN7V/dashboard/share/US_YQNG893UWDZHZJPQ1962B9NH6KEQCAHVN0ALBYBKHREXPZ298L0PJ15EOEX2VCAN?type=summary&agentView=true&fqdn=summary-page
+  rules v1 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✔ FIXED: Kane re-ran the trap and the hardened rules flag it.
+
+╔══════════════════════════════════════════════════════════════════════╗
+║ ROUND 3 · 😈 scammer plays "delayed-seed"                            ║
+╚══════════════════════════════════════════════════════════════════════╝
+  Evolved: no seed prompt on load (so quick scanners see a clean page). After wallet connect, a 'session expired' modal asks for your '12 secret words', avoiding the words seed/recovery/mnemonic.
+  planted on http://safuswap.localhost:4110/ (hot-reloaded, no restart)
+
+  🤖 Kane referee (rules v1) → http://safuswap.localhost:4110/
+  🤖 Kane CLI is driving http://safuswap.localhost:4110/ in headless Chrome (run d214beb7)…
+     step  2 · navigate: Navigate to http://safuswap.localhost:4110/?safu_run=d214beb7
+     step  3 · click: Clicking Connect Wallet in the top-right header
+     step  4 · click: Clicking Confirm in the SafuWallet popup
+     step  5 · analyze: the "You pay" amount is 10 USDC
+     step  6 · assert: the "You pay" amount is 10 USDC
+     step  7 · wait: Waiting because the session-expired dialog blocks the Swap button and requests secret words
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ❔  INCONCLUSIVE   http://safuswap.localhost:4110/
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ? Kane could not complete the flow (stuck.ap_stuck): AP determined agent is stuck — no viable actions remain
+  Evidence:
+   domain     safuswap.localhost (official allowlist)
+   wallet     eth_requestAccounts
+   kane       failed · The test wallet was already expired after connection and required secret words, so the safe swap flow could not continue.
+   credits    20.7
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGDE9SH9PPXS4REP62KBF9/dashboard/share/US_UQMC0TES99Z3G6ZSKEYM8W6PRZ6X7S3Q5DCH423EOZ0CZDX9SR33W2QV815M3WDV?type=summary&agentView=true&fqdn=summary-page
+  rules v1 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ MISSED: the trap slipped past. Scammer's disclosure + Kane's report go to the builder.
+  📝 fix prompt → .safuclick/loop/prompts/round-3-fix.md
+  🛠 builder (scripted, LLM-free) is patching…
+     + seed.patterns += /secret words/
+     + seed.patterns += /\b(12|24)[- ]?(secret |recovery |seed |private )?words\b/
+     + seed.patterns += /re-?sync.{0,40}(wallet|words)/
+     + kane.textPatterns += "secret words"
+     ✔ unit + regression tests pass · rules v1 → v2
+
+  🤖 Kane referee re-check (rules v2) → http://safuswap.localhost:4110/
+  🤖 Kane CLI is driving http://safuswap.localhost:4110/ in headless Chrome (run d731e33f)…
+     step  2 · navigate: Navigate to http://safuswap.localhost:4110/?safu_run=d731e33f
+     step  3 · click: Clicking Connect Wallet in the top-right header
+     step  4 · click: Clicking Confirm in the SafuWallet popup
+     step  5 · wait: Waiting while the session-expired recovery-phrase dialog blocks the swap controls
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚨  TRAP FLAGGED   http://safuswap.localhost:4110/
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Why:
+   ✖ Page shows a field asking for secrets: "Session expired To re-sync SafuWallet, type your 12 secret words in order. Re-sync" [seed_phrase_prompt · rule:dom]
+   ? Kane could not complete the flow (stuck.ap_stuck): AP determined agent is stuck — no viable actions remain
+  Evidence:
+   domain     safuswap.localhost (official allowlist)
+   wallet     eth_requestAccounts
+   kane       failed · attempted a 10 USDC swap on SafuSwap
+   credits    10.0
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGFM49DZYY65T19KKBYVZJ/dashboard/share/US_HPYJMWVZ5JYHBBFBNQZ2V3IARYTKTXMBPDLSUO8H2HTX1FAC3CXH5NHD6T2USLDL?type=summary&agentView=true&fqdn=summary-page
+  rules v2 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✔ FIXED: Kane re-ran the trap and the hardened rules flag it.
+
+╔══════════════════════════════════════════════════════════════════════╗
+║ SCOREBOARD                                                           ║
+╚══════════════════════════════════════════════════════════════════════╝
+  R1  unlimited-approve    CAUGHT  rules v0
+  R2  poisoned-approve     KANE-ONLY → FIXED  rules v0 → v1
+  R3  delayed-seed         MISSED → FIXED  rules v1 → v2
+  Kane credits used this loop: 97.5
+  ✔ promoted hardened rules → config/rules.json

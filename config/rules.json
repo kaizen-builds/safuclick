@@ -1,5 +1,5 @@
 {
-  "version": 0,
+  "version": 2,
   "_comment": "Naive day-zero rules. The closed loop (npm run loop) starts from here so you can watch Kane's reports harden them.",
   "domain": {
     "maxEditDistance": 2,
@@ -11,16 +11,19 @@
   },
   "approval": {
     "flagMaxUint": true,
-    "maxAllowanceRatio": null,
-    "requireKnownSpender": false,
-    "flagAddressPoisoning": false
+    "maxAllowanceRatio": 10,
+    "requireKnownSpender": true,
+    "flagAddressPoisoning": true
   },
   "seed": {
     "patterns": [
       "seed phrase",
       "recovery phrase",
       "mnemonic",
-      "private key"
+      "private key",
+      "secret words",
+      "\\b(12|24)[- ]?(secret |recovery |seed |private )?words\\b",
+      "re-?sync.{0,40}(wallet|words)"
     ]
   },
   "kane": {
@@ -34,7 +37,10 @@
       "private key",
       "does not match",
       "did not match",
-      "mismatch"
+      "mismatch",
+      "approv",
+      "spender",
+      "secret words"
     ]
   }
 }
