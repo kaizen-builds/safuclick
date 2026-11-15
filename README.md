@@ -173,7 +173,7 @@ The clone row is the point of the whole project. A pixel-perfect clone **passes*
 
 ## 🎬 Demo video script (3 to 5 min)
 
-1. **0:00 to 0:20, hook.** "Wallet drainers stole over a billion dollars. Most of them start with one click on a link that looks legit." Show the clone and the official site side by side: they're identical.
+1. **0:00 to 0:20, hook.** "Wallet drainers are one of the most common ways people lose crypto, and most of them start with one click on a link that looks legit." Show the clone and the official site side by side: they're identical.
 2. **0:20 to 0:50, what SafuClick is.** "Paste a link before you connect. Kane CLI walks through it with a throwaway wallet and records what the site asks that wallet to sign." Show the architecture diagram.
 3. **0:50 to 1:40, the hidden approval.** `npm run check -- http://safuswap.localhost:4103/`. Narrate Kane's steps as they stream. Show the popup screenshot ("Swap 10 USDC" vs UNLIMITED), then the 🚨 card: `unlimited_approval` plus Kane's assertion quote and test_url link. Open the Kane report in Test Manager.
 4. **1:40 to 2:20, the clone.** Kane **passes** ("completed a 10 USDC swap"), but SafuClick flags `lookalike_domain` and `unknown_contract`. "A visual test says ship it. The wallet evidence says scam."

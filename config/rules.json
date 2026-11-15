@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "_comment": "Naive day-zero rules. The closed loop (npm run loop) starts from here so you can watch Kane's reports harden them.",
+  "_comment": "Hardened rules (v2), produced by the closed loop (npm run loop --promote) from Kane reports. Baseline: rules.baseline.json.",
   "domain": {
     "maxEditDistance": 2,
     "flagBrandTokens": true,
