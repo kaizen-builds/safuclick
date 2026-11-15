@@ -1,0 +1,55 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswep.localhost:4101/",
+  "host": "safuswep.localhost",
+  "officialDomain": false,
+  "reasons": [
+    {
+      "id": "lookalike_domain",
+      "source": "rule:domain",
+      "detail": "safuswep.localhost is 1 edit away from official safuswap.localhost"
+    },
+    {
+      "id": "unknown_contract",
+      "source": "rule:wallet",
+      "detail": "Transaction sent to unknown contract 0xc10ec1…d000 (not in allowlist)",
+      "evidence": {
+        "kind": "swap",
+        "label": "Swap",
+        "to": "0xc10ec10e00000000000000000000000000bad000",
+        "token": "USDC",
+        "amountRaw": "10000000",
+        "amountHuman": "10 USDC",
+        "spender": "0xc10ec10e00000000000000000000000000bad000"
+      }
+    }
+  ],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "kind": "swap",
+        "label": "Swap",
+        "to": "0xc10ec10e00000000000000000000000000bad000",
+        "token": "USDC",
+        "amountRaw": "10000000",
+        "amountHuman": "10 USDC",
+        "spender": "0xc10ec10e00000000000000000000000000bad000"
+      }
+    ]
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The SafuWallet confirmation showed a Contract line instead of the required Spender line, so the requested spender value could not be checked or saved.",
+    "summary": "The wallet popup did not provide the Spender field required by the swap review. It showed Contract instead, which is not the requested field.\nUpdate the SafuWallet confirmation to show a clearly labeled Spender line, or revise the review requirement to explicitly use Contract if that is the intended value.\nevidence: objective_contradiction: The popup had no Spender line; analysis found only Contract, so popup_spender cannot be extracted as requested.",
+    "credits": 33.289615000000005,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GFX24TWZM2TB2D8ZY43M7F/dashboard/share/US_IS9Z2Z3Z55SLG8LZIY07Y2CT90RCPVXW0EOVG5Y6SQ3FB96HYNLJ3ZAA57699IH8?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 0,
+  "note": "Kane could not complete the flow (assertion_error.confirmed_product_bug): The popup had no Spender line; analysis found only Contract, so popup_spender cannot be extracted as requested.",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

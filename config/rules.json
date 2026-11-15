@@ -1,9 +1,40 @@
 {
   "version": 0,
   "_comment": "Naive day-zero rules. The closed loop (npm run loop) starts from here so you can watch Kane's reports harden them.",
-  "domain": { "maxEditDistance": 2, "flagBrandTokens": true, "flagPunycode": true },
-  "contracts": { "requireKnownContract": true },
-  "approval": { "flagMaxUint": true, "maxAllowanceRatio": null, "requireKnownSpender": false, "flagAddressPoisoning": false },
-  "seed": { "patterns": ["seed phrase", "recovery phrase", "mnemonic", "private key"] },
-  "kane": { "flagFailedFlow": true, "textPatterns": ["unlimited", "seed phrase", "recovery phrase", "does not match", "mismatch"] }
+  "domain": {
+    "maxEditDistance": 2,
+    "flagBrandTokens": true,
+    "flagPunycode": true
+  },
+  "contracts": {
+    "requireKnownContract": true
+  },
+  "approval": {
+    "flagMaxUint": true,
+    "maxAllowanceRatio": null,
+    "requireKnownSpender": false,
+    "flagAddressPoisoning": false
+  },
+  "seed": {
+    "patterns": [
+      "seed phrase",
+      "recovery phrase",
+      "mnemonic",
+      "private key"
+    ]
+  },
+  "kane": {
+    "flagFailedFlow": true,
+    "textPatterns": [
+      "unlimited",
+      "seed phrase",
+      "recovery[- ]phrase",
+      "recovery (words|credentials)",
+      "secret (recovery )?words",
+      "private key",
+      "does not match",
+      "did not match",
+      "mismatch"
+    ]
+  }
 }

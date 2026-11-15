@@ -1,0 +1,42 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap-verify.localhost:4102/",
+  "host": "safuswap-verify.localhost",
+  "officialDomain": false,
+  "reasons": [
+    {
+      "id": "brand_impersonation",
+      "source": "rule:domain",
+      "detail": "safuswap-verify.localhost contains brand \"safuswap\" but is not an official domain"
+    },
+    {
+      "id": "seed_phrase_prompt",
+      "source": "rule:dom",
+      "detail": "Page shows a field asking for secrets: \"Wallet verification required Enter your 12-word recovery phrase to verify your wallet and continue. Verify wallet\"",
+      "evidence": {
+        "tag": "textarea",
+        "type": "textarea",
+        "id": "verify-input",
+        "name": "verify",
+        "placeholder": "word1 word2 word3 ...",
+        "label": "",
+        "nearbyText": "Wallet verification required Enter your 12-word recovery phrase to verify your wallet and continue. Verify wallet"
+      }
+    }
+  ],
+  "walletSummary": {
+    "requests": [],
+    "transactions": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The swap page showed a wallet-verification dialog asking for secret recovery words instead of allowing the normal SafuWallet connection flow.",
+    "summary": "The page presented a request for wallet recovery credentials before the user could proceed with the intended wallet connection and swap.\nRemove the recovery-phrase/private-key verification dialog from this flow. Wallet connection and swap confirmation should use the built-in SafuWallet confirmation dialogs only, and must never request secret recovery words.\nevidence: error_ui_text: A prompt asks for a private key.",
+    "credits": 16.570165,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GFMCG0KKJRABKZQKMZ1547/dashboard/share/US_E4GGAZASBQRGW7D5M2TGTUT3XK3V8TS0CURY5AOZ2O179MQ9D57YGOCVW0TEGOQH?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 0,
+  "note": "Kane could not complete the flow (failed): The page presented a request for wallet recovery credentials before the user could proceed with the intended wallet connection and swap. Remove the recovery-phrase/private-key verification dialog from this flow. Wallet connection and swap confirmation should u",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

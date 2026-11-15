@@ -16,7 +16,7 @@ const kaneCaught = (v) => v.reasons.some((r) => r.source === 'kane');
 
 async function referee(move, rulesFile, opts, label) {
   console.log(`\n  🤖 ${bold('Kane referee')} ${label} → ${cyan(move.url)}`);
-  const res = await check(move.url, { rules: rulesFile, maxSteps: opts.maxSteps || 12, quiet: false });
+  const res = await check(move.url, { rules: rulesFile, maxSteps: opts.maxSteps || 16, quiet: false });
   return res;
 }
 

@@ -15,7 +15,7 @@ const help = `
   safuclick gym                     start the local phishing gym (official SafuSwap + scam variants)
   safuclick check <url>             Kane drives the URL with a mock wallet; prints a verdict card
       --amount 10                   amount the user intends to swap (USDC)
-      --max-steps 14                Kane step budget (credits!)
+      --max-steps 16                Kane step budget (credits!)
       --rules config/rules.json     heuristics file  --json  --markdown report.md  --fail-on-trap
       --replay <runDir>             re-judge a saved Kane run with current rules (0 credits)
   safuclick ui [--port 4200]        small web UI for checks

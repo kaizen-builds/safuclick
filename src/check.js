@@ -30,7 +30,7 @@ export async function check(url, opts = {}) {
     const target = new URL(url); target.searchParams.set('safu_run', runId);
     runDir = opts.outDir || path.join(STATE, 'runs', `${new Date().toISOString().replace(/[:.]/g, '-')}-${target.hostname}-${target.port || 80}`);
     log(`  🤖 Kane CLI is driving ${cyan(url)} in headless Chrome (run ${runId})…`);
-    kane = await runKane({ url: target.toString(), amount, maxSteps: opts.maxSteps || 14, outDir: runDir,
+    kane = await runKane({ url: target.toString(), amount, maxSteps: opts.maxSteps || 16, outDir: runDir,
       onEvent: (ev) => { if (ev.step && ev.status === 'done') log(dim(`     step ${String(ev.step).padStart(2)} · ${ev.remark.slice(0, 110)}`)); } });
     await new Promise((r) => setTimeout(r, 800));
     walletLog = await fetchLog(runId).catch(() => []);

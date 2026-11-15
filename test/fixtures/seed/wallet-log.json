@@ -1,0 +1,90 @@
+[
+  {
+    "run": "eac3f529",
+    "seq": 1,
+    "ts": "2026-11-15T20:50:55.566Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap-verify.localhost:4102",
+    "href": "http://safuswap-verify.localhost:4102/?safu_run=eac3f529",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "eac3f529",
+    "seq": 2,
+    "ts": "2026-11-15T20:50:55.588Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-verify.localhost:4102",
+    "href": "http://safuswap-verify.localhost:4102/?safu_run=eac3f529",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "eac3f529",
+    "seq": 3,
+    "ts": "2026-11-15T20:50:55.590Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-verify.localhost:4102",
+    "href": "http://safuswap-verify.localhost:4102/?safu_run=eac3f529",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "word1 word2 word3 ...",
+      "label": "",
+      "nearbyText": "Wallet verification required Enter your 12-word recovery phrase to verify your wallet and continue. Verify wallet"
+    }
+  },
+  {
+    "run": "eac3f529",
+    "seq": 1,
+    "ts": "2026-11-15T20:51:02.040Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap-verify.localhost:4102",
+    "href": "http://safuswap-verify.localhost:4102/?safu_run=eac3f529",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "eac3f529",
+    "seq": 2,
+    "ts": "2026-11-15T20:51:02.041Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-verify.localhost:4102",
+    "href": "http://safuswap-verify.localhost:4102/?safu_run=eac3f529",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "eac3f529",
+    "seq": 3,
+    "ts": "2026-11-15T20:51:02.042Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-verify.localhost:4102",
+    "href": "http://safuswap-verify.localhost:4102/?safu_run=eac3f529",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "word1 word2 word3 ...",
+      "label": "",
+      "nearbyText": "Wallet verification required Enter your 12-word recovery phrase to verify your wallet and continue. Verify wallet"
+    }
+  }
+]

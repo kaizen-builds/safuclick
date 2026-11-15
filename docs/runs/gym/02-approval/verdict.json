@@ -1,0 +1,62 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap.localhost:4103/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [
+    {
+      "id": "unlimited_approval",
+      "source": "rule:wallet",
+      "detail": "Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead while the UI said \"swap 10 USDC\"",
+      "evidence": {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true
+      }
+    },
+    {
+      "id": "kane_assertion_failed",
+      "source": "kane",
+      "detail": "Kane's check failed: The wallet popup did not match the requested swap: it asked to approve token spending for an unlimited USDC amount. The instructions explicitly allow for this case and require Reject plus a mismatch report, but the agent treated the expected conditional check ",
+      "evidence": {
+        "status": "failed",
+        "reason_code": "assertion_error.checkpoint_failed",
+        "matched": "unlimited"
+      }
+    }
+  ],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "kind": "approve",
+        "label": "Approve token spending",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "token": "USDC",
+        "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true
+      }
+    ]
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The run stopped on an assertion after SafuWallet presented an approval for unlimited USDC, rather than rejecting that mismatched request and reporting it as instructed.",
+    "summary": "The wallet popup did not match the requested swap: it asked to approve token spending for an unlimited USDC amount. The instructions explicitly allow for this case and require Reject plus a mismatch report, but the agent treated the expected conditional check as a hard requirement and ended the run instead.\nChange the popup check to branch: collect Action, Spender, and Amount first; if Action is not Swap or Amount is not exactly 10 USDC, click Reject and report the values. Do not make the expected Swap value a terminal assertion before that branch.",
+    "credits": 25.167312499999998,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GFHFWAAVPVC8TH69FTVKEH/dashboard/share/US_9969J3M9RGY8VU10690G396ME7IQVPJA9DFHVLA0HU22E33HU4FPIFKAOY9B31PK?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 0,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

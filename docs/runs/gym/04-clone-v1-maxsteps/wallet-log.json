@@ -1,0 +1,141 @@
+[
+  {
+    "run": "905a8b2c",
+    "seq": 1,
+    "ts": "2026-11-15T20:51:59.405Z",
+    "type": "page_loaded",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 2,
+    "ts": "2026-11-15T20:51:59.425Z",
+    "type": "input_seen",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 1,
+    "ts": "2026-11-15T20:52:06.372Z",
+    "type": "page_loaded",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 2,
+    "ts": "2026-11-15T20:52:06.373Z",
+    "type": "input_seen",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 3,
+    "ts": "2026-11-15T20:52:28.701Z",
+    "type": "wallet_request",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 4,
+    "ts": "2026-11-15T20:52:35.246Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 5,
+    "ts": "2026-11-15T20:52:44.621Z",
+    "type": "input_typed",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "field": {
+      "id": "amount",
+      "name": "amount"
+    },
+    "length": 2
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 6,
+    "ts": "2026-11-15T20:52:50.330Z",
+    "type": "wallet_request",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "method": "eth_sendTransaction",
+    "params": [
+      {
+        "from": "0x7e57000000000000000000000000000000000001",
+        "to": "0xc10ec10e00000000000000000000000000bad000",
+        "data": "0x38ed173900000000000000000000000000000000000000000000000000000000009896800000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 7,
+    "ts": "2026-11-15T20:52:50.330Z",
+    "type": "tx_decoded",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "decoded": {
+      "kind": "swap",
+      "label": "Swap",
+      "to": "0xc10ec10e00000000000000000000000000bad000",
+      "token": "USDC",
+      "amountRaw": "10000000",
+      "amountHuman": "10 USDC",
+      "spender": "0xc10ec10e00000000000000000000000000bad000"
+    }
+  },
+  {
+    "run": "905a8b2c",
+    "seq": 8,
+    "ts": "2026-11-15T20:53:13.114Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswep.localhost:4101",
+    "href": "http://safuswep.localhost:4101/?safu_run=905a8b2c",
+    "method": "eth_sendTransaction",
+    "approved": true,
+    "decoded": {
+      "kind": "swap",
+      "label": "Swap",
+      "to": "0xc10ec10e00000000000000000000000000bad000",
+      "token": "USDC",
+      "amountRaw": "10000000",
+      "amountHuman": "10 USDC",
+      "spender": "0xc10ec10e00000000000000000000000000bad000"
+    }
+  }
+]

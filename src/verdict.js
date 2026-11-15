@@ -66,8 +66,11 @@ export function evaluate({ url, intendedAmount = 10, kane, walletLog = [] }, rul
     const text = kaneText(kane);
     const kHit = (rules.kane.textPatterns || []).map(rx).find((r) => r.test(text));
     const said = (kane.summary || kane.one_liner || kane.reason || '').replace(/\s+/g, ' ').slice(0, 260);
-    if (kHit) add('kane_assertion_failed', 'kane', `Kane's check failed: ${said}`, { status: kane.status, reason_code: kane.reason_code, matched: kHit.source });
-    else kaneNote = `Kane could not complete the flow (${kane.status}): ${said}`;
+    // Only assertion failures / confirmed product bugs count as Kane trap signals;
+    // stuck.max_steps, timeouts etc. are inconclusive (Kane's summary can over-narrate those).
+    const assertive = !kane.reason_code || /^assertion_error/.test(kane.reason_code);
+    if (kHit && assertive) add('kane_assertion_failed', 'kane', `Kane's check failed: ${said}`, { status: kane.status, reason_code: kane.reason_code, matched: kHit.source });
+    else kaneNote = `Kane could not complete the flow (${kane.reason_code || kane.status}): ${(kane.reason || said).slice(0, 160)}`;
   }
 
   const verdict = reasons.length ? 'TRAP FLAGGED' : (kaneNote || (!kane && walletLog.length === 0)) ? 'INCONCLUSIVE' : 'NO KNOWN TRAPS FOUND';

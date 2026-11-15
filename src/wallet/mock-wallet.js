@@ -98,7 +98,7 @@
       var d = decodeTx(p[0] || {});
       log('tx_decoded', { decoded: d });
       var rows = [['Site', location.origin], ['Request', 'Send transaction'], ['Action', d.label], ['Contract', d.to]];
-      if (d.kind === 'approve') rows.push(['Spender', d.spender]);
+      rows.push(['Spender', d.spender]); // for a swap, the router contract that pulls your tokens
       rows.push(['Amount', d.amountHuman]);
       var ok2 = await popup(rows, d.kind === 'approve' ? 'Allow token spending?' : 'Confirm transaction');
       log('wallet_decision', { method: method, approved: ok2, decoded: d });

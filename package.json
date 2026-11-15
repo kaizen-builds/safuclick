@@ -9,7 +9,7 @@
     "check": "node bin/safuclick.js check",
     "ui": "node bin/safuclick.js ui",
     "loop": "node bin/safuclick.js loop",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.js"
   },
   "engines": { "node": ">=20" },
   "license": "MIT",

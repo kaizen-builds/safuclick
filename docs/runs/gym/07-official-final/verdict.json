@@ -1,0 +1,35 @@
+{
+  "verdict": "NO KNOWN TRAPS FOUND",
+  "url": "http://safuswap.localhost:4100/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "kind": "swap",
+        "label": "Swap",
+        "to": "0x5afe5afe00000000000000000000000000c0ffee",
+        "token": "USDC",
+        "amountRaw": "10000000",
+        "amountHuman": "10 USDC",
+        "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+      }
+    ]
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "completed a 10 USDC swap on SafuSwap",
+    "summary": "Connected the wallet and confirmed the connection request.\nSet the payment amount to 10 USDC and started the swap.\nReviewed the SafuWallet confirmation details: the action was Swap and the amount was exactly 10 USDC.\nThe confirmation details matched the requested swap, and the swap was completed.",
+    "credits": 31.16336,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG0H66FF6HZ0H2SQN7K030/dashboard/share/US_MVO15Y2JOVKHHAX4A6R00Y3VFJETPXBR7M0ZDPD35JU0QJ9KPT1YFMMEM3MAF3K9?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 0,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}

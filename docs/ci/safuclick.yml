@@ -1,3 +1,4 @@
+# Copy to .github/workflows/safuclick.yml to enable (shipped as an example).
 # Runs SafuClick against the phishing gym on every PR and posts Kane's verdict as a PR comment.
 # Secrets needed: LT_USERNAME, LT_ACCESS_KEY (TestMu AI / LambdaTest credentials for Kane CLI).
 name: SafuClick (powered by Kane CLI)

@@ -1,0 +1,35 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "url": "http://safuswap.localhost:4100/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [],
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "kind": "swap",
+        "label": "Swap",
+        "to": "0x5afe5afe00000000000000000000000000c0ffee",
+        "token": "USDC",
+        "amountRaw": "10000000",
+        "amountHuman": "10 USDC",
+        "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+      }
+    ]
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The SafuWallet swap confirmation shows a Contract field instead of the required Spender field, so the safety check cannot be completed.",
+    "summary": "The wallet confirmation presents the contract address under “Contract” but does not provide the required “Spender” line. Because the required field is missing, the run cannot verify who is being authorized before approving the swap.\nUpdate the SafuWallet confirmation for swaps to show a clearly labeled Spender line, then rerun the safety check. Until then, users should reject this confirmation because the required spender information cannot be verified.\nevidence: objective_contradiction: The popup has Contract rather than the required Spender line, so the required checkpoint cannot pass.",
+    "credits": 25.266265000000004,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GFTJZQ0HMKFSVGY3FVPVQC/dashboard/share/US_Z5U9OB4H8E2IF9QJ74H2TGAHBDH35T5GB5YGSJONK9AGL7JNOSN0QA04J9JR4N41?type=summary&agentView=true&fqdn=summary-page"
+  },
+  "rulesVersion": 0,
+  "note": "Kane could not complete the flow (assertion_error.confirmed_product_bug): The popup has Contract rather than the required Spender line, so the required checkpoint cannot pass.",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "<local>"
+}
