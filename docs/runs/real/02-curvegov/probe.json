@@ -1,0 +1,19 @@
+{
+  "startUrl": "https://curvegov.icu",
+  "finalUrl": "https://curvegov.icu/",
+  "status": 200,
+  "hops": [
+    {
+      "url": "https://curvegov.icu",
+      "status": 200,
+      "location": null
+    }
+  ],
+  "error": null,
+  "blocked": false,
+  "title": "Governance - Curve",
+  "fields": [],
+  "walletConnect": false,
+  "textSnippet": "Governance - Curve Governance - Curve Curve.finance <img alt=\"Curve\" class=\"css-jqoe6e\" data-savepage-src=\"https://cdn.jsdelivr.net/gh/curvefi/curve-assets/branding/logo.png\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIgAAASICAYAAAB4LPTDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAewgAAHsIBbtB1PgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACAASURBVHic7N15kCTped/37/tmZt3V1fc5s7MHFwcv2RZpgwsQgEXZkijbIGXK4VCEQ0Haph1SUDTNQxRFg7QVJAURQEg270s0ZYMUSICCQKxBAiJAwjwgEIYIcEBgd7HnHD09fXd1nZn5+o+3arunp4",
+  "pageUrl": "https://curvegov.icu/"
+}

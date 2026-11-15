@@ -52,7 +52,7 @@ export async function check(url, opts = {}) {
 
   if (realSite) {
     log(`  🔎 real-site mode: peeking at ${cyan(url)} (no mock wallet, no signing)…`);
-    probe = await probeUrl(url);
+    probe = await probeUrl(url, { guard: opts.urlGuard || null });
     writeJSON(path.join(runDir, 'probe.json'), probe);
     if (probe.error) log(yellow(`     HTTP peek failed: ${probe.error}`));
     else log(dim(`     HTTP ${probe.status || '?'} · final ${probe.finalUrl} · title ${JSON.stringify(probe.title || '')}`));
@@ -67,7 +67,7 @@ export async function check(url, opts = {}) {
       patchLive({ phase: 'kane', steps: [] });
       const steps = [];
       kane = await runKane({
-        url, amount, maxSteps: opts.maxSteps || 12, outDir: runDir, objective: realSiteObjective(),
+        url, amount, maxSteps: opts.maxSteps || 12, timeout: opts.timeout || 300, outDir: runDir, objective: realSiteObjective(),
         onEvent: (ev) => {
           if (ev.step && ev.status === 'done') {
             steps.push({ step: ev.step, remark: ev.remark });

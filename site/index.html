@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafuClick — check a crypto link before you connect · powered by Kane CLI</title>
+<meta name="description" content="Paste a crypto link. Kane CLI opens it in a throwaway browser and SafuClick flags known trap patterns — lookalike domains, seed-phrase prompts, hidden unlimited approvals — before your wallet touches it.">
+<meta property="og:title" content="SafuClick — check the link before you connect">
+<meta property="og:description" content="Kane CLI visits the link first. SafuClick flags known wallet-drainer trap patterns. Built for the KaneCLI Hackathon by TestMu AI.">
+<meta property="og:image" content="/cards/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#top" aria-label="SafuClick home">
+    <svg class="glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 7v8c0 7.4 5.1 13.4 12 15 6.9-1.6 12-7.6 12-15V7L16 2Z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m10.5 16 3.8 3.8 7.4-7.6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>
+    <span>SafuClick</span><em>powered by Kane CLI</em>
+  </a>
+  <nav>
+    <a href="#checks">Recorded checks</a>
+    <a href="#arena">Scam Arena</a>
+    <a href="#how">How it works</a>
+    <a href="https://github.com/kaizen-builds/safuclick" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="dither" aria-hidden="true"></canvas>
+    <div class="wrap hero-in">
+      <p class="eyebrow"><span class="dot"></span> KaneCLI Hackathon · TestMu AI</p>
+      <h1>Check the link<br><span class="muted">before you connect.</span></h1>
+      <p class="lede">Someone drops “claim your airdrop” in the group chat. Paste it here first. <b>Kane CLI</b> opens it in a throwaway browser, and SafuClick flags the trap patterns that drain wallets: lookalike domains, seed-phrase prompts and hidden unlimited approvals.</p>
+      <form id="liveForm" class="paste" autocomplete="off">
+        <span class="paste-pre">https://</span>
+        <input id="liveUrl" name="url" type="text" inputmode="url" placeholder="paste-a-suspicious-link.xyz" aria-label="Link to check" spellcheck="false">
+        <button type="submit" class="btn primary" id="liveBtn">Run live check</button>
+      </form>
+      <p class="fine mono" id="liveMeta">checking if live checks are online…</p>
+      <div class="hero-alt"><a class="btn ghost" href="#checks">Browse 7 recorded checks — free</a><a class="link" href="#arena">Watch the Scam Arena →</a></div>
+    </div>
+  </section>
+
+  <!-- LIVE RESULT -->
+  <section id="live" class="wrap live hidden" aria-live="polite">
+    <div class="window">
+      <div class="win-bar"><i></i><i></i><i></i><span class="mono" id="liveTitle">kane-cli run · real-site · observe only</span><span class="mono win-right" id="liveState">queued</span></div>
+      <div class="win-body live-body">
+        <div class="live-left">
+          <div id="liveVerdict"></div>
+          <ol class="timeline" id="liveSteps"></ol>
+        </div>
+        <div class="live-right"><div id="liveCard" class="card-slot"><div class="scan"><span></span></div><p class="mono">Kane is opening the page in headless Chrome…</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAPS -->
+  <section class="wrap sec" id="traps">
+    <h2>Three traps. Known patterns.</h2>
+    <p class="sub">SafuClick doesn’t guess if a site is “safe”. It looks for specific tricks that drain wallets, and shows you the evidence.</p>
+    <div class="plates">
+      <article class="plate">
+        <div class="plate-viz mono">
+          <div class="dom ok"><em>safu<b>swap</b>.localhost</em><span>official</span></div>
+          <div class="dom bad"><em>safu<b>swep</b>.localhost</em><span>1 edit away</span></div>
+          <div class="dom bad"><em>curvegov<b>.icu</b></em><span>brand ≠ official</span></div>
+        </div>
+        <div class="plate-txt"><span class="num">1</span><h3>Lookalike domains</h3><p>Edit distance, brand tokens and punycode against a known-good list. Catches the clone even when the page is pixel-perfect.</p></div>
+      </article>
+      <article class="plate">
+        <div class="plate-viz mono">
+          <div class="seedbox"><small>Wallet verification required</small><span>Enter your 12-word recovery phrase</span><div class="fake-input">word1 word2 word3 …</div></div>
+          <div class="refuse">✋ Kane refused to type</div>
+        </div>
+        <div class="plate-txt"><span class="num">2</span><h3>Seed-phrase prompts</h3><p>“Verify”, “re-sync”, “12 secret words”. No real dApp ever asks. Kane is told never to type, and reports the wording.</p></div>
+      </article>
+      <article class="plate">
+        <div class="plate-viz mono">
+          <div class="calldata"><span class="k">ui</span> Swap 10 USDC</div>
+          <div class="calldata bad"><span class="k">wallet</span> approve(0xd2a1…dead,<br>&nbsp;&nbsp;115792089237316195423…)</div>
+          <div class="calldata"><span class="k">=</span> <b class="red">UNLIMITED USDC</b></div>
+        </div>
+        <div class="plate-txt"><span class="num">3</span><h3>Hidden approvals</h3><p>A mock wallet logs what the page really asks to sign: spender and amount. The button says 10 USDC; the evidence says otherwise.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- RECORDED CHECKS -->
+  <section class="wrap sec" id="checks">
+    <h2>Recorded checks.</h2>
+    <p class="sub">Real Kane CLI runs, replayed for free. Four on our practice phishing gym, three on live sites.</p>
+    <div class="chips" id="chips" role="tablist"></div>
+    <div class="window" id="checkWin">
+      <div class="win-bar"><i></i><i></i><i></i><span class="mono" id="checkTitle"></span><span class="mono win-right" id="checkMode"></span></div>
+      <div class="win-body check-body">
+        <div class="check-left">
+          <div id="checkVerdict"></div>
+          <p class="blurb" id="checkBlurb"></p>
+          <div id="checkReasons"></div>
+          <div id="checkWallet"></div>
+          <div id="checkKane"></div>
+        </div>
+        <div class="check-right">
+          <img id="checkCard" alt="SafuCard verdict image" class="safucard">
+          <div class="steps-head mono"><span>Kane step timeline</span><button class="mini" id="replayBtn">↺ replay</button></div>
+          <ol class="timeline" id="checkSteps"></ol>
+        </div>
+      </div>
+    </div>
+    <p class="fine mono center">Every field above comes from the run files in <a href="https://github.com/kaizen-builds/safuclick/tree/main/docs/runs">docs/runs</a>. Nothing is mocked for the site.</p>
+  </section>
+
+  <!-- ARENA -->
+  <section class="sec arena-sec" id="arena">
+    <div class="wrap">
+      <h2>Scam Arena.</h2>
+      <p class="sub">A scammer agent plants a new trick. Kane referees. When the rules miss, a builder agent hardens them, and Kane checks the fix. Recorded 3-round fight, rules v0 → v2.</p>
+      <div class="scoreboard">
+        <div class="side"><span class="who">😈 Scammer</span><b id="scScam">0</b><small class="mono">rounds the rules missed at first</small></div>
+        <div class="vs mono">VS<br><small>Kane CLI referee</small><br><button class="btn ghost sm" id="arenaPlay">▶ Replay fight</button></div>
+        <div class="side"><span class="who">🛠 Builder</span><b id="scBuild">0</b><small class="mono">traps the rules flagged (after fixes)</small></div>
+      </div>
+      <div class="rounds" id="rounds"></div>
+      <p class="fine mono center" id="arenaFoot"></p>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="wrap sec" id="how">
+    <h2>How it works.</h2>
+    <p class="sub">Kane does the clicking. SafuClick reads the evidence.</p>
+    <div class="flow">
+      <div class="flow-step"><span class="box">1</span><h3>You paste</h3><ul><li>A link from a DM, a reply or an ad.</li><li>Nothing touches your wallet.</li></ul></div>
+      <div class="flow-step on"><span class="box">2</span><h3>Kane visits</h3><ul><li><code>kane-cli run</code> opens it in headless Chrome.</li><li>On the gym it drives a swap with a mock wallet. On real sites it only observes.</li></ul></div>
+      <div class="flow-step"><span class="box">3</span><h3>You get a verdict</h3><ul><li><b class="red">Trap flagged</b> with reasons and evidence, or <b class="green">No known traps found</b>.</li><li>Plus a SafuCard to warn your group.</li></ul></div>
+    </div>
+    <div class="leaders mono">
+      <div><span>Lookalike / brand-impersonating domain</span><i></i><b class="green">RULE · ANY SITE</b></div>
+      <div><span>Seed / recovery / “secret words” prompt</span><i></i><b class="green">RULE + KANE · ANY SITE</b></div>
+      <div><span>Connect Wallet on an unknown domain</span><i></i><b class="amber">SIGNAL ONLY</b></div>
+      <div><span>Unlimited / oversized approval, poisoned spender</span><i></i><b class="green">GYM · MOCK WALLET</b></div>
+      <div><span>Cloaking (bot sees blank, human sees scam)</span><i></i><b class="red">KNOWN LIMITATION</b></div>
+    </div>
+  </section>
+
+  <!-- LIMITS -->
+  <section class="wrap sec" id="limits">
+    <div class="limits">
+      <div><h2>What it doesn’t do.</h2><p class="sub">Honesty is part of the product.</p></div>
+      <ul class="lim">
+        <li><b>It never says “safe”.</b> The best result is “no known traps found” on this run.</li>
+        <li><b>It flags known patterns.</b> A brand-new trick can slip through until the loop learns it.</li>
+        <li><b>Scam sites cloak.</b> Some show bots a blank page. We caught aave-fi.info doing it live.</li>
+        <li><b>Wallet evidence needs the mock wallet.</b> On real sites, Kane observes the page but doesn’t sign anything, so hidden approvals can’t be seen there.</li>
+        <li><b>Live checks are capped.</b> Each one is a real Kane run that costs credits.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap sec">
+    <div class="cta">
+      <canvas id="dither2" aria-hidden="true"></canvas>
+      <div class="cta-in">
+        <h2>Paste before you connect.</h2>
+        <div class="cta-btns"><a class="btn primary" href="#top" id="ctaTry">Check a link</a><a class="link" href="https://github.com/kaizen-builds/safuclick" target="_blank" rel="noopener">Run it yourself on GitHub</a></div>
+        <p class="fine mono">open source · MIT · <code>npm run check -- &lt;url&gt;</code></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <div class="foot-brand"><b>SafuClick</b><p>A pre-connect safety check for crypto links. Flags known trap patterns. Powered by Kane CLI.</p></div>
+  <div><small class="mono">PROJECT</small><a href="https://github.com/kaizen-builds/safuclick" target="_blank" rel="noopener">Source on GitHub</a><a href="#checks">Recorded checks</a><a href="#arena">Scam Arena</a></div>
+  <div><small class="mono">BUILT WITH</small><a href="https://www.npmjs.com/package/@testmuai/kane-cli" target="_blank" rel="noopener">Kane CLI</a><a href="https://www.testmuai.com/" target="_blank" rel="noopener">TestMu AI</a></div>
+  <div><small class="mono">HACKATHON</small><a href="https://www.kaneclihack.sh/" target="_blank" rel="noopener">KaneCLI Hackathon</a><span>by Kaizen</span></div>
+  <p class="foot-line mono">Not financial or security advice. A clean result is not a guarantee: sites can cloak or fingerprint test browsers.</p>
+</footer>
+<script src="app.js" type="module"></script>
+</body>
+</html>

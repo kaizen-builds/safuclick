@@ -9,6 +9,18 @@
 
 ---
 
+## 🌐 Website: [safuclick.vercel.app](https://safuclick.vercel.app)
+
+Try it without installing anything:
+
+- **Recorded checks** are 7 real Kane runs you can replay for free. Four are on the practice gym (official, clone, seed prompt, hidden approval) and three are on live sites (Uniswap, curvegov.icu, aave-fi.info).
+- **Scam Arena** replays the recorded 3-round scammer vs builder fight, where the rules go from v0 to v2.
+- **Live check**: paste a link and Kane CLI runs a real observe-only check. It doesn't use the mock wallet, sign anything or type anything.
+
+How the live check is hosted: the site runs on Vercel, but Kane needs a browser and a logged-in Kane account, so the runs happen on a machine that's logged in to Kane. Vercel's `/api/check` validates the URL (http/https only, no localhost or private IPs) and posts the job to a secret [ntfy.sh](https://ntfy.sh) topic. `scripts/live-worker.sh` (`src/live-api/relay-worker.js`) runs on the Kane machine, subscribes over outbound HTTPS, runs `safuclick check --real-site` and posts the verdict back. No inbound port or tunnel is needed, and Kane credentials never leave that machine. Caps: 3 live checks per visitor per day, 40 per day overall, one Kane run at a time (queue of 5) and a 150 s Kane timeout. If the worker is down, the site says live checks are offline and points to the recorded checks.
+
+Rebuild the site data from run files with `npm run site:data`. The site lives in `site/`.
+
 ## ⚡ 60-second quickstart
 
 ```bash

@@ -1,0 +1,1 @@
+{ "name": "safuclick-site", "private": true, "type": "module", "engines": { "node": ">=20" } }

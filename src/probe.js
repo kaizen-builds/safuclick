@@ -28,13 +28,14 @@ export function inspectHtml(html = '', pageUrl = '') {
   return { title, fields, walletConnect, blocked, textSnippet: text.slice(0, 500), pageUrl };
 }
 
-export async function probeUrl(raw, { timeoutMs = 8000 } = {}) {
+export async function probeUrl(raw, { timeoutMs = 8000, guard = null } = {}) {
   const hops = [];
   let url = raw, finalUrl = raw, status = 0, html = '', error = null;
   const ac = new AbortController();
   const t = setTimeout(() => ac.abort(), timeoutMs);
   try {
     for (let i = 0; i < 8; i++) {
+      if (guard) await guard(url);
       const res = await fetch(url, {
         redirect: 'manual', signal: ac.signal,
         headers: { 'User-Agent': UA, Accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8' },

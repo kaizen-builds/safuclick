@@ -3,16 +3,33 @@
   "version": "0.1.0",
   "description": "Paste a crypto link before you connect your wallet. SafuClick drives it with Kane CLI and a mock wallet, and flags known trap patterns. Powered by Kane CLI.",
   "type": "module",
-  "bin": { "safuclick": "bin/safuclick.js" },
+  "bin": {
+    "safuclick": "bin/safuclick.js"
+  },
   "scripts": {
     "gym": "node bin/safuclick.js gym",
     "check": "node bin/safuclick.js check",
     "ui": "node bin/safuclick.js ui",
     "loop": "node bin/safuclick.js loop",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "live-api": "node src/live-api/server.js",
+    "site:data": "node scripts/build-site.js"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/kaizen-builds/safuclick" },
-  "keywords": ["kane-cli", "testmu", "web3", "phishing", "wallet-drainer", "security", "ai-agents"]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaizen-builds/safuclick"
+  },
+  "keywords": [
+    "kane-cli",
+    "testmu",
+    "web3",
+    "phishing",
+    "wallet-drainer",
+    "security",
+    "ai-agents"
+  ]
 }

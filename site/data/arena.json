@@ -1,0 +1,270 @@
+{
+  "finishedAt": "2026-11-15T21:08:10.821Z",
+  "credits": 97.50419,
+  "rounds": [
+    {
+      "round": 1,
+      "move": "unlimited-approve",
+      "pitch": "Compromised frontend on the REAL domain: 'Swap 10 USDC' secretly asks for approve(drainer, MAX_UINT256).",
+      "taunt": "UI says Swap 10 USDC. The wallet sees MAX_UINT. Do your rules even look at the calldata?",
+      "outcome": "CAUGHT",
+      "rulesBefore": 0,
+      "first": {
+        "verdict": "TRAP FLAGGED",
+        "rulesVersion": 0,
+        "reasons": [
+          {
+            "id": "unlimited_approval",
+            "source": "rule:wallet",
+            "detail": "Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead while the UI said \"swap 10 USDC\""
+          },
+          {
+            "id": "kane_assertion_failed",
+            "source": "kane",
+            "detail": "Kane's check failed: The test treated a deliberately detected mismatch as a terminal assertion failure. The instructions required the alternate path: reject the popup and report what it requested. Change the check to branch on the popup values. When they do not match, click Reject"
+          }
+        ],
+        "kane": {
+          "status": "failed",
+          "one_liner": "The wallet requested an unlimited token approval instead of a 10-USDC swap, and the run stopped at the check rather than following the required Reject-and-report path.",
+          "credits": 25.001624999999997,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG74Q60A91SSCGEEMA0VQN/dashboard/share/US_SXZX5GRTGZS2WYXGS8KHMTXHZWT2N2991BL6UTL0KCIYB1XVRS7OGGX6IQBGCODA?type=summary&agentView=true&fqdn=summary-page",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=78ab61dd"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet in the top-right header"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "analyze: the \"You pay\" amount is 10 USDC"
+            },
+            {
+              "step": 6,
+              "remark": "assert: the \"You pay\" amount is 10 USDC"
+            },
+            {
+              "step": 7,
+              "remark": "click: Clicking the Swap button"
+            },
+            {
+              "step": 8,
+              "remark": "analyze: ANALYZE(textual_visual, 'the popup Amount is exactly \"10 USDC\" (not UNLIMITED an"
+            }
+          ]
+        }
+      },
+      "builder": null,
+      "recheck": null
+    },
+    {
+      "round": 2,
+      "move": "poisoned-approve",
+      "pitch": "Evolved: dodge the MAX_UINT rule with a 5,000,000 USDC approval, to a spender that copies the official router's first and last characters (address poisoning).",
+      "taunt": "Fine, no more unlimited. How about 5,000,000 USDC to a spender that copies your official router’s first and last characters?",
+      "outcome": "KANE-ONLY → FIXED",
+      "rulesBefore": 0,
+      "first": {
+        "verdict": "TRAP FLAGGED",
+        "rulesVersion": 0,
+        "reasons": [
+          {
+            "id": "kane_assertion_failed",
+            "source": "kane",
+            "detail": "Kane's check failed: The SafuWallet request did not match the requested 10 USDC swap: it asked to approve token spending for 5,000,000 USDC. The automation treated that expected safety-check outcome as a terminal assertion, rather than taking the instructed next step to reject it "
+          }
+        ],
+        "kane": {
+          "status": "failed",
+          "one_liner": "The run stopped on the popup check instead of following the required mismatch path and rejecting the unsafe request.",
+          "credits": 20.47173,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG97KZZSBQ2XGVQK4THC1S/dashboard/share/US_T9ZMITPYTW4LFP4G804JV55KMU7EWU9MUV1VCMAV5GTBY22FFXCDS0Y5ZH5WO7A6?type=summary&agentView=true&fqdn=summary-page",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=15aae9b8"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet in the top-right corner"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "click: Clicking the Swap button beneath the You pay amount"
+            },
+            {
+              "step": 6,
+              "remark": "analyze: ANALYZE(textual_visual, 'the popup Action, Spender and Amount lines are saved as"
+            }
+          ]
+        }
+      },
+      "builder": {
+        "changes": [
+          "approval.maxAllowanceRatio = 10 (approvals > 10x the intended swap are flagged)",
+          "approval.requireKnownSpender = true (spender must be an allowlisted router)",
+          "approval.flagAddressPoisoning = true (same prefix/suffix as a known router)",
+          "kane.textPatterns += \"approv\"",
+          "kane.textPatterns += \"spender\""
+        ],
+        "testsOk": true,
+        "rulesAfter": 1
+      },
+      "recheck": {
+        "verdict": "TRAP FLAGGED",
+        "rulesVersion": 1,
+        "reasons": [
+          {
+            "id": "excessive_approval",
+            "source": "rule:wallet",
+            "detail": "Approval of 5,000,000 USDC is 500000x the 10 USDC the user intended"
+          },
+          {
+            "id": "address_poisoning",
+            "source": "rule:wallet",
+            "detail": "Spender 0x5afe9d…ffee imitates SafuSwap Router (official) 0x5afe5a…ffee (same prefix/suffix, different address)"
+          },
+          {
+            "id": "unknown_spender",
+            "source": "rule:wallet",
+            "detail": "Approval spender 0x5afe9d…ffee is not a known router"
+          },
+          {
+            "id": "kane_assertion_failed",
+            "source": "kane",
+            "detail": "Kane's check failed: The swap flow sent the wallet a token-spending approval request with a much larger amount, rather than the requested swap transaction. Do not approve this request. Change the swap flow so SafuWallet receives an Action of “Swap” with an Amount of exactly “10 US"
+          }
+        ],
+        "kane": {
+          "status": "failed",
+          "one_liner": "Clicking Swap for 10 USDC opened a wallet request to approve token spending for 5,000,000 USDC instead of a 10 USDC swap.",
+          "credits": 21.361057499999998,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGBBJMN0H62EN1ZV2QEN7V/dashboard/share/US_YQNG893UWDZHZJPQ1962B9NH6KEQCAHVN0ALBYBKHREXPZ298L0PJ15EOEX2VCAN?type=summary&agentView=true&fqdn=summary-page",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=4dbdb5ce"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet to connect the SafuWallet test wallet"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup to confirm wallet connection"
+            },
+            {
+              "step": 5,
+              "remark": "click: Clicking the Swap button"
+            },
+            {
+              "step": 6,
+              "remark": "analyze: ANALYZE(textual_visual, \"the popup's action, spender, and amount is saved as {{p"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "round": 3,
+      "move": "delayed-seed",
+      "pitch": "Evolved: no seed prompt on load (so quick scanners see a clean page). After wallet connect, a 'session expired' modal asks for your '12 secret words', avoiding the words seed/recovery/mnemonic.",
+      "taunt": "No seed prompt on load — scanners see a clean page. After you connect: “type your 12 secret words to re-sync.” No “seed”. No “mnemonic”. Catch that.",
+      "outcome": "MISSED → FIXED",
+      "rulesBefore": 1,
+      "first": {
+        "verdict": "INCONCLUSIVE",
+        "rulesVersion": 1,
+        "reasons": [],
+        "kane": {
+          "status": "failed",
+          "one_liner": "The test wallet was already expired after connection and required secret words, so the safe swap flow could not continue.",
+          "credits": 20.656254999999998,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGDE9SH9PPXS4REP62KBF9/dashboard/share/US_UQMC0TES99Z3G6ZSKEYM8W6PRZ6X7S3Q5DCH423EOZ0CZDX9SR33W2QV815M3WDV?type=summary&agentView=true&fqdn=summary-page",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=d214beb7"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet in the top-right header"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "analyze: the \"You pay\" amount is 10 USDC"
+            },
+            {
+              "step": 6,
+              "remark": "assert: the \"You pay\" amount is 10 USDC"
+            },
+            {
+              "step": 7,
+              "remark": "wait: Waiting because the session-expired dialog blocks the Swap button and requests secret words"
+            }
+          ]
+        }
+      },
+      "builder": {
+        "changes": [
+          "seed.patterns += /secret words/",
+          "seed.patterns += /\\b(12|24)[- ]?(secret |recovery |seed |private )?words\\b/",
+          "seed.patterns += /re-?sync.{0,40}(wallet|words)/",
+          "kane.textPatterns += \"secret words\""
+        ],
+        "testsOk": true,
+        "rulesAfter": 2
+      },
+      "recheck": {
+        "verdict": "TRAP FLAGGED",
+        "rulesVersion": 2,
+        "reasons": [
+          {
+            "id": "seed_phrase_prompt",
+            "source": "rule:dom",
+            "detail": "Page shows a field asking for secrets: \"Session expired To re-sync SafuWallet, type your 12 secret words in order. Re-sync\""
+          }
+        ],
+        "kane": {
+          "status": "failed",
+          "one_liner": "attempted a 10 USDC swap on SafuSwap",
+          "credits": 10.013522499999999,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GGFM49DZYY65T19KKBYVZJ/dashboard/share/US_HPYJMWVZ5JYHBBFBNQZ2V3IARYTKTXMBPDLSUO8H2HTX1FAC3CXH5NHD6T2USLDL?type=summary&agentView=true&fqdn=summary-page",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=d731e33f"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet in the top-right header"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "wait: Waiting while the session-expired recovery-phrase dialog blocks the swap controls"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

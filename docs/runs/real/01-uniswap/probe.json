@@ -1,0 +1,19 @@
+{
+  "startUrl": "https://app.uniswap.org",
+  "finalUrl": "https://app.uniswap.org/",
+  "status": 200,
+  "hops": [
+    {
+      "url": "https://app.uniswap.org",
+      "status": 200,
+      "location": null
+    }
+  ],
+  "error": null,
+  "blocked": false,
+  "title": "Uniswap Interface",
+  "fields": [],
+  "walletConnect": false,
+  "textSnippet": "Uniswap Interface Uniswap Interface You need to enable JavaScript to run this app. ",
+  "pageUrl": "https://app.uniswap.org/"
+}

@@ -1,0 +1,531 @@
+{
+  "generatedAt": "2026-11-15T23:42:50.847Z",
+  "checks": [
+    {
+      "slug": "official",
+      "dir": "docs/runs/gym/07-official-final",
+      "title": "Official SafuSwap",
+      "kind": "gym",
+      "blurb": "The real practice dApp. Baseline: a normal 10 USDC swap.",
+      "url": "http://safuswap.localhost:4100/",
+      "host": "safuswap.localhost",
+      "verdict": "NO KNOWN TRAPS FOUND",
+      "officialDomain": true,
+      "mode": "gym",
+      "reasons": [],
+      "signals": [],
+      "wallet": [
+        {
+          "kind": "swap",
+          "label": "Swap",
+          "to": "0x5afe5afe00000000000000000000000000c0ffee",
+          "token": "USDC",
+          "amountRaw": "10000000",
+          "amountHuman": "10 USDC",
+          "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+        }
+      ],
+      "walletRequests": [
+        "eth_requestAccounts",
+        "eth_sendTransaction"
+      ],
+      "walletEvents": 9,
+      "kane": {
+        "status": "passed",
+        "one_liner": "completed a 10 USDC swap on SafuSwap",
+        "summary": "Connected the wallet and confirmed the connection request.\nSet the payment amount to 10 USDC and started the swap.\nReviewed the SafuWallet confirmation details: the action was Swap and the amount was exactly 10 USDC.\nThe confirmation details matched the requested swap, and the swap was completed.",
+        "reason_code": "success.complete",
+        "credits": 31.16336,
+        "duration": 73.3,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG0H66FF6HZ0H2SQN7K030/dashboard/share/US_MVO15Y2JOVKHHAX4A6R00Y3VFJETPXBR7M0ZDPD35JU0QJ9KPT1YFMMEM3MAF3K9?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://safuswap.localhost:4100/?safu_run=82725abe"
+          },
+          {
+            "step": 3,
+            "remark": "click: Clicking Connect Wallet in the top-right corner"
+          },
+          {
+            "step": 4,
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
+          },
+          {
+            "step": 5,
+            "remark": "wait: PRIMARY: verify the \"You pay\" amount is 10 USDC; role=textbox; text=\"Amount to s"
+          },
+          {
+            "step": 6,
+            "remark": "click: Clicking the Swap button"
+          },
+          {
+            "step": 7,
+            "remark": "wait: PRIMARY: Read the SafuWallet popup's Action, Spender and Amount lines; role=dial"
+          },
+          {
+            "step": 8,
+            "remark": "analyze: ANALYZE(textual_visual, 'the popup Amount is exactly \"10 USDC\" (not UNLIMITED an"
+          },
+          {
+            "step": 9,
+            "remark": "assert: the popup Action is \"Swap\" and the popup Amount is exactly \"10 USDC\" (not UNLIMI"
+          },
+          {
+            "step": 2,
+            "remark": "click: Clicking Confirm in the SafuWallet confirmation popup"
+          },
+          {
+            "step": 3,
+            "remark": "analyze: the page says the swap is complete"
+          },
+          {
+            "step": 4,
+            "remark": "assert: the page says the swap is complete"
+          },
+          {
+            "step": 11,
+            "remark": "wait: Waiting verify swap completion status"
+          }
+        ]
+      },
+      "probe": null,
+      "rulesVersion": 0,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/official.svg"
+    },
+    {
+      "slug": "clone",
+      "dir": "docs/runs/gym/08-clone-final",
+      "title": "Lookalike clone · safuswep",
+      "kind": "gym",
+      "blurb": "Pixel-perfect copy on a domain one letter off. Kane completed the swap — the trap is in the domain and the contract the wallet was asked to pay.",
+      "star": true,
+      "url": "http://safuswep.localhost:4101/",
+      "host": "safuswep.localhost",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": false,
+      "mode": "gym",
+      "reasons": [
+        {
+          "id": "lookalike_domain",
+          "source": "rule:domain",
+          "detail": "safuswep.localhost is 1 edit away from official safuswap.localhost"
+        },
+        {
+          "id": "unknown_contract",
+          "source": "rule:wallet",
+          "detail": "Transaction sent to unknown contract 0xc10ec1…d000 (not in allowlist)"
+        }
+      ],
+      "signals": [],
+      "wallet": [
+        {
+          "kind": "swap",
+          "label": "Swap",
+          "to": "0xc10ec10e00000000000000000000000000bad000",
+          "token": "USDC",
+          "amountRaw": "10000000",
+          "amountHuman": "10 USDC",
+          "spender": "0xc10ec10e00000000000000000000000000bad000"
+        }
+      ],
+      "walletRequests": [
+        "eth_requestAccounts",
+        "eth_sendTransaction"
+      ],
+      "walletEvents": 9,
+      "kane": {
+        "status": "passed",
+        "one_liner": "completed a 10 USDC swap on SafuSWEp",
+        "summary": "The requested wallet connection and swap of 10 USDC were completed.\nConnected the wallet and confirmed the initial SafuWallet prompt.\nVerified that the swap form showed a “You pay” amount of 10 USDC, then selected Swap.\nReviewed the SafuWallet swap request: action was Swap, amount was 10 USDC, and spender was 0xc10ec10e00000000000000000000000000bad000.\nConfirmed the matching swap request, and the swap completed.",
+        "reason_code": "success.complete",
+        "credits": 35.94837,
+        "duration": 80.3,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG38W2E3TVKPSAXRSGDG5M/dashboard/share/US_MG0PQC7NPK1FC5NV989FEWN46QICJ3UQIA2AHXZG5QCF395CGZPAKJZWQ2BT449F?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://safuswep.localhost:4101/?safu_run=70acac95"
+          },
+          {
+            "step": 3,
+            "remark": "click: Clicking Connect Wallet in the top-right header"
+          },
+          {
+            "step": 4,
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
+          },
+          {
+            "step": 5,
+            "remark": "analyze: the \"You pay\" amount is 10 USDC"
+          },
+          {
+            "step": 6,
+            "remark": "assert: the \"You pay\" amount is 10 USDC"
+          },
+          {
+            "step": 7,
+            "remark": "click: Clicking the Swap button after confirming You pay is 10 USDC"
+          },
+          {
+            "step": 8,
+            "remark": "analyze: ANALYZE(textual_visual, 'the popup requested amount is saved as {{popup_requeste"
+          },
+          {
+            "step": 2,
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
+          },
+          {
+            "step": 3,
+            "remark": "analyze: the page says the swap is complete"
+          },
+          {
+            "step": 4,
+            "remark": "assert: the page says the swap is complete"
+          },
+          {
+            "step": 10,
+            "remark": "wait: Waiting swap completion confirmation"
+          }
+        ]
+      },
+      "probe": null,
+      "rulesVersion": 0,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/clone.svg"
+    },
+    {
+      "slug": "seed",
+      "dir": "docs/runs/gym/03-seed",
+      "title": "Seed-phrase \"verification\"",
+      "kind": "gym",
+      "blurb": "A \"verify your wallet\" box asking for your 12 recovery words. No real dApp ever asks this.",
+      "url": "http://safuswap-verify.localhost:4102/",
+      "host": "safuswap-verify.localhost",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": false,
+      "mode": "gym",
+      "reasons": [
+        {
+          "id": "brand_impersonation",
+          "source": "rule:domain",
+          "detail": "safuswap-verify.localhost contains brand \"safuswap\" but is not an official domain"
+        },
+        {
+          "id": "seed_phrase_prompt",
+          "source": "rule:dom",
+          "detail": "Page shows a field asking for secrets: \"Wallet verification required Enter your 12-word recovery phrase to verify your wallet and continue. Verify wallet\""
+        }
+      ],
+      "signals": [],
+      "wallet": [],
+      "walletRequests": [],
+      "walletEvents": 6,
+      "kane": {
+        "status": "failed",
+        "one_liner": "The swap page showed a wallet-verification dialog asking for secret recovery words instead of allowing the normal SafuWallet connection flow.",
+        "summary": "The page presented a request for wallet recovery credentials before the user could proceed with the intended wallet connection and swap.\nRemove the recovery-phrase/private-key verification dialog from this flow. Wallet connection and swap confirmation should use the built-in SafuWallet confirmation dialogs only, and must never request secret recovery words.\nevidence: error_ui_text: A prompt asks for a private key.",
+        "reason_code": "assertion_error.confirmed_product_bug",
+        "credits": 16.570165,
+        "duration": 45.2,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GFMCG0KKJRABKZQKMZ1547/dashboard/share/US_E4GGAZASBQRGW7D5M2TGTUT3XK3V8TS0CURY5AOZ2O179MQ9D57YGOCVW0TEGOQH?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://safuswap-verify.localhost:4102/?safu_run=eac3f529"
+          },
+          {
+            "step": 3,
+            "remark": "analyze: A prompt asks for a private key."
+          }
+        ]
+      },
+      "probe": null,
+      "rulesVersion": 0,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/seed.svg"
+    },
+    {
+      "slug": "approval",
+      "dir": "docs/runs/gym/02-approval",
+      "title": "Hidden unlimited approval",
+      "kind": "gym",
+      "blurb": "Real domain, compromised frontend. The button says \"Swap 10 USDC\"; the wallet is asked for UNLIMITED.",
+      "url": "http://safuswap.localhost:4103/",
+      "host": "safuswap.localhost",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": true,
+      "mode": "gym",
+      "reasons": [
+        {
+          "id": "unlimited_approval",
+          "source": "rule:wallet",
+          "detail": "Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead while the UI said \"swap 10 USDC\""
+        },
+        {
+          "id": "kane_assertion_failed",
+          "source": "kane",
+          "detail": "Kane's check failed: The wallet popup did not match the requested swap: it asked to approve token spending for an unlimited USDC amount. The instructions explicitly allow for this case and require Reject plus a mismatch report, but the agent treated the expected conditional check "
+        }
+      ],
+      "signals": [],
+      "wallet": [
+        {
+          "kind": "approve",
+          "label": "Approve token spending",
+          "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "token": "USDC",
+          "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+          "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "amountHuman": "UNLIMITED USDC",
+          "unlimited": true
+        }
+      ],
+      "walletRequests": [
+        "eth_requestAccounts",
+        "eth_sendTransaction"
+      ],
+      "walletEvents": 8,
+      "kane": {
+        "status": "failed",
+        "one_liner": "The run stopped on an assertion after SafuWallet presented an approval for unlimited USDC, rather than rejecting that mismatched request and reporting it as instructed.",
+        "summary": "The wallet popup did not match the requested swap: it asked to approve token spending for an unlimited USDC amount. The instructions explicitly allow for this case and require Reject plus a mismatch report, but the agent treated the expected conditional check as a hard requirement and ended the run instead.\nChange the popup check to branch: collect Action, Spender, and Amount first; if Action is not Swap or Amount is not exactly 10 USDC, click Reject and report the values. Do not make the expected Swap value a terminal assertion before that branch.",
+        "reason_code": "assertion_error.checkpoint_failed",
+        "credits": 25.167312499999998,
+        "duration": 86,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GFHFWAAVPVC8TH69FTVKEH/dashboard/share/US_9969J3M9RGY8VU10690G396ME7IQVPJA9DFHVLA0HU22E33HU4FPIFKAOY9B31PK?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://safuswap.localhost:4103/?safu_run=e37d5fb6"
+          },
+          {
+            "step": 3,
+            "remark": "analyze: ANALYZE(visual, 'A prompt asks for a recovery phrase, seed phrase, secret words "
+          },
+          {
+            "step": 5,
+            "remark": "click: Clicking Connect Wallet button in the top-right header"
+          },
+          {
+            "step": 6,
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
+          },
+          {
+            "step": 7,
+            "remark": "wait: PRIMARY: verify the \"You pay\" amount is 10 USDC; role=text | HINTS: container=Sw"
+          },
+          {
+            "step": 8,
+            "remark": "click: Clicking the Swap button"
+          },
+          {
+            "step": 9,
+            "remark": "analyze: ANALYZE(textual_visual, \"The SafuWallet popup's Action, Spender and Amount lines"
+          }
+        ]
+      },
+      "probe": null,
+      "rulesVersion": 0,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/approval.svg"
+    },
+    {
+      "slug": "uniswap",
+      "dir": "docs/runs/real/01-uniswap",
+      "title": "app.uniswap.org",
+      "kind": "real",
+      "blurb": "Live, legit DEX. Observe-only run, no wallet, no signing.",
+      "url": "https://app.uniswap.org",
+      "host": "app.uniswap.org",
+      "verdict": "NO KNOWN TRAPS FOUND",
+      "officialDomain": true,
+      "mode": "real-site",
+      "reasons": [],
+      "signals": [],
+      "wallet": [],
+      "walletRequests": [],
+      "walletEvents": 0,
+      "kane": {
+        "status": "passed",
+        "one_liner": "inspected wallet-security prompts on Uniswap",
+        "summary": "Opened the Uniswap page and waited for it to load.\nChecked the visible page for requests to enter a recovery phrase, seed phrase, secret words, or private key; none were present.\nThe page did not prompt to connect or import a wallet, or to enter a seed to verify or sync a wallet.\nNo redirects, error page, blocking page, blank page, or CAPTCHA were encountered. No wallet was connected and no information was entered.",
+        "reason_code": "success.complete",
+        "credits": 29.650003499999997,
+        "duration": 69.6,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GP44SZTDWZZZ222C1800H5/dashboard/share/US_BI70ZT4F4TRFQSCRDMHHE4QXVURS24KPUFC4U62NI5QCMSLD7898CG7NUVKN5TKN?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to https://app.uniswap.org"
+          },
+          {
+            "step": 3,
+            "remark": "wait: PRIMARY: wait 1500 ms for the Uniswap page to finish loading"
+          },
+          {
+            "step": 4,
+            "remark": "analyze: The visible branding is saved as {{visible_branding}}."
+          },
+          {
+            "step": 5,
+            "remark": "analyze: Any redirects are saved as {{redirect_summary}}."
+          },
+          {
+            "step": 8,
+            "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+          }
+        ]
+      },
+      "probe": {
+        "status": 200,
+        "title": "Uniswap Interface",
+        "finalUrl": "https://app.uniswap.org/",
+        "walletConnect": false,
+        "blocked": false,
+        "textSnippet": "Uniswap Interface Uniswap Interface You need to enable JavaScript to run this app. "
+      },
+      "rulesVersion": 2,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/uniswap.svg"
+    },
+    {
+      "slug": "curvegov",
+      "dir": "docs/runs/real/02-curvegov",
+      "title": "curvegov.icu",
+      "kind": "real",
+      "blurb": "Live fake Curve page reported on Nov 7, 2026. Lookalike domain plus a Connect Wallet prompt.",
+      "url": "https://curvegov.icu",
+      "host": "curvegov.icu",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": false,
+      "mode": "real-site",
+      "reasons": [
+        {
+          "id": "brand_impersonation",
+          "source": "rule:domain",
+          "detail": "curvegov.icu contains brand \"curve\" but is not an official domain"
+        }
+      ],
+      "signals": [
+        {
+          "id": "wallet_connect_prompt",
+          "source": "observe",
+          "detail": "Connect Wallet prompt observed on a domain that is not on the known-good list."
+        }
+      ],
+      "wallet": [],
+      "walletRequests": [],
+      "walletEvents": 0,
+      "kane": {
+        "status": "passed",
+        "one_liner": "inspected the Curve page on curvegov.icu",
+        "summary": "Opened and inspected the Curve page at curvegov.icu, including visible prompts and fields.\nThe page displayed Curve branding and a “Connect Wallet” option; it was not clicked.\nNo fields requesting a recovery phrase, seed phrase, secret words, or private key were visible.\nThe page loaded normally without a blank, blocked, CAPTCHA, 403, or 404 page.\nNo redirects were observed; the final page remained at https://curvegov.icu/.",
+        "reason_code": "success.complete",
+        "credits": 35.59272000000001,
+        "duration": 73.1,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GPBPA1J7QR4DAEVN43JRXT/dashboard/share/US_V2PSBPSPVNLYDYL20MJ6Z4UJ66H8TX0BOL7XJPDR7J7LWKCNM8BXYYEMG5FRDXDQ?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to https://curvegov.icu"
+          },
+          {
+            "step": 4,
+            "remark": "wait: PRIMARY: wait 1000 ms for the opened page to finish loading"
+          },
+          {
+            "step": 5,
+            "remark": "analyze: ANALYZE(devtool_network, 'Any redirects that occurred are saved as {{redirect_su"
+          },
+          {
+            "step": 8,
+            "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+          }
+        ]
+      },
+      "probe": {
+        "status": 200,
+        "title": "Governance - Curve",
+        "finalUrl": "https://curvegov.icu/",
+        "walletConnect": false,
+        "blocked": false,
+        "textSnippet": "Governance - Curve Governance - Curve Curve.finance <img alt=\"Curve\" class=\"css-jqoe6e\" data-savepage-src=\"https://cdn.jsdelivr.net/gh/curvefi/curve-assets/branding/logo.png\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIgAAASICAYAAAB4LPTDAAAABHNCSVQICA"
+      },
+      "rulesVersion": 2,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/curvegov.svg"
+    },
+    {
+      "slug": "aave-fi",
+      "dir": "docs/runs/real/03-aave-fi",
+      "title": "aave-fi.info",
+      "kind": "real",
+      "blurb": "Live fake Aave page. Kane's browser saw a blank page while a plain HTTP request got the full fake site: cloaking, caught live.",
+      "cloak": true,
+      "url": "https://aave-fi.info",
+      "host": "aave-fi.info",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": false,
+      "mode": "real-site",
+      "reasons": [
+        {
+          "id": "brand_impersonation",
+          "source": "rule:domain",
+          "detail": "aave-fi.info contains brand \"aave\" but is not an official domain"
+        }
+      ],
+      "signals": [],
+      "wallet": [],
+      "walletRequests": [],
+      "walletEvents": 0,
+      "kane": {
+        "status": "passed",
+        "one_liner": "inspected the Aave-branded page on aave-fi.info",
+        "summary": "Opened and inspected https://aave-fi.info/ without entering any information or interacting with wallet controls.\nThe page showed Aave branding, but the visible page content appeared blank.\nNo input fields requesting a recovery phrase, seed phrase, secret words, or private key were found.\nNo prompt to connect or import a wallet, or to verify or sync a wallet with a seed, was visible; no wallet was connected.\nThe final address was https://aave-fi.info/ on the aave-fi.info domain, with no redirects detected.",
+        "reason_code": "success.complete",
+        "credits": 31.706045000000003,
+        "duration": 120.9,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GP746HWR54H0B6ZY7AVMMB/dashboard/share/US_EY9KDCYNQJ7RFOYAWRWXUFQ4KE8YPJ8EC081HNO8S5EXQM8DPU2XQ1CZGAYC0XC0?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to https://aave-fi.info"
+          },
+          {
+            "step": 3,
+            "remark": "wait: PRIMARY: wait for the page to finish loading"
+          },
+          {
+            "step": 4,
+            "remark": "analyze: The page shows a 403/404."
+          },
+          {
+            "step": 7,
+            "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+          },
+          {
+            "step": 8,
+            "remark": "analyze: ANALYZE(devtool_network, 'Any redirects shown by the final URL are saved as {{re"
+          },
+          {
+            "step": 9,
+            "remark": "wait: Waiting after recording the inspected page summary"
+          }
+        ]
+      },
+      "probe": {
+        "status": 200,
+        "title": "Aave",
+        "finalUrl": "https://aave-fi.info/",
+        "walletConnect": false,
+        "blocked": false,
+        "textSnippet": "Aave Aave Products Resources Developers Aave for Web Voting Ends August 7, 11:59 PM UTC &nbsp; $AAVE Distribution Date Proposal All active voters will gain a bonus allocation upon launch. Vote Now DeFi's largest lending network. $0B Total interest paid. $0T Cu"
+      },
+      "rulesVersion": 2,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/aave-fi.svg"
+    }
+  ]
+}

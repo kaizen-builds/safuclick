@@ -1,0 +1,71 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "https://curvegov.icu",
+  "host": "curvegov.icu",
+  "officialDomain": false,
+  "reasons": [
+    {
+      "id": "brand_impersonation",
+      "source": "rule:domain",
+      "detail": "curvegov.icu contains brand \"curve\" but is not an official domain"
+    }
+  ],
+  "signals": [
+    {
+      "id": "wallet_connect_prompt",
+      "source": "observe",
+      "detail": "Connect Wallet prompt observed on a domain that is not on the known-good list."
+    }
+  ],
+  "mode": "real-site",
+  "walletSummary": {
+    "requests": [],
+    "transactions": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "inspected the Curve page on curvegov.icu",
+    "summary": "Opened and inspected the Curve page at curvegov.icu, including visible prompts and fields.\nThe page displayed Curve branding and a “Connect Wallet” option; it was not clicked.\nNo fields requesting a recovery phrase, seed phrase, secret words, or private key were visible.\nThe page loaded normally without a blank, blocked, CAPTCHA, 403, or 404 page.\nNo redirects were observed; the final page remained at https://curvegov.icu/.",
+    "credits": 35.59272000000001,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GPBPA1J7QR4DAEVN43JRXT/dashboard/share/US_V2PSBPSPVNLYDYL20MJ6Z4UJ66H8TX0BOL7XJPDR7J7LWKCNM8BXYYEMG5FRDXDQ?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to https://curvegov.icu"
+      },
+      {
+        "step": 4,
+        "remark": "wait: PRIMARY: wait 1000 ms for the opened page to finish loading"
+      },
+      {
+        "step": 5,
+        "remark": "analyze: ANALYZE(devtool_network, 'Any redirects that occurred are saved as {{redirect_su"
+      },
+      {
+        "step": 8,
+        "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+      }
+    ]
+  },
+  "probe": {
+    "finalUrl": "https://curvegov.icu/",
+    "status": 200,
+    "title": "Governance - Curve",
+    "hops": [
+      {
+        "url": "https://curvegov.icu",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "blocked": false,
+    "error": null,
+    "walletConnect": false
+  },
+  "rulesVersion": 2,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/real/02-curvegov",
+  "card": "docs/runs/real/02-curvegov/card.svg"
+}

@@ -1,0 +1,73 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "https://aave-fi.info",
+  "host": "aave-fi.info",
+  "officialDomain": false,
+  "reasons": [
+    {
+      "id": "brand_impersonation",
+      "source": "rule:domain",
+      "detail": "aave-fi.info contains brand \"aave\" but is not an official domain"
+    }
+  ],
+  "signals": [],
+  "mode": "real-site",
+  "walletSummary": {
+    "requests": [],
+    "transactions": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "inspected the Aave-branded page on aave-fi.info",
+    "summary": "Opened and inspected https://aave-fi.info/ without entering any information or interacting with wallet controls.\nThe page showed Aave branding, but the visible page content appeared blank.\nNo input fields requesting a recovery phrase, seed phrase, secret words, or private key were found.\nNo prompt to connect or import a wallet, or to verify or sync a wallet with a seed, was visible; no wallet was connected.\nThe final address was https://aave-fi.info/ on the aave-fi.info domain, with no redirects detected.",
+    "credits": 31.706045000000003,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GP746HWR54H0B6ZY7AVMMB/dashboard/share/US_EY9KDCYNQJ7RFOYAWRWXUFQ4KE8YPJ8EC081HNO8S5EXQM8DPU2XQ1CZGAYC0XC0?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to https://aave-fi.info"
+      },
+      {
+        "step": 3,
+        "remark": "wait: PRIMARY: wait for the page to finish loading"
+      },
+      {
+        "step": 4,
+        "remark": "analyze: The page shows a 403/404."
+      },
+      {
+        "step": 7,
+        "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+      },
+      {
+        "step": 8,
+        "remark": "analyze: ANALYZE(devtool_network, 'Any redirects shown by the final URL are saved as {{re"
+      },
+      {
+        "step": 9,
+        "remark": "wait: Waiting after recording the inspected page summary"
+      }
+    ]
+  },
+  "probe": {
+    "finalUrl": "https://aave-fi.info/",
+    "status": 200,
+    "title": "Aave",
+    "hops": [
+      {
+        "url": "https://aave-fi.info",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "blocked": false,
+    "error": null,
+    "walletConnect": false
+  },
+  "rulesVersion": 2,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/real/03-aave-fi",
+  "card": "docs/runs/real/03-aave-fi/card.svg"
+}

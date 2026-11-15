@@ -1,0 +1,63 @@
+{
+  "verdict": "NO KNOWN TRAPS FOUND",
+  "url": "https://app.uniswap.org",
+  "host": "app.uniswap.org",
+  "officialDomain": true,
+  "reasons": [],
+  "signals": [],
+  "mode": "real-site",
+  "walletSummary": {
+    "requests": [],
+    "transactions": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "inspected wallet-security prompts on Uniswap",
+    "summary": "Opened the Uniswap page and waited for it to load.\nChecked the visible page for requests to enter a recovery phrase, seed phrase, secret words, or private key; none were present.\nThe page did not prompt to connect or import a wallet, or to enter a seed to verify or sync a wallet.\nNo redirects, error page, blocking page, blank page, or CAPTCHA were encountered. No wallet was connected and no information was entered.",
+    "credits": 29.650003499999997,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GP44SZTDWZZZ222C1800H5/dashboard/share/US_BI70ZT4F4TRFQSCRDMHHE4QXVURS24KPUFC4U62NI5QCMSLD7898CG7NUVKN5TKN?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to https://app.uniswap.org"
+      },
+      {
+        "step": 3,
+        "remark": "wait: PRIMARY: wait 1500 ms for the Uniswap page to finish loading"
+      },
+      {
+        "step": 4,
+        "remark": "analyze: The visible branding is saved as {{visible_branding}}."
+      },
+      {
+        "step": 5,
+        "remark": "analyze: Any redirects are saved as {{redirect_summary}}."
+      },
+      {
+        "step": 8,
+        "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+      }
+    ]
+  },
+  "probe": {
+    "finalUrl": "https://app.uniswap.org/",
+    "status": 200,
+    "title": "Uniswap Interface",
+    "hops": [
+      {
+        "url": "https://app.uniswap.org",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "blocked": false,
+    "error": null,
+    "walletConnect": false
+  },
+  "rulesVersion": 2,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/real/01-uniswap",
+  "card": "docs/runs/real/01-uniswap/card.svg"
+}

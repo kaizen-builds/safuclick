@@ -1,0 +1,19 @@
+{
+  "startUrl": "https://aave-fi.info",
+  "finalUrl": "https://aave-fi.info/",
+  "status": 200,
+  "hops": [
+    {
+      "url": "https://aave-fi.info",
+      "status": 200,
+      "location": null
+    }
+  ],
+  "error": null,
+  "blocked": false,
+  "title": "Aave",
+  "fields": [],
+  "walletConnect": false,
+  "textSnippet": "Aave Aave Products Resources Developers Aave for Web Voting Ends August 7, 11:59 PM UTC &nbsp; $AAVE Distribution Date Proposal All active voters will gain a bonus allocation upon launch. Vote Now DeFi's largest lending network. $0B Total interest paid. $0T Cumulative deposits. $0B Total originated loan volume. The best build with Aave. Reach millions of users and access billions in capital with a few lines of code. Start Building Contact Us We chose Aave for MetaMask Earn because of its DeFi le",
+  "pageUrl": "https://aave-fi.info/"
+}
