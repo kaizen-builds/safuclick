@@ -1,0 +1,60 @@
+{
+  "_comment": "The scripted scammer's moves, in order. Each move is a gym site config planted on the loop slot (port 4110). A real LLM scammer (SAFU_SCAMMER_CMD) can write any config with the same shape.",
+  "moves": [
+    {
+      "name": "unlimited-approve",
+      "pitch": "Compromised frontend on the REAL domain: 'Swap 10 USDC' secretly asks for approve(drainer, MAX_UINT256).",
+      "site": {
+        "id": "loop-unlimited-approve",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "traps": [
+          {
+            "type": "approve",
+            "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+            "amount": "max"
+          }
+        ]
+      }
+    },
+    {
+      "name": "poisoned-approve",
+      "pitch": "Evolved: dodge the MAX_UINT rule with a 5,000,000 USDC approval, to a spender that copies the official router's first and last characters (address poisoning).",
+      "site": {
+        "id": "loop-poisoned-approve",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "traps": [
+          {
+            "type": "approve",
+            "spender": "0x5afe9d1b7c3e2a4f6b8d0e1c3a5f7b9d1ec0ffee",
+            "amount": "5000000000000"
+          }
+        ]
+      }
+    },
+    {
+      "name": "delayed-seed",
+      "pitch": "Evolved: no seed prompt on load (so quick scanners see a clean page). After wallet connect, a 'session expired' modal asks for your '12 secret words', avoiding the words seed/recovery/mnemonic.",
+      "site": {
+        "id": "loop-delayed-seed",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "traps": [
+          {
+            "type": "seed_prompt",
+            "when": "after_connect",
+            "delayMs": 600,
+            "title": "Session expired",
+            "wording": "To re-sync SafuWallet, type your 12 secret words in order.",
+            "placeholder": "your 12 secret words",
+            "button": "Re-sync"
+          }
+        ]
+      }
+    }
+  ]
+}

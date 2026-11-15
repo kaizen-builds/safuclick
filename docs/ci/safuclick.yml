@@ -1,0 +1,37 @@
+# Runs SafuClick against the phishing gym on every PR and posts Kane's verdict as a PR comment.
+# Secrets needed: LT_USERNAME, LT_ACCESS_KEY (TestMu AI / LambdaTest credentials for Kane CLI).
+name: SafuClick (powered by Kane CLI)
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  safuclick:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm test
+      - name: Install Kane CLI
+        run: npm install -g @testmuai/kane-cli
+      - name: Start phishing gym
+        run: (node bin/safuclick.js gym > gym.log 2>&1 &) && sleep 2
+      - name: Kane checks official + hidden-approval variant
+        env:
+          LT_USERNAME: ${{ secrets.LT_USERNAME }}
+          LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
+        run: |
+          node bin/safuclick.js check http://safuswap.localhost:4100/ --markdown official.md
+          node bin/safuclick.js check http://safuswap.localhost:4103/ --markdown approval.md
+          # Gate: the official site must be clean, the trap must be flagged.
+          grep -q "NO KNOWN TRAPS FOUND" official.md
+          grep -q "TRAP FLAGGED" approval.md
+      - name: Post Kane report to the PR
+        if: always() && github.event_name == 'pull_request'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          cat official.md approval.md > safuclick-report.md || true
+          gh pr comment ${{ github.event.pull_request.number }} --body-file safuclick-report.md || true

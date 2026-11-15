@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SafuClick · check a crypto link before you connect</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,sans-serif;background:#0b0f14;color:#e6edf3}
+.wrap{max-width:760px;margin:0 auto;padding:40px 18px}h1{margin:0;font-size:34px}h1 span{color:#22c55e}
+.sub{opacity:.7;margin:6px 0 24px}form{display:flex;gap:10px}input{flex:1;padding:14px;border-radius:12px;border:1px solid #30363d;background:#161b22;color:#fff;font-size:16px}
+button{padding:14px 20px;border-radius:12px;border:0;background:#22c55e;color:#04110a;font-weight:800;font-size:16px;cursor:pointer}button:disabled{opacity:.5}
+.chips{margin:12px 0;display:flex;gap:8px;flex-wrap:wrap}.chip{background:#161b22;border:1px solid #30363d;border-radius:999px;padding:4px 10px;cursor:pointer;font-size:13px}
+pre{background:#010409;border:1px solid #30363d;border-radius:12px;padding:12px;max-height:220px;overflow:auto;font-size:12px;white-space:pre-wrap}
+.card{border-radius:16px;padding:20px;margin-top:18px;border:2px solid}.trap{border-color:#ef4444;background:#1f0b0b}.ok{border-color:#22c55e;background:#07170d}.inc{border-color:#eab308;background:#1a1505}
+.v{font-size:26px;font-weight:900}.reason{margin:6px 0}.ev{font-size:13px;opacity:.85;word-break:break-all}a{color:#58a6ff}.foot{opacity:.5;font-size:12px;margin-top:30px}
+</style></head><body><div class="wrap">
+<h1>Safu<span>Click</span></h1>
+<div class="sub">Paste a crypto link before you connect your wallet. Kane CLI walks through it with a throwaway mock wallet and flags known trap patterns.</div>
+<form id="f"><input id="u" placeholder="http://safuswep.localhost:4101/" required><button id="b">Check link</button></form>
+<div class="chips">Gym:
+<span class="chip" data-u="http://safuswap.localhost:4100/">official</span><span class="chip" data-u="http://safuswep.localhost:4101/">clone</span>
+<span class="chip" data-u="http://safuswap-verify.localhost:4102/">seed prompt</span><span class="chip" data-u="http://safuswap.localhost:4103/">hidden approval</span></div>
+<pre id="log" hidden></pre><div id="out"></div>
+<div class="foot">SafuClick, powered by Kane CLI. Flags known trap patterns seen on a run; not a guarantee of safety (sites can cloak or fingerprint test wallets).</div>
+</div><script>
+const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{$('#u').value=c.dataset.u});
+$('#f').onsubmit=async e=>{e.preventDefault();$('#b').disabled=true;$('#out').innerHTML='';$('#log').hidden=false;$('#log').textContent='Starting Kane…';
+ const r=await fetch('/api/check',{method:'POST',body:JSON.stringify({url:$('#u').value})});const j=await r.json();if(!r.ok){$('#log').textContent=j.error;$('#b').disabled=false;return}
+ const t=setInterval(async()=>{const s=await (await fetch('/api/job/'+j.id)).json();$('#log').textContent=s.log.join('\n');$('#log').scrollTop=1e9;
+  if(s.status!=='running'){clearInterval(t);$('#b').disabled=false;if(s.verdict)render(s.verdict);else $('#out').textContent=s.error}},1500)};
+function render(v){const cls=v.verdict==='TRAP FLAGGED'?'trap':v.verdict==='INCONCLUSIVE'?'inc':'ok';const icon={trap:'🚨',ok:'✅',inc:'❔'}[cls];
+ $('#out').innerHTML=`<div class="card ${cls}"><div class="v">${icon} ${esc(v.verdict)}</div><div class="ev">${esc(v.url)}</div>
+ ${v.reasons.map(r=>`<div class="reason">✖ ${esc(r.detail)} <code>${esc(r.id)}</code></div>`).join('')}${v.note?`<div class="reason">? ${esc(v.note)}</div>`:''}
+ <hr style="border-color:#30363d"><div class="ev">Domain: ${esc(v.host)} ${v.officialDomain?'(official)':'(not on allowlist)'}</div>
+ <div class="ev">Wallet: ${esc(v.walletSummary.requests.join(' → ')||'no requests')}</div>
+ ${v.walletSummary.transactions.map(t=>`<div class="ev">Tx: ${esc(t.label)}: <b>${esc(t.amountHuman)}</b>${t.kind==='approve'?' → spender '+esc(t.spender):''}</div>`).join('')}
+ ${v.kane?`<div class="ev">Kane: ${esc(v.kane.status)} · ${esc(v.kane.one_liner)} ${v.kane.test_url?`· <a href="${esc(v.kane.test_url)}" target="_blank">Kane report</a>`:''}</div>`:''}</div>`}
+</script></body></html>

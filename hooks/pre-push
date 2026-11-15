@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Example git hook: block a push of your dApp frontend if SafuClick (via Kane CLI) flags a trap
+# on your staging URL. Install: cp hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+# Configure: export SAFU_STAGING_URL=http://safuswap.localhost:4100/
+set -euo pipefail
+URL="${SAFU_STAGING_URL:-http://safuswap.localhost:4100/}"
+echo "🛡️  SafuClick pre-push: Kane is checking $URL"
+mkdir -p .safuclick
+if ! node bin/safuclick.js check "$URL" --markdown .safuclick/last-report.md --fail-on-trap; then
+  echo "🚨 SafuClick flagged a trap. Report: .safuclick/last-report.md (feed it to your coding agent)"
+  exit 1
+fi
