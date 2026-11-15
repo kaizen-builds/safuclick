@@ -1,0 +1,6 @@
+node_modules/
+.safuclick/
+.testmuai/
+output-*/
+*.log
+.env

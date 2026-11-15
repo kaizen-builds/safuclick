@@ -1,0 +1,10 @@
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import fs from 'node:fs';
+export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const STATE = path.join(ROOT, '.safuclick');
+export const p = (...a) => path.join(ROOT, ...a);
+export const readJSON = (f, fallback) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { if (fallback !== undefined) return fallback; throw e; } };
+export const writeJSON = (f, v) => { fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, JSON.stringify(v, null, 2) + '\n'); };
+export const COLLECTOR_PORT = Number(process.env.SAFU_COLLECTOR_PORT || 4199);
+export const COLLECTOR_URL = `http://127.0.0.1:${COLLECTOR_PORT}/log`;
