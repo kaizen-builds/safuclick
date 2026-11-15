@@ -1,0 +1,12 @@
+{
+  "_comment": "Domains and contracts SafuClick treats as official. Add your own (e.g. app.uniswap.org) for real use.",
+  "domains": ["safuswap.localhost", "127.0.0.1:4100", "localhost:4100"],
+  "brands": ["safuswap", "uniswap", "pancakeswap", "metamask", "opensea", "aave"],
+  "contracts": {
+    "0x5afe5afe00000000000000000000000000c0ffee": "SafuSwap Router (official)",
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "USDC (mock token)"
+  },
+  "spenders": {
+    "0x5afe5afe00000000000000000000000000c0ffee": "SafuSwap Router (official)"
+  }
+}
