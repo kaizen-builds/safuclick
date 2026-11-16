@@ -3,18 +3,25 @@
   "url": "https://aave-fi.info",
   "host": "aave-fi.info",
   "officialDomain": false,
+  "resembles": "app.aave.com",
   "reasons": [
     {
       "id": "brand_impersonation",
       "source": "rule:domain",
-      "detail": "aave-fi.info contains brand \"aave\" but is not an official domain"
+      "detail": "aave-fi.info uses the brand \"aave\" but is not an official domain. Looks like app.aave.com",
+      "evidence": {
+        "resembles": "app.aave.com"
+      }
     }
   ],
   "signals": [],
   "mode": "real-site",
   "walletSummary": {
     "requests": [],
-    "transactions": []
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
   },
   "kane": {
     "status": "passed",
@@ -63,11 +70,15 @@
     ],
     "blocked": false,
     "error": null,
-    "walletConnect": false
+    "walletConnect": false,
+    "turnstile": false,
+    "rdap": null,
+    "textSnippet": "Aave Aave Products Resources Developers Aave for Web Voting Ends August 7, 11:59 PM UTC &nbsp; $AAVE Distribution Date Proposal All active voters will gain a bonus allocation upon launch. Vote Now DeFi's largest lending network. $0B Total interest paid. $0T Cumulative deposits. $0B Total originated "
   },
-  "rulesVersion": 2,
+  "rulesVersion": 7,
   "note": null,
   "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
   "runDir": "docs/runs/real/03-aave-fi",
-  "card": "docs/runs/real/03-aave-fi/card.svg"
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
 }

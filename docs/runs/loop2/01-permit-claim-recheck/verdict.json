@@ -1,0 +1,126 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "resembles": null,
+  "reasons": [
+    {
+      "id": "permit_signature",
+      "source": "rule:signature",
+      "detail": "Gas-free Permit2 PermitSingle signature would let 0xc1a1ec…1a1e move UNLIMITED USDC until 2029-11-15 (unknown spender, UNLIMITED amount, valid 1095 days). No transaction needed: one signature is enough to drain",
+      "evidence": {
+        "scheme": "Permit2 PermitSingle",
+        "primaryType": "PermitSingle",
+        "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+        "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "tokenSymbol": "USDC",
+        "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+        "amountRaw": "1461501637330902918203684832716283019655932542975",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true,
+        "expiry": 1889397439,
+        "expiryIso": "2029-11-15",
+        "expiryDays": 1095
+      }
+    },
+    {
+      "id": "kane_rejected_request",
+      "source": "kane",
+      "detail": "Kane: \"reviewed and rejected an unlimited USDC permit on SafuSwap Connected the wallet by selecting Connect Wallet and confirming the connection.\"",
+      "evidence": {
+        "status": "passed"
+      }
+    }
+  ],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_signTypedData_v4"
+    ],
+    "transactions": [],
+    "signatures": [
+      {
+        "kind": "typed",
+        "primaryType": "PermitSingle",
+        "domainName": "Permit2",
+        "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+        "chainId": 11155111,
+        "scheme": "Permit2 PermitSingle",
+        "permits": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "tokenSymbol": "USDC",
+            "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+            "amountRaw": "1461501637330902918203684832716283019655932542975",
+            "amountHuman": "UNLIMITED USDC",
+            "unlimited": true,
+            "expiry": 1889397439,
+            "expiryIso": "2029-11-15",
+            "expiryDays": 1095
+          }
+        ],
+        "sigDeadline": 1889397439,
+        "isPermit": true
+      }
+    ],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "reviewed and rejected an unlimited USDC permit on SafuSwap",
+    "summary": "Connected the wallet by selecting Connect Wallet and confirming the connection.\nSelected Claim and reviewed the SafuWallet signature request in full.\nThe request was a Permit2 PermitSingle / PermitSingle token permit for USDC (0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48), allowing spender 0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e to move an unlimited amount of USDC until 2029-11-15 (in 1095 days).\nRejected the signature because it granted token-moving permission to an unknown spender for an unlimited amount with a far-future expiration.\nThe wallet reported: “Signature rejected in wallet.”",
+    "credits": 43.58180599999999,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWHS3MDA6N6Y9GXYPHD1GR/dashboard/share/US_ITGPS04DI46SNQZLUICR8K9RM2VR6I3HO9GRBW7WXAIWPE1V0W8P86ZQ7WUC1F98?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=6384fa37"
+      },
+      {
+        "step": 3,
+        "remark": "click: Clicking Connect Wallet"
+      },
+      {
+        "step": 4,
+        "remark": "click: Clicking Confirm in the SafuWallet popup"
+      },
+      {
+        "step": 5,
+        "remark": "click: Clicking the Claim button on the SafuSwap Airdrop claim card"
+      },
+      {
+        "step": 6,
+        "remark": "analyze: The SafuWallet popup is a harmless message."
+      },
+      {
+        "step": 2,
+        "remark": "click: Clicking Reject in the SafuWallet popup"
+      },
+      {
+        "step": 3,
+        "remark": "wait: Waiting for the rejection result to remain visible"
+      },
+      {
+        "step": 9,
+        "remark": "analyze: ANALYZE(textual_visual, 'The claim result from the SafuWallet popup is saved as "
+      },
+      {
+        "step": 10,
+        "remark": "wait: Waiting after confirming the recorded claim result"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 7,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/loop2/01-permit-claim-recheck",
+  "scenario": "claim",
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
+}

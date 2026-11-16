@@ -3,12 +3,16 @@
   "url": "https://app.uniswap.org",
   "host": "app.uniswap.org",
   "officialDomain": true,
+  "resembles": null,
   "reasons": [],
   "signals": [],
   "mode": "real-site",
   "walletSummary": {
     "requests": [],
-    "transactions": []
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
   },
   "kane": {
     "status": "passed",
@@ -53,11 +57,15 @@
     ],
     "blocked": false,
     "error": null,
-    "walletConnect": false
+    "walletConnect": false,
+    "turnstile": false,
+    "rdap": null,
+    "textSnippet": "Uniswap Interface Uniswap Interface You need to enable JavaScript to run this app. "
   },
-  "rulesVersion": 2,
+  "rulesVersion": 7,
   "note": null,
   "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
   "runDir": "docs/runs/real/01-uniswap",
-  "card": "docs/runs/real/01-uniswap/card.svg"
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
 }

@@ -1,0 +1,63 @@
+{
+  "verdict": "NO KNOWN TRAPS FOUND",
+  "url": "https://usdc082.com",
+  "host": "usdc082.com",
+  "officialDomain": false,
+  "reasons": [],
+  "signals": [],
+  "mode": "real-site",
+  "walletSummary": {
+    "requests": [],
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "inspected a cryptocurrency-themed page on usdc082.com",
+    "summary": "Reviewed the loaded page as requested without entering any information, connecting a wallet, or submitting anything.\nThe page was branded “BITCOIN & ETHEREUM” and the address-bar domain was usdc082.com.\nNo wallet connection or import prompt was visible, and the page did not request a seed phrase, recovery phrase, or private key.\nThe page loaded normally without a blank, blocked, CAPTCHA, 403, or 404 page.",
+    "credits": 23.262225,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWQBXA5A1MR61GYANPV3ZD/dashboard/share/US_IRLUK08YPNCL1YSCXNEMAD0MWZ0D9OXTQBAD4YAPS6K81W2FO7249GO50M0112IV?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to https://usdc082.com"
+      },
+      {
+        "step": 3,
+        "remark": "wait: PRIMARY: wait 1500 ms for the opened page to finish loading"
+      },
+      {
+        "step": 4,
+        "remark": "analyze: ANALYZE(literal, 'The domain in the address bar is stored as {{address_bar_domai"
+      },
+      {
+        "step": 7,
+        "remark": "assert: The page does not ask for a seed, recovery phrase, or private key."
+      }
+    ]
+  },
+  "probe": {
+    "finalUrl": "https://usdc082.com/",
+    "status": 200,
+    "title": "onkeyon",
+    "hops": [
+      {
+        "url": "https://usdc082.com",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "blocked": false,
+    "error": null,
+    "walletConnect": false,
+    "textSnippet": "onkeyon onkeyon "
+  },
+  "rulesVersion": 2,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": ".safuclick/runs/2026-11-16T00-39-43-385Z-usdc082.com-443",
+  "card": "card.svg"
+}

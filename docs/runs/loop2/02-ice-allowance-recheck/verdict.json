@@ -1,0 +1,151 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "resembles": null,
+  "reasons": [
+    {
+      "id": "increase_allowance",
+      "source": "rule:wallet",
+      "detail": "Page called increaseAllowance(0x1ce1ce…1ce1, UNLIMITED USDC) while the UI said \"swap 10 USDC\". It ADDS to any existing allowance and dodges approve-only checks (ice phishing)",
+      "evidence": {
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "selector": "0x39509351",
+        "token": "USDC",
+        "kind": "increaseAllowance",
+        "label": "Increase allowance (increaseAllowance)",
+        "spender": "0x1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true,
+        "additive": true
+      }
+    },
+    {
+      "id": "unlimited_approval",
+      "source": "rule:wallet",
+      "detail": "Page asked the wallet for UNLIMITED USDC allowance increase to 0x1ce1ce…1ce1 while the UI said \"swap 10 USDC\"",
+      "evidence": {
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "selector": "0x39509351",
+        "token": "USDC",
+        "kind": "increaseAllowance",
+        "label": "Increase allowance (increaseAllowance)",
+        "spender": "0x1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true,
+        "additive": true
+      }
+    },
+    {
+      "id": "unknown_spender",
+      "source": "rule:wallet",
+      "detail": "Approval spender 0x1ce1ce…1ce1 is not a known router",
+      "evidence": {
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "selector": "0x39509351",
+        "token": "USDC",
+        "kind": "increaseAllowance",
+        "label": "Increase allowance (increaseAllowance)",
+        "spender": "0x1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true,
+        "additive": true
+      }
+    },
+    {
+      "id": "kane_rejected_request",
+      "source": "kane",
+      "detail": "Kane: \"rejected an unsafe allowance request on SafuSwap Connected a wallet and confirmed the initial SafuWallet request.\"",
+      "evidence": {
+        "status": "passed"
+      }
+    }
+  ],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "selector": "0x39509351",
+        "token": "USDC",
+        "kind": "increaseAllowance",
+        "label": "Increase allowance (increaseAllowance)",
+        "spender": "0x1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1",
+        "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "amountHuman": "UNLIMITED USDC",
+        "unlimited": true,
+        "additive": true
+      }
+    ],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "rejected an unsafe allowance request on SafuSwap",
+    "summary": "Connected a wallet and confirmed the initial SafuWallet request.\nEntered 10 USDC as the amount to pay and started the swap.\nSafuWallet showed an “Increase allowance” request rather than a swap for exactly 10 USDC, so the request was rejected and the swap was not completed.\nThe available run details did not include the spender or the added allowance amount shown in the popup.",
+    "credits": 32.6835225,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWS7CXWJG96HP5M1AXDHQK/dashboard/share/US_W4B2KSXTL1UZUIL4NNM62KF90RQL8WWLODQC1YDY209EE97MLDZTGD4FLX1FO8BR?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=44587cb8"
+      },
+      {
+        "step": 3,
+        "remark": "click: Clicking Connect Wallet (top right)"
+      },
+      {
+        "step": 4,
+        "remark": "click: Clicking Confirm in the SafuWallet popup"
+      },
+      {
+        "step": 5,
+        "remark": "click: Clicking the Swap button"
+      },
+      {
+        "step": 6,
+        "remark": "wait: PRIMARY: SafuWallet popup Action, Spender and Amount lines have been read"
+      },
+      {
+        "step": 7,
+        "remark": "analyze: The SafuWallet popup is a Swap of exactly 10 USDC."
+      },
+      {
+        "step": 2,
+        "remark": "click: Clicking Reject in the SafuWallet popup"
+      },
+      {
+        "step": 3,
+        "remark": "analyze: ANALYZE(devtool_network, 'The added Amount line from the SafuWallet popup is sav"
+      },
+      {
+        "step": 4,
+        "remark": "wait: Waiting after rejecting the unsafe SafuWallet request"
+      },
+      {
+        "step": 9,
+        "remark": "wait: Waiting after the SafuWallet rejection status is displayed"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 7,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/loop2/02-ice-allowance-recheck",
+  "scenario": "allowance",
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
+}

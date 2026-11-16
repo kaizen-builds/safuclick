@@ -9,10 +9,10 @@
 <meta property="og:description" content="Kane CLI visits the link first. SafuClick flags known wallet-drainer trap patterns. Built for the KaneCLI Hackathon by TestMu AI.">
 <meta property="og:image" content="/cards/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F5EFE4">
+<meta name="theme-color" content="#000000">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Doto:wght@700;800&family=Silkscreen&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -34,7 +34,7 @@
     <div class="hero-txt">
       <p class="kicker mono">Pre-connect link check &middot; powered by Kane CLI</p>
       <h1>Check the link <em>before</em> you connect.</h1>
-      <p class="lede">Paste a link from a DM or a group chat. Kane CLI opens it in a throwaway browser, and SafuClick flags known trap patterns: lookalike domains, seed-phrase prompts and hidden unlimited approvals.</p>
+      <p class="lede">Paste a link from a DM or a group chat. Kane CLI opens it in a throwaway browser, and SafuClick flags known trap patterns: lookalike domains, seed-phrase prompts, hidden approvals and gas-free &ldquo;sign to claim&rdquo; permits.</p>
       <form id="liveForm" class="paste" autocomplete="off">
         <label class="paste-pre mono" for="liveUrl">https://</label>
         <input id="liveUrl" name="url" type="text" inputmode="url" placeholder="suspicious-airdrop.xyz" aria-label="Link to check" spellcheck="false">
@@ -61,7 +61,7 @@
   <section class="wrap sec" id="checks">
     <div class="sec-head">
       <h2>Recorded checks</h2>
-      <p>Seven real Kane CLI runs, free to browse: four on our practice phishing gym with a mock wallet, three on live sites. Data comes straight from <a href="https://github.com/kaizen-builds/safuclick/tree/main/docs/runs" target="_blank" rel="noopener">docs/runs</a>.</p>
+      <p>Eleven real Kane CLI runs, free to browse: seven on our practice phishing gym, where a mock wallet decodes every request (permits, batches, allowance tricks), and four on live sites, including a scam link from a real DM. Data comes straight from <a href="https://github.com/kaizen-builds/safuclick/tree/main/docs/runs" target="_blank" rel="noopener">docs/runs</a>.</p>
     </div>
     <div class="checks panel">
       <div class="tabs" id="chips" role="tablist" aria-label="Recorded checks"></div>
@@ -87,7 +87,7 @@
   <section class="wrap sec" id="arena">
     <div class="sec-head">
       <h2>Scam Arena</h2>
-      <p>A scammer agent plants a new trick each round. Kane referees. When the rules miss, a builder agent hardens them and Kane checks the fix.</p>
+      <p>A scammer agent plants a new trick each round. Kane referees. When the rules miss, a builder agent hardens them and Kane checks the fix. Round 6 is a real scam link that got past us.</p>
     </div>
     <div class="panel arena">
       <div class="score">
@@ -109,7 +109,7 @@
       </ol>
       <div class="limits">
         <h3>Limits, plainly</h3>
-        <p>It flags known patterns and never says &ldquo;safe&rdquo;. A new trick can slip through until the loop learns it. Some scam sites cloak and show bots a blank page; we caught aave-fi.info doing exactly that. Wallet evidence needs the gym&rsquo;s mock wallet, so hidden approvals can&rsquo;t be seen on real sites. Live checks are capped because each one is a real Kane run.</p>
+        <p>It flags known patterns and never says &ldquo;safe&rdquo;. A new trick can slip through until the loop learns it. Some scam sites cloak and show bots a blank page; we caught aave-fi.info doing exactly that, and the cloaking lab shows when that makes a check inconclusive. Wallet evidence (permits, batches, approvals) needs the gym&rsquo;s mock wallet, so it can&rsquo;t be seen on real sites. Address poisoning, malware and hijacked real domains are out of scope. Live checks are capped because each one is a real Kane run.</p>
       </div>
     </div>
   </section>

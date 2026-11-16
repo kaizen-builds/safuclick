@@ -1,0 +1,100 @@
+{
+  "verdict": "NO KNOWN TRAPS FOUND",
+  "url": "http://safuswap.localhost:4110/",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "reasons": [],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_signTypedData_v4"
+    ],
+    "transactions": [],
+    "signatures": [
+      {
+        "kind": "typed",
+        "primaryType": "PermitSingle",
+        "domainName": "Permit2",
+        "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+        "chainId": 11155111,
+        "scheme": "Permit2 PermitSingle",
+        "permits": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "tokenSymbol": "USDC",
+            "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+            "amountRaw": "1461501637330902918203684832716283019655932542975",
+            "amountHuman": "UNLIMITED USDC",
+            "unlimited": true,
+            "expiry": 1889397311,
+            "expiryIso": "2029-11-15",
+            "expiryDays": 1095
+          }
+        ],
+        "sigDeadline": 1889397311,
+        "isPermit": true
+      }
+    ],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "reviewed and rejected a token-permit claim request on SafuSwap",
+    "summary": "Connected the SafuWallet test wallet and started the claim request.\nThe wallet showed a token-permit signature request, so it was rejected rather than approved.\nThe request was a Permit2 PermitSingle / PermitSingle for unlimited USDC, allowing spender 0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e to use USDC token 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.\nThe permit would have expired on 2029-11-15 (in 1095 days).",
+    "credits": 39.606413,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWDWRE9KTDBJTQXPYWWK0G/dashboard/share/US_EX9U56PVFXAROWFVTK2EZP3272Z0X21ZIYQ3TMAFO4795VVEM8DYDQLQPFSZOOPL?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=c92de491"
+      },
+      {
+        "step": 3,
+        "remark": "click: Clicking Connect Wallet button top-right"
+      },
+      {
+        "step": 4,
+        "remark": "click: Clicking Confirm in the SafuWallet popup"
+      },
+      {
+        "step": 5,
+        "remark": "click: Clicking the Claim button for 2,000 SFU"
+      },
+      {
+        "step": 6,
+        "remark": "wait: PRIMARY: read the SafuWallet popup in full: Request, Signature type, Token, Spen"
+      },
+      {
+        "step": 7,
+        "remark": "analyze: The popup is a harmless message."
+      },
+      {
+        "step": 2,
+        "remark": "click: Clicking Reject in the SafuWallet popup"
+      },
+      {
+        "step": 3,
+        "remark": "wait: Waiting confirm the rejection result and report the SafuWallet popup signature details"
+      },
+      {
+        "step": 10,
+        "remark": "wait: PRIMARY: wait for the conditional SafuWallet safety handling to complete"
+      },
+      {
+        "step": 11,
+        "remark": "wait: Waiting verify the SafuWallet signature rejection result"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 2,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "scenario": "claim",
+  "runDir": "docs/runs/loop2/01-permit-claim-first",
+  "card": "docs/runs/loop2/01-permit-claim-first/card.svg"
+}

@@ -1,0 +1,122 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "https://usdc082.com",
+  "host": "usdc082.com",
+  "officialDomain": false,
+  "resembles": "circle.com",
+  "reasons": [
+    {
+      "id": "ticker_digits_domain",
+      "source": "rule:domain",
+      "detail": "usdc082.com is a coin ticker or exchange name (\"usdc\") plus digits, a naming pattern common to throwaway fake-exchange sites. Looks like circle.com",
+      "evidence": {
+        "resembles": "circle.com"
+      }
+    }
+  ],
+  "signals": [
+    {
+      "id": "wallet_connect_prompt",
+      "source": "observe",
+      "detail": "Connect Wallet prompt observed on a domain that is not on the known-good list."
+    },
+    {
+      "id": "domain_age",
+      "source": "rule:domain",
+      "detail": "usdc082.com registered 2025-12-29 (321 days ago)"
+    },
+    {
+      "id": "mismatched_title",
+      "source": "observe",
+      "detail": "Page title \"onkeyon\" has nothing to do with the domain or any known brand"
+    },
+    {
+      "id": "turnstile",
+      "source": "observe",
+      "detail": "Cloudflare Turnstile challenge on the page (common on fake exchanges to keep scanners out; also used by legit sites)"
+    }
+  ],
+  "mode": "real-site",
+  "walletSummary": {
+    "requests": [],
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The browser run used more steps than allowed and was stopped before it produced the required inspection result.",
+    "summary": "The agent reached a loaded page but kept waiting instead of completing the visible-page assessment, recording the required observations, and ending the run within the ten-step limit.\nEnd the check immediately after the required visible inspection. Record the final URL, domain, branding, and visible login or wallet prompts without opening risky flows; do not spend remaining steps on repeated waits.",
+    "credits": 60.53648499999999,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWZ1W9MG3GK5STERG5NBSD/dashboard/share/US_44EANW2H1MVIMWNDLWPX0Y43MSNBRMP8ZGZJSLNDKGFW7ZSS9H7H8YRTUNY302RL?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "stuck.max_steps",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to https://usdc082.com"
+      },
+      {
+        "step": 3,
+        "remark": "wait: PRIMARY: wait 1500 ms for the page to finish loading and any redirect to settle"
+      },
+      {
+        "step": 4,
+        "remark": "analyze: the final URL in the address bar is saved as {{final_url}}"
+      },
+      {
+        "step": 5,
+        "remark": "analyze: the domain in the address bar is saved as {{address_bar_domain}}"
+      },
+      {
+        "step": 6,
+        "remark": "analyze: ANALYZE(unknown, 'the exact label or wording of any visible input field that ask"
+      },
+      {
+        "step": 8,
+        "remark": "analyze: ANALYZE(visual, 'any visible prompt to Connect Wallet, import a wallet, or enter"
+      },
+      {
+        "step": 9,
+        "remark": "analyze: the page shows a 403/404"
+      },
+      {
+        "step": 10,
+        "remark": "wait: PRIMARY: summarize the inspected branding, final URL, wallet prompts, login stat"
+      },
+      {
+        "step": 11,
+        "remark": "wait: Waiting after completing the requested page inspection and summary"
+      }
+    ]
+  },
+  "probe": {
+    "finalUrl": "https://usdc082.com/",
+    "status": 200,
+    "title": "onkeyon",
+    "hops": [
+      {
+        "url": "https://usdc082.com",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "blocked": false,
+    "error": null,
+    "walletConnect": false,
+    "turnstile": true,
+    "rdap": {
+      "domain": "usdc082.com",
+      "registered": "2025-12-29T20:32:32Z",
+      "ageDays": 321,
+      "registrar": "Gname.com Pte. Ltd."
+    },
+    "textSnippet": "onkeyon onkeyon "
+  },
+  "rulesVersion": 7,
+  "note": "Kane could not complete the flow (stuck.max_steps): Maximum steps exceeded (11/10)",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/real/05-usdc082-fixed",
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
+}

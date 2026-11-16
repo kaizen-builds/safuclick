@@ -3,7 +3,10 @@
   "url": "http://safuswap.localhost:4100/",
   "host": "safuswap.localhost",
   "officialDomain": true,
+  "resembles": null,
   "reasons": [],
+  "signals": [],
+  "mode": "gym",
   "walletSummary": {
     "requests": [
       "eth_requestAccounts",
@@ -19,17 +22,74 @@
         "amountHuman": "10 USDC",
         "spender": "0x5afe5afe00000000000000000000000000c0ffee"
       }
-    ]
+    ],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
   },
   "kane": {
     "status": "passed",
     "one_liner": "completed a 10 USDC swap on SafuSwap",
     "summary": "Connected the wallet and confirmed the connection request.\nSet the payment amount to 10 USDC and started the swap.\nReviewed the SafuWallet confirmation details: the action was Swap and the amount was exactly 10 USDC.\nThe confirmation details matched the requested swap, and the swap was completed.",
     "credits": 31.16336,
-    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG0H66FF6HZ0H2SQN7K030/dashboard/share/US_MVO15Y2JOVKHHAX4A6R00Y3VFJETPXBR7M0ZDPD35JU0QJ9KPT1YFMMEM3MAF3K9?type=summary&agentView=true&fqdn=summary-page"
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG0H66FF6HZ0H2SQN7K030/dashboard/share/US_MVO15Y2JOVKHHAX4A6R00Y3VFJETPXBR7M0ZDPD35JU0QJ9KPT1YFMMEM3MAF3K9?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap.localhost:4100/?safu_run=82725abe"
+      },
+      {
+        "step": 3,
+        "remark": "click: Clicking Connect Wallet in the top-right corner"
+      },
+      {
+        "step": 4,
+        "remark": "click: Clicking Confirm in the SafuWallet popup"
+      },
+      {
+        "step": 5,
+        "remark": "wait: PRIMARY: verify the \"You pay\" amount is 10 USDC; role=textbox; text=\"Amount to s"
+      },
+      {
+        "step": 6,
+        "remark": "click: Clicking the Swap button"
+      },
+      {
+        "step": 7,
+        "remark": "wait: PRIMARY: Read the SafuWallet popup's Action, Spender and Amount lines; role=dial"
+      },
+      {
+        "step": 8,
+        "remark": "analyze: ANALYZE(textual_visual, 'the popup Amount is exactly \"10 USDC\" (not UNLIMITED an"
+      },
+      {
+        "step": 9,
+        "remark": "assert: the popup Action is \"Swap\" and the popup Amount is exactly \"10 USDC\" (not UNLIMI"
+      },
+      {
+        "step": 2,
+        "remark": "click: Clicking Confirm in the SafuWallet confirmation popup"
+      },
+      {
+        "step": 3,
+        "remark": "analyze: the page says the swap is complete"
+      },
+      {
+        "step": 4,
+        "remark": "assert: the page says the swap is complete"
+      },
+      {
+        "step": 11,
+        "remark": "wait: Waiting verify swap completion status"
+      }
+    ]
   },
-  "rulesVersion": 0,
+  "probe": null,
+  "rulesVersion": 7,
   "note": null,
   "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
-  "runDir": "<local>"
+  "runDir": "docs/runs/gym/07-official-final",
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
 }

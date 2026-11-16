@@ -1,0 +1,19 @@
+{
+  "startUrl": "https://usdc082.com",
+  "finalUrl": "https://usdc082.com/",
+  "status": 200,
+  "hops": [
+    {
+      "url": "https://usdc082.com",
+      "status": 200,
+      "location": null
+    }
+  ],
+  "error": null,
+  "blocked": false,
+  "title": "onkeyon",
+  "fields": [],
+  "walletConnect": false,
+  "textSnippet": "onkeyon onkeyon ",
+  "pageUrl": "https://usdc082.com/"
+}

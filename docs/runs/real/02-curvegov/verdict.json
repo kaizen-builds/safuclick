@@ -3,11 +3,15 @@
   "url": "https://curvegov.icu",
   "host": "curvegov.icu",
   "officialDomain": false,
+  "resembles": "curve.fi",
   "reasons": [
     {
       "id": "brand_impersonation",
       "source": "rule:domain",
-      "detail": "curvegov.icu contains brand \"curve\" but is not an official domain"
+      "detail": "curvegov.icu uses the brand \"curve\" but is not an official domain. Looks like curve.fi",
+      "evidence": {
+        "resembles": "curve.fi"
+      }
     }
   ],
   "signals": [
@@ -20,7 +24,10 @@
   "mode": "real-site",
   "walletSummary": {
     "requests": [],
-    "transactions": []
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
   },
   "kane": {
     "status": "passed",
@@ -61,11 +68,15 @@
     ],
     "blocked": false,
     "error": null,
-    "walletConnect": false
+    "walletConnect": false,
+    "turnstile": false,
+    "rdap": null,
+    "textSnippet": "Governance - Curve Governance - Curve Curve.finance <img alt=\"Curve\" class=\"css-jqoe6e\" data-savepage-src=\"https://cdn.jsdelivr.net/gh/curvefi/curve-assets/branding/logo.png\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIgAAASICAYAAAB4LPTDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAewgAAHsIBbtB1PgAAAB"
   },
-  "rulesVersion": 2,
+  "rulesVersion": 7,
   "note": null,
   "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
   "runDir": "docs/runs/real/02-curvegov",
-  "card": "docs/runs/real/02-curvegov/card.svg"
+  "rejudged": "re-judged with rules v7 from the saved Kane run (0 credits)",
+  "card": "card.svg"
 }

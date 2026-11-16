@@ -1,0 +1,69 @@
+
+╔══════════════════════════════════════════════════════════════════════╗
+║ REAL-WORLD ROUND · https://usdc082.com · rules v5                    ║
+╚══════════════════════════════════════════════════════════════════════╝
+  ↺ replaying saved Kane run from docs/runs/real/04-usdc082-miss (0 credits)
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅  NO KNOWN TRAPS FOUND   https://usdc082.com
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Evidence:
+   mode       real-site (observe only, no mock wallet)
+   domain     usdc082.com (not on known-good list)
+   final url  https://usdc082.com/
+   title      onkeyon
+   http       200
+   wallet     no wallet requests
+   kane       passed · inspected a cryptocurrency-themed page on usdc082.com
+   credits    23.3
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWQBXA5A1MR61GYANPV3ZD/dashboard/share/US_IRLUK08YPNCL1YSCXNEMAD0MWZ0D9OXTQBAD4YAPS6K81W2FO7249GO50M0112IV?type=summary&agentView=true&fqdn=summary-page
+  rules v5 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ MISSED in the wild. Handing the real run to the builder.
+     + fakeExchange.* on: ticker/exchange-name + digits domains, RDAP domain age (<= 90 days), login/register wall + withdraw/balance/customer-service wording + Turnstile + generic title on a non-listed domain
+     ✔ unit + regression tests pass · rules v5 → v6
+
+  🤖 Kane re-check on the live site (rules v6, observe only, no login) → https://usdc082.com
+  🔎 real-site mode: peeking at https://usdc082.com (no mock wallet, no signing)…
+     domain registered 2025-12-29 (321 days ago, RDAP)
+     HTTP 200 · final https://usdc082.com/ · title "onkeyon"
+  🤖 Kane CLI is reviewing https://usdc082.com in headless Chrome (observe only, run 2026-11-16T00-43-55-306Z-usdc082.com-443)…
+     step  2 · navigate: Navigate to https://usdc082.com
+     step  3 · wait: PRIMARY: wait 1500 ms for the page to finish loading and any redirect to settle
+     step  4 · analyze: the final URL in the address bar is saved as {{final_url}}
+     step  5 · analyze: the domain in the address bar is saved as {{address_bar_domain}}
+     step  6 · analyze: ANALYZE(unknown, 'the exact label or wording of any visible input field that ask
+     step  8 · analyze: ANALYZE(visual, 'any visible prompt to Connect Wallet, import a wallet, or enter
+     step  9 · analyze: the page shows a 403/404
+     step 10 · wait: PRIMARY: summarize the inspected branding, final URL, wallet prompts, login stat
+     step 11 · wait: Waiting after completing the requested page inspection and summary
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚨  TRAP FLAGGED   https://usdc082.com
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Why:
+   ✖ usdc082.com is a coin ticker or exchange name plus digits, a naming pattern common to throwaway fake-exchange sites [ticker_digits_domain · rule:domain]
+   ✖ Login / register page for an unknown "exchange" on a non-listed domain, behind Turnstile, generic title "onkeyon". Classic withdrawal-fee scam setup: never log in with credentials someone sent you [fake_exchange_login · rule:fake-exchange]
+  Signals:
+   · Connect Wallet prompt observed on a domain that is not on the known-good list. [wallet_connect_prompt]
+   · usdc082.com registered 2025-12-29 (321 days ago) [domain_age]
+   · Page title "onkeyon" has nothing to do with the domain or any known brand [mismatched_title]
+   · Cloudflare Turnstile challenge on the page (common on fake exchanges to keep scanners out; also used by legit sites) [turnstile]
+   ? Kane could not complete the flow (stuck.max_steps): Maximum steps exceeded (11/10)
+  Evidence:
+   mode       real-site (observe only, no mock wallet)
+   domain     usdc082.com (not on known-good list)
+   final url  https://usdc082.com/
+   title      onkeyon
+   http       200
+   wallet     no wallet requests
+   kane       failed · The browser run used more steps than allowed and was stopped before it produced the required inspection result.
+   credits    60.5
+   replay     https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWZ1W9MG3GK5STERG5NBSD/dashboard/share/US_44EANW2H1MVIMWNDLWPX0Y43MSNBRMP8ZGZJSLNDKGFW7ZSS9H7H8YRTUNY302RL?type=summary&agentView=true&fqdn=summary-page
+  rules v6 · Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SafuCard   /workspace/safuclick/.safuclick/runs/2026-11-16T00-43-55-306Z-usdc082.com-443/card.svg
+
+  ✔ FIXED: Kane re-ran the live site and the hardened rules flag it.
+  ✔ promoted hardened rules → config/rules.json

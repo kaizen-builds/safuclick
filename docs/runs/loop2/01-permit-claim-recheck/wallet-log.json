@@ -1,0 +1,209 @@
+[
+  {
+    "run": "6384fa37",
+    "seq": 1,
+    "ts": "2026-11-16T00:36:41.522Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "title": "SafuSwap Airdrop",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "6384fa37",
+    "seq": 2,
+    "ts": "2026-11-16T00:36:41.545Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "6384fa37",
+    "seq": 3,
+    "ts": "2026-11-16T00:36:44.524Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "tag": "t+3s",
+    "title": "SafuSwap Airdrop",
+    "text": "SafuSwap Airdrop · Season 2 Eligible wallets can claim before the window closes. Your allocation 2,000 SFU Claim closes in 23:59:12 Connect wallet to claim Gas-free: just sign to verify eligibility. No transaction needed.",
+    "textLength": 221,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to claim"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "6384fa37",
+    "seq": 1,
+    "ts": "2026-11-16T00:36:50.720Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "title": "SafuSwap Airdrop",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "6384fa37",
+    "seq": 2,
+    "ts": "2026-11-16T00:36:50.722Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "6384fa37",
+    "seq": 3,
+    "ts": "2026-11-16T00:36:53.721Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "tag": "t+3s",
+    "title": "SafuSwap Airdrop",
+    "text": "SafuSwap Airdrop · Season 2 Eligible wallets can claim before the window closes. Your allocation 2,000 SFU Claim closes in 23:59:12 Connect wallet to claim Gas-free: just sign to verify eligibility. No transaction needed.",
+    "textLength": 221,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to claim"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "6384fa37",
+    "seq": 4,
+    "ts": "2026-11-16T00:37:00.721Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "tag": "t+10s",
+    "title": "SafuSwap Airdrop",
+    "text": "SafuSwap Airdrop · Season 2 Eligible wallets can claim before the window closes. Your allocation 2,000 SFU Claim closes in 23:59:12 Connect wallet to claim Gas-free: just sign to verify eligibility. No transaction needed.",
+    "textLength": 221,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to claim"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "6384fa37",
+    "seq": 5,
+    "ts": "2026-11-16T00:37:07.902Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "6384fa37",
+    "seq": 6,
+    "ts": "2026-11-16T00:37:13.848Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "6384fa37",
+    "seq": 7,
+    "ts": "2026-11-16T00:37:19.715Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "method": "eth_signTypedData_v4",
+    "params": [
+      "0x7e57000000000000000000000000000000000001",
+      "{\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}],\"PermitDetails\":[{\"name\":\"token\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint160\"},{\"name\":\"expiration\",\"type\":\"uint48\"},{\"name\":\"nonce\",\"type\":\"uint48\"}],\"PermitSingle\":[{\"name\":\"details\",\"type\":\"PermitDetails\"},{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"sigDeadline\",\"type\":\"uint256\"}]},\"primaryType\":\"PermitSingle\",\"domain\":{\"name\":\"Permit2\",\"chainId\":11155111,\"verifyingContract\":\"0x000000000022d473030f116ddee9f6b43ac78ba3\"},\"message\":{\"details\":{\"token\":\"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\"amount\":\"1461501637330902918203684832716283019655932542975\",\"expiration\":1889397439,\"nonce\":0},\"spender\":\"0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e\",\"sigDeadline\":1889397439}}"
+    ]
+  },
+  {
+    "run": "6384fa37",
+    "seq": 8,
+    "ts": "2026-11-16T00:37:19.715Z",
+    "type": "sig_decoded",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "method": "eth_signTypedData_v4",
+    "decoded": {
+      "kind": "typed",
+      "primaryType": "PermitSingle",
+      "domainName": "Permit2",
+      "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+      "chainId": 11155111,
+      "scheme": "Permit2 PermitSingle",
+      "permits": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "tokenSymbol": "USDC",
+          "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+          "amountRaw": "1461501637330902918203684832716283019655932542975",
+          "amountHuman": "UNLIMITED USDC",
+          "unlimited": true,
+          "expiry": 1889397439,
+          "expiryIso": "2029-11-15",
+          "expiryDays": 1095
+        }
+      ],
+      "sigDeadline": 1889397439,
+      "isPermit": true
+    }
+  },
+  {
+    "run": "6384fa37",
+    "seq": 9,
+    "ts": "2026-11-16T00:38:06.447Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4110",
+    "href": "http://safuswap.localhost:4110/?safu_run=6384fa37",
+    "method": "eth_signTypedData_v4",
+    "approved": false,
+    "decoded": {
+      "kind": "typed",
+      "primaryType": "PermitSingle",
+      "domainName": "Permit2",
+      "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+      "chainId": 11155111,
+      "scheme": "Permit2 PermitSingle",
+      "permits": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "tokenSymbol": "USDC",
+          "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+          "amountRaw": "1461501637330902918203684832716283019655932542975",
+          "amountHuman": "UNLIMITED USDC",
+          "unlimited": true,
+          "expiry": 1889397439,
+          "expiryIso": "2029-11-15",
+          "expiryDays": 1095
+        }
+      ],
+      "sigDeadline": 1889397439,
+      "isPermit": true
+    }
+  }
+]

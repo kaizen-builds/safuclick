@@ -19,7 +19,7 @@ function segD(px, py, ax, ay, bx, by) {
   return Math.hypot(px - ax - t * dx, py - ay - t * dy);
 }
 const segDist = (x, y) => Math.min(segD(x, y, -0.3, 0.0, -0.08, 0.24), segD(x, y, -0.08, 0.24, 0.34, -0.22));
-function dither(canvas, { cell = 5, shield = true, color = [74, 29, 63] } = {}) {
+function dither(canvas, { cell = 5, shield = true, color = [218, 255, 82] } = {}) {
   const ctx = canvas.getContext('2d');
   let W, H, t0 = performance.now();
   const resize = () => { const r = canvas.getBoundingClientRect(); W = canvas.width = Math.max(1, Math.floor(r.width)); H = canvas.height = Math.max(1, Math.floor(r.height)); };
@@ -65,8 +65,8 @@ function stepsHtml(steps) {
     return `<li style="animation-delay:${REDUCED ? 0 : i * 0.08}s"><span class="t">${String(s.step).padStart(2, '0')}</span><span class="a">${esc(act)}</span><span>${esc(rest.join(': '))}</span></li>`;
   }).join('') || '<li><span class="t">--</span><span></span><span>Kane did not run (site unreachable).</span></li>';
 }
-function verdictHtml(v, url) {
-  return `<span class="stamp ${cls(v)}">${esc(v)}</span><div class="v-url">${esc(url)}</div>`;
+function verdictHtml(v, url, resembles) {
+  return `<span class="stamp ${cls(v)}">${esc(v)}</span><div class="v-url">${esc(url)}${resembles ? ` <span class="looks">looks like ${esc(resembles)}</span>` : ''}</div>`;
 }
 function reasonsHtml(reasons, signals, verdict) {
   let h = '';
@@ -81,8 +81,13 @@ function walletHtml(c) {
     if (!p) return '';
     return `<div class="blk"><h4>HTTP peek, no browser</h4><div class="ev"><span class="k">status</span> ${esc(p.status)} &middot; <span class="k">title</span> ${esc(p.title)}<br><span class="k">connect wallet copy</span> ${p.walletConnect ? '<span class="bad">yes</span>' : 'no'}${p.blocked ? ' &middot; <span class="bad">blocked / captcha</span>' : ''}</div></div>`;
   }
-  if (!c.wallet?.length) return `<div class="blk"><h4>Mock wallet evidence</h4><div class="ev"><span class="k">requests</span> ${esc((c.walletRequests || []).join(', ') || 'none')}<br>No transaction was requested.</div></div>`;
-  return `<div class="blk"><h4>Mock wallet evidence</h4>${c.wallet.map((t) => `<div class="ev"><span class="k">action</span> ${esc(t.label)}<br><span class="k">${t.spender && t.spender !== t.to ? 'spender' : 'to'}</span> ${esc(short(t.spender || t.to))}<br><span class="k">amount</span> <span class="${t.unlimited || /UNLIMITED/.test(t.amountHuman) ? 'bad' : ''}">${esc(t.amountHuman)}</span></div>`).join('')}</div>`;
+  const peek = c.probe ? `<div class="blk"><h4>View 1: HTTP peek, no JS, no wallet</h4><div class="ev">${esc((c.probe.textSnippet || '').replace(/^(SafuSwap\s*)+/, '').slice(0, 110))}</div></div>` : '';
+  const sigs = (c.signatures || []).flatMap((s) => (s.permits || []).map((pm) => `<div class="ev"><span class="k">signature</span> ${esc(s.scheme)} (no gas)<br><span class="k">spender</span> ${esc(short(pm.spender))}<br><span class="k">amount</span> <span class="${pm.unlimited ? 'bad' : ''}">${esc(pm.amountHuman)}</span> &middot; <span class="k">expires</span> ${esc(pm.expiryIso || 'never')}</div>`)).join('');
+  const bats = (c.batches || []).map((b) => `<div class="ev"><span class="k">batch</span> ${b.callCount} actions in one confirm${b.delegation ? ' &middot; 7702 delegator ' + esc(short(b.delegation.delegator)) : ''}${b.calls.map((x, i) => `<br><span class="k">${i + 1}</span> ${esc(x.kind)} <span class="${x.unlimited ? 'bad' : ''}">${esc(x.amountHuman)}</span>${x.kind !== 'swap' ? ' to ' + esc(short(x.spender)) : ''}`).join('')}</div>`).join('');
+  const title = c.probe ? 'View 2: Kane browser + mock wallet' : 'Mock wallet evidence';
+  if (sigs || bats) return peek + `<div class="blk"><h4>${title}</h4>${sigs}${bats}</div>`;
+  if (!c.wallet?.length) return peek + `<div class="blk"><h4>${title}</h4><div class="ev"><span class="k">requests</span> ${esc((c.walletRequests || []).join(', ') || 'none')}<br>No transaction was requested.</div></div>`;
+  return peek + `<div class="blk"><h4>${title}</h4>${c.wallet.map((t) => `<div class="ev"><span class="k">action</span> ${esc(t.label)}<br><span class="k">${t.kind === 'setApprovalForAll' ? 'operator' : t.spender && t.spender !== t.to ? 'spender' : 'to'}</span> ${esc(short(t.spender || t.to))}<br><span class="k">amount</span> <span class="${t.unlimited || /UNLIMITED/.test(t.amountHuman) ? 'bad' : ''}">${esc(t.amountHuman)}</span></div>`).join('')}</div>`;
 }
 function kaneHtml(k) {
   if (!k) return '';
@@ -97,7 +102,7 @@ function showCheck(slug) {
   current = c;
   document.querySelectorAll('.tab').forEach((b) => { const on = b.dataset.slug === c.slug; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
   $('#checkMode').textContent = c.mode === 'real-site' ? 'live site · observe only' : 'phishing gym · mock wallet';
-  $('#checkVerdict').innerHTML = verdictHtml(c.verdict, c.url);
+  $('#checkVerdict').innerHTML = verdictHtml(c.verdict, c.url, c.resembles);
   $('#checkBlurb').textContent = c.blurb;
   $('#checkReasons').innerHTML = reasonsHtml(c.reasons, c.signals, c.verdict);
   $('#checkWallet').innerHTML = walletHtml(c);
@@ -110,9 +115,9 @@ function showCheck(slug) {
 fetch('data/checks.json').then((r) => r.json()).then((d) => {
   CHECKS = d.checks;
   const tab = (c) => `<button class="tab" role="tab" data-slug="${c.slug}"><span class="s ${cls(c.verdict)}"></span>${esc(c.title)}</button>`;
-  $('#chips').innerHTML = '<div class="tab-grp">Phishing gym</div>' + CHECKS.filter((c) => c.kind !== 'real').map(tab).join('') + '<div class="tab-grp">Live sites</div>' + CHECKS.filter((c) => c.kind === 'real').map(tab).join('');
+  $('#chips').innerHTML = '<div class="tab-grp">2026 drainer traps</div>' + CHECKS.filter((c) => c.kind === 'new').map(tab).join('') + '<div class="tab-grp">Phishing gym basics</div>' + CHECKS.filter((c) => c.kind === 'gym').map(tab).join('') + '<div class="tab-grp">Live sites</div>' + CHECKS.filter((c) => c.kind === 'real').map(tab).join('');
   $('#chips').addEventListener('click', (e) => { const b = e.target.closest('.tab'); if (b) { showCheck(b.dataset.slug); b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } });
-  showCheck('clone');
+  showCheck('claim');
 });
 $('#stepsBtn').addEventListener('click', () => {
   const el = $('#checkSteps'), open = el.classList.toggle('hidden') === false;
@@ -136,7 +141,7 @@ function renderArena(upTo = 99) {
     const caught = r.outcome === 'CAUGHT';
     const after = r.builder?.rulesAfter ?? r.rulesBefore;
     return `<article class="round ${vis ? '' : 'dim'}">
-      <div class="round-h"><h3>${r.round}. ${esc(r.move)}</h3><span class="mono">rules v${r.rulesBefore}${after !== r.rulesBefore ? ` to v${after}` : ''}</span></div>
+      <div class="round-h"><h3>${r.round}. ${esc(r.move)}${r.real ? ' <span class="mono tag">real link</span>' : ''}</h3><span class="mono">rules v${r.rulesBefore}${after !== r.rulesBefore ? ` to v${after}` : ''}</span></div>
       <p class="taunt">&ldquo;${esc(r.taunt || r.pitch)}&rdquo;</p>
       <span class="outcome ${caught ? 'caught' : 'fixed'}">${esc(r.outcome)}</span>
       <div class="r-line">First try: <span class="${vcls(r.first?.verdict)}">${esc(r.first?.verdict)}</span>${r.first?.reasons?.length ? ` (${esc(r.first.reasons.map((x) => x.id).join(', '))})` : ''}</div>
@@ -148,7 +153,7 @@ function renderArena(upTo = 99) {
 fetch('data/arena.json').then((r) => r.json()).then((d) => {
   ARENA = d; renderArena();
   const when = new Date(d.finishedAt).toLocaleString('en-GB', { timeZone: 'Africa/Lagos', dateStyle: 'medium', timeStyle: 'short' });
-  $('#arenaFoot').innerHTML = `Recorded ${esc(when)} Lagos time &middot; ${d.rounds.length} rounds &middot; ${Number(d.credits).toFixed(1)} Kane credits &middot; <a href="https://github.com/kaizen-builds/safuclick/blob/main/docs/runs/loop/transcript.txt" target="_blank" rel="noopener">full transcript</a>`;
+  $('#arenaFoot').innerHTML = `Recorded ${esc(when)} Lagos time &middot; ${d.rounds.length} rounds &middot; ${Number(d.credits).toFixed(1)} Kane credits &middot; <a href="https://github.com/kaizen-builds/safuclick/tree/main/docs/runs" target="_blank" rel="noopener">transcripts</a>`;
 });
 $('#arenaPlay').addEventListener('click', () => {
   if (!ARENA) return;
@@ -211,7 +216,7 @@ $('#liveForm').addEventListener('submit', async (e) => {
     if (job.status !== 'done') throw new Error(job.error || 'The check failed');
     const v = job.verdict;
     $('#liveState').textContent = `done · ${Math.round((Date.now() - t0) / 1000)}s`;
-    $('#liveVerdict').innerHTML = verdictHtml(v.verdict, v.url) + reasonsHtml(v.reasons, v.signals, v.verdict) + kaneHtml(v.kane);
+    $('#liveVerdict').innerHTML = verdictHtml(v.verdict, v.url, v.resembles) + reasonsHtml(v.reasons, v.signals, v.verdict) + kaneHtml(v.kane);
     $('#liveSteps').innerHTML = stepsHtml(job.steps?.length ? job.steps : v.kane?.steps);
     const card = '/api/card?id=' + encodeURIComponent(j.id);
     $('#liveCard').innerHTML = `<img class="safucard" alt="SafuCard for this check" src="${card}"><a class="link-btn" style="margin-top:10px;display:inline-block" href="${card}&download=1">download SafuCard</a>`;

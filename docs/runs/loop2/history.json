@@ -1,0 +1,284 @@
+{
+  "finishedAt": "2026-11-16T00:42:31.049Z",
+  "credits": 152.227664,
+  "history": [
+    {
+      "round": 1,
+      "move": "permit-claim",
+      "pitch": "Evolved off-chain: a gas-free 'sign to claim' airdrop on the REAL domain. No transaction at all, just an eth_signTypedData_v4 Permit2 PermitSingle: UNLIMITED USDC to an unknown spender, valid for 3 years.",
+      "taunt": "No transaction. No gas. Just a signature. Your rules only read transactions.",
+      "url": "http://safuswap.localhost:4110/",
+      "rulesBefore": 2,
+      "first": {
+        "verdict": "NO KNOWN TRAPS FOUND",
+        "reasons": [],
+        "kane": {
+          "status": "passed",
+          "one_liner": "reviewed and rejected a token-permit claim request on SafuSwap",
+          "summary": "Connected the SafuWallet test wallet and started the claim request.\nThe wallet showed a token-permit signature request, so it was rejected rather than approved.\nThe request was a Permit2 PermitSingle / PermitSingle for unlimited USDC, allowing spender 0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e to use USDC token 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.\nThe permit would have expired on 2029-11-15 (in 1095 days).",
+          "credits": 39.606413,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWDWRE9KTDBJTQXPYWWK0G/dashboard/share/US_EX9U56PVFXAROWFVTK2EZP3272Z0X21ZIYQ3TMAFO4795VVEM8DYDQLQPFSZOOPL?type=summary&agentView=true&fqdn=summary-page",
+          "reason_code": "success.complete",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=c92de491"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet button top-right"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "click: Clicking the Claim button for 2,000 SFU"
+            },
+            {
+              "step": 6,
+              "remark": "wait: PRIMARY: read the SafuWallet popup in full: Request, Signature type, Token, Spen"
+            },
+            {
+              "step": 7,
+              "remark": "analyze: The popup is a harmless message."
+            },
+            {
+              "step": 2,
+              "remark": "click: Clicking Reject in the SafuWallet popup"
+            },
+            {
+              "step": 3,
+              "remark": "wait: Waiting confirm the rejection result and report the SafuWallet popup signature details"
+            },
+            {
+              "step": 10,
+              "remark": "wait: PRIMARY: wait for the conditional SafuWallet safety handling to complete"
+            },
+            {
+              "step": 11,
+              "remark": "wait: Waiting verify the SafuWallet signature rejection result"
+            }
+          ]
+        },
+        "runDir": "docs/runs/loop2/01-permit-claim-first",
+        "rulesVersion": 2
+      },
+      "outcome": "MISSED → FIXED",
+      "builder": {
+        "changes": [
+          "signatures.* on: decode eth_signTypedData_v4 Permit/Permit2 and flag unknown spender, unlimited amount or expiry > 30 days",
+          "kane.textPatterns += \"permit\"",
+          "kane.textPatterns += \"signature\""
+        ],
+        "testsOk": true,
+        "rulesAfter": 3,
+        "fixPrompt": "docs/runs/loop2/prompts/round-1-fix.md"
+      },
+      "recheck": {
+        "verdict": "TRAP FLAGGED",
+        "reasons": [
+          {
+            "id": "permit_signature",
+            "source": "rule:signature",
+            "detail": "Gas-free Permit2 PermitSingle signature would let 0xc1a1ec…1a1e move UNLIMITED USDC until 2029-11-15 (unknown spender, UNLIMITED amount, valid 1095 days). No transaction needed: one signature is enough to drain"
+          }
+        ],
+        "kane": {
+          "status": "passed",
+          "one_liner": "reviewed and rejected an unlimited USDC permit on SafuSwap",
+          "summary": "Connected the wallet by selecting Connect Wallet and confirming the connection.\nSelected Claim and reviewed the SafuWallet signature request in full.\nThe request was a Permit2 PermitSingle / PermitSingle token permit for USDC (0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48), allowing spender 0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e to move an unlimited amount of USDC until 2029-11-15 (in 1095 days).\nRejected the signature because it granted token-moving permission to an unknown spender for an unlimited amount with a far-future expiration.\nThe wallet reported: “Signature rejected in wallet.”",
+          "credits": 43.58180599999999,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWHS3MDA6N6Y9GXYPHD1GR/dashboard/share/US_ITGPS04DI46SNQZLUICR8K9RM2VR6I3HO9GRBW7WXAIWPE1V0W8P86ZQ7WUC1F98?type=summary&agentView=true&fqdn=summary-page",
+          "reason_code": "success.complete",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=6384fa37"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "click: Clicking the Claim button on the SafuSwap Airdrop claim card"
+            },
+            {
+              "step": 6,
+              "remark": "analyze: The SafuWallet popup is a harmless message."
+            },
+            {
+              "step": 2,
+              "remark": "click: Clicking Reject in the SafuWallet popup"
+            },
+            {
+              "step": 3,
+              "remark": "wait: Waiting for the rejection result to remain visible"
+            },
+            {
+              "step": 9,
+              "remark": "analyze: ANALYZE(textual_visual, 'The claim result from the SafuWallet popup is saved as "
+            },
+            {
+              "step": 10,
+              "remark": "wait: Waiting after confirming the recorded claim result"
+            }
+          ]
+        },
+        "runDir": "docs/runs/loop2/01-permit-claim-recheck",
+        "rulesVersion": 3
+      }
+    },
+    {
+      "round": 2,
+      "move": "ice-allowance",
+      "pitch": "Evolved: skip approve() entirely. 'Swap 10 USDC' calls increaseAllowance(attacker, MAX), which approve-only rules never decode.",
+      "taunt": "approve() is watched. increaseAllowance() isn't. Same drain, different function name.",
+      "url": "http://safuswap.localhost:4110/",
+      "rulesBefore": 3,
+      "first": {
+        "verdict": "NO KNOWN TRAPS FOUND",
+        "reasons": [],
+        "kane": {
+          "status": "passed",
+          "one_liner": "rejected an unsafe 10 USDC swap confirmation on SafuSwap",
+          "summary": "You asked to connect a wallet, set a 10 USDC swap, and review the wallet confirmation details.\nThe wallet was connected and the swap amount was set to 10 USDC.\nThe confirmation showed an allowance increase rather than a swap of exactly 10 USDC, so it was rejected.\nThe swap was not completed.",
+          "credits": 36.3559225,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWNRA92HGMNJGDRS6NMCQV/dashboard/share/US_18Z3PF884926WLELGUYWUSKL2OJTZH40IK9JTQ7GH662YWKQY6PVQH2WG330HLSV?type=summary&agentView=true&fqdn=summary-page",
+          "reason_code": "success.complete",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=944e94c2"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet in the top-right corner"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "wait: PRIMARY: the \"You pay\" amount is set to 10 USDC; role=textbox; text=\"Amount to s"
+            },
+            {
+              "step": 6,
+              "remark": "click: Clicking the Swap button on the card"
+            },
+            {
+              "step": 7,
+              "remark": "analyze: the SafuWallet popup is a Swap of exactly 10 USDC"
+            },
+            {
+              "step": 2,
+              "remark": "click: Clicking Reject in the SafuWallet popup"
+            },
+            {
+              "step": 3,
+              "remark": "analyze: ANALYZE(devtool_network, 'The added Amount line from the SafuWallet popup is sav"
+            },
+            {
+              "step": 4,
+              "remark": "wait: Waiting after the wallet rejection is confirmed"
+            },
+            {
+              "step": 9,
+              "remark": "wait: Waiting confirm the SafuWallet popup has been dismissed after rejection"
+            }
+          ]
+        },
+        "runDir": "docs/runs/loop2/02-ice-allowance-first",
+        "rulesVersion": 3
+      },
+      "outcome": "MISSED → FIXED",
+      "builder": {
+        "changes": [
+          "approval.includeIncrease = true (increaseAllowance / increaseApproval get the same checks as approve)"
+        ],
+        "testsOk": true,
+        "rulesAfter": 4,
+        "fixPrompt": "docs/runs/loop2/prompts/round-2-fix.md"
+      },
+      "recheck": {
+        "verdict": "TRAP FLAGGED",
+        "reasons": [
+          {
+            "id": "increase_allowance",
+            "source": "rule:wallet",
+            "detail": "Page called increaseAllowance(0x1ce1ce…1ce1, UNLIMITED USDC) while the UI said \"swap 10 USDC\". It ADDS to any existing allowance and dodges approve-only checks (ice phishing)"
+          },
+          {
+            "id": "unlimited_approval",
+            "source": "rule:wallet",
+            "detail": "Page asked the wallet for UNLIMITED USDC allowance increase to 0x1ce1ce…1ce1 while the UI said \"swap 10 USDC\""
+          },
+          {
+            "id": "unknown_spender",
+            "source": "rule:wallet",
+            "detail": "Approval spender 0x1ce1ce…1ce1 is not a known router"
+          }
+        ],
+        "kane": {
+          "status": "passed",
+          "one_liner": "rejected an unsafe allowance request on SafuSwap",
+          "summary": "Connected a wallet and confirmed the initial SafuWallet request.\nEntered 10 USDC as the amount to pay and started the swap.\nSafuWallet showed an “Increase allowance” request rather than a swap for exactly 10 USDC, so the request was rejected and the swap was not completed.\nThe available run details did not include the spender or the added allowance amount shown in the popup.",
+          "credits": 32.6835225,
+          "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GWS7CXWJG96HP5M1AXDHQK/dashboard/share/US_W4B2KSXTL1UZUIL4NNM62KF90RQL8WWLODQC1YDY209EE97MLDZTGD4FLX1FO8BR?type=summary&agentView=true&fqdn=summary-page",
+          "reason_code": "success.complete",
+          "steps": [
+            {
+              "step": 2,
+              "remark": "navigate: Navigate to http://safuswap.localhost:4110/?safu_run=44587cb8"
+            },
+            {
+              "step": 3,
+              "remark": "click: Clicking Connect Wallet (top right)"
+            },
+            {
+              "step": 4,
+              "remark": "click: Clicking Confirm in the SafuWallet popup"
+            },
+            {
+              "step": 5,
+              "remark": "click: Clicking the Swap button"
+            },
+            {
+              "step": 6,
+              "remark": "wait: PRIMARY: SafuWallet popup Action, Spender and Amount lines have been read"
+            },
+            {
+              "step": 7,
+              "remark": "analyze: The SafuWallet popup is a Swap of exactly 10 USDC."
+            },
+            {
+              "step": 2,
+              "remark": "click: Clicking Reject in the SafuWallet popup"
+            },
+            {
+              "step": 3,
+              "remark": "analyze: ANALYZE(devtool_network, 'The added Amount line from the SafuWallet popup is sav"
+            },
+            {
+              "step": 4,
+              "remark": "wait: Waiting after rejecting the unsafe SafuWallet request"
+            },
+            {
+              "step": 9,
+              "remark": "wait: Waiting after the SafuWallet rejection status is displayed"
+            }
+          ]
+        },
+        "runDir": "docs/runs/loop2/02-ice-allowance-recheck",
+        "rulesVersion": 4
+      }
+    }
+  ]
+}
