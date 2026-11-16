@@ -13,7 +13,7 @@
   <circle cx="88" cy="160" r="28" fill="#3E6A4C"/>
   <text x="88" y="168" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="#FBF7EF">OK</text>
   <text x="136" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="900" fill="#3E6A4C">NO KNOWN TRAPS FOUND</text>
-  <text x="72" y="216" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#7D6273">http://safuswap.localhost:4100/</text>
+  <text x="72" y="216" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#7D6273">http://safuswap.localhost:4100</text>
   <text x="72" y="250" font-size="20" fill="#3E6A4C">No known trap patterns on this run.</text>
   <text x="72" y="500" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#4A1D3F">Domain: safuswap.localhost (official allowlist)  ·  gym / mock-wallet mode</text>
   <text x="72" y="528" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#6B2D5C">Kane CLI: passed: completed a 10 USDC swap on SafuSwap</text>

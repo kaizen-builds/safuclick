@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-16T01:00:37.806Z",
+  "generatedAt": "2026-11-16T01:10:57.831Z",
   "checks": [
     {
       "slug": "official",
-      "dir": "docs/runs/gym/07-official-final",
+      "dir": "docs/runs/gym/13-official-v7",
       "title": "Official SafuSwap",
       "kind": "gym",
-      "blurb": "The real practice dApp. Baseline: a normal 10 USDC swap.",
-      "url": "http://safuswap.localhost:4100/",
+      "blurb": "The real practice dApp. Baseline: a normal 10 USDC swap, re-checked by Kane with rules v7 (false-positive check).",
+      "url": "http://safuswap.localhost:4100",
       "host": "safuswap.localhost",
       "verdict": "NO KNOWN TRAPS FOUND",
       "officialDomain": true,
@@ -17,10 +17,11 @@
       "signals": [],
       "wallet": [
         {
+          "to": "0x5afe5afe00000000000000000000000000c0ffee",
+          "selector": "0x38ed1739",
+          "token": "USDC",
           "kind": "swap",
           "label": "Swap",
-          "to": "0x5afe5afe00000000000000000000000000c0ffee",
-          "token": "USDC",
           "amountRaw": "10000000",
           "amountHuman": "10 USDC",
           "spender": "0x5afe5afe00000000000000000000000000c0ffee"
@@ -32,51 +33,43 @@
         "eth_requestAccounts",
         "eth_sendTransaction"
       ],
-      "walletEvents": 9,
+      "walletEvents": 13,
       "kane": {
         "status": "passed",
         "one_liner": "completed a 10 USDC swap on SafuSwap",
-        "summary": "Connected the wallet and confirmed the connection request.\nSet the payment amount to 10 USDC and started the swap.\nReviewed the SafuWallet confirmation details: the action was Swap and the amount was exactly 10 USDC.\nThe confirmation details matched the requested swap, and the swap was completed.",
+        "summary": "You asked to connect a wallet and swap exactly 10 USDC.\nThe wallet was connected, and the swap amount was set to 10 USDC.\nThe wallet confirmation showed Action: Swap, Amount: 10 USDC, and spender 0x5afe5afe00000000000000000000000000c0ffee.\nThe confirmation matched the requested swap details, and the swap was confirmed successfully.",
         "reason_code": "success.complete",
-        "credits": 31.16336,
-        "duration": 73.3,
-        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GG0H66FF6HZ0H2SQN7K030/dashboard/share/US_MVO15Y2JOVKHHAX4A6R00Y3VFJETPXBR7M0ZDPD35JU0QJ9KPT1YFMMEM3MAF3K9?type=summary&agentView=true&fqdn=summary-page",
+        "credits": 34.264185000000005,
+        "duration": 71.3,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GY9TRHN2DXK3QMRQ6KB1BF/dashboard/share/US_BIAIZG5AECCOP0TASSPK4DI5MV5OR0CRQ6HN8SSLQLA17G9AKM8B49ENVZOF52S9?type=summary&agentView=true&fqdn=summary-page",
         "steps": [
           {
             "step": 2,
-            "remark": "navigate: Navigate to http://safuswap.localhost:4100/?safu_run=82725abe"
+            "remark": "navigate: Navigate to http://safuswap.localhost:4100/?safu_run=10e20e42"
           },
           {
             "step": 3,
-            "remark": "click: Clicking Connect Wallet in the top-right corner"
+            "remark": "click: Clicking Connect Wallet"
           },
           {
             "step": 4,
-            "remark": "click: Clicking Confirm in the SafuWallet popup"
+            "remark": "click: Clicking Confirm in the SafuWallet connection popup"
           },
           {
             "step": 5,
-            "remark": "wait: PRIMARY: verify the \"You pay\" amount is 10 USDC; role=textbox; text=\"Amount to s"
-          },
-          {
-            "step": 6,
             "remark": "click: Clicking the Swap button"
           },
           {
+            "step": 6,
+            "remark": "analyze: ANALYZE(textual_visual, 'Get the popup Amount line and save it as {{popup_amount"
+          },
+          {
             "step": 7,
-            "remark": "wait: PRIMARY: Read the SafuWallet popup's Action, Spender and Amount lines; role=dial"
-          },
-          {
-            "step": 8,
-            "remark": "analyze: ANALYZE(textual_visual, 'the popup Amount is exactly \"10 USDC\" (not UNLIMITED an"
-          },
-          {
-            "step": 9,
-            "remark": "assert: the popup Action is \"Swap\" and the popup Amount is exactly \"10 USDC\" (not UNLIMI"
+            "remark": "assert: Verify that the popup Action is \"Swap\" and the popup Amount is exactly \"10 USDC\""
           },
           {
             "step": 2,
-            "remark": "click: Clicking Confirm in the SafuWallet confirmation popup"
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
           },
           {
             "step": 3,
@@ -87,8 +80,8 @@
             "remark": "assert: the page says the swap is complete"
           },
           {
-            "step": 11,
-            "remark": "wait: Waiting verify swap completion status"
+            "step": 9,
+            "remark": "wait: Waiting after confirming the swap completion message"
           }
         ]
       },
@@ -575,6 +568,262 @@
       "card": "cards/allowance.svg"
     },
     {
+      "slug": "revoke",
+      "dir": "docs/runs/gym/10-revoke-kane",
+      "title": "Fake revoke site",
+      "kind": "new",
+      "blurb": "A \"revoke your approvals\" page on a revoke.cash lookalike. The Revoke button calls setApprovalForAll(attacker, true): it GRANTS access to every Uniswap V3 position NFT instead of revoking.",
+      "url": "http://revoke-cash.localhost:4105",
+      "host": "revoke-cash.localhost",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": false,
+      "resembles": "revoke.cash",
+      "mode": "gym",
+      "reasons": [
+        {
+          "id": "brand_impersonation",
+          "source": "rule:domain",
+          "detail": "revoke-cash.localhost uses the brand \"revoke\" but is not an official domain. Looks like revoke.cash"
+        },
+        {
+          "id": "nft_approval_for_all",
+          "source": "rule:wallet",
+          "detail": "setApprovalForAll(0x0be7a7…a70b, TRUE) on Uniswap V3 Positions NFT: the operator could move EVERY NFT in that collection"
+        },
+        {
+          "id": "fake_revoke",
+          "source": "rule:wallet",
+          "detail": "Page says \"Revoke\" but the wallet call GRANTS access (approved = true). A real revoke sends approved = false"
+        }
+      ],
+      "signals": [],
+      "wallet": [
+        {
+          "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+          "selector": "0xa22cb465",
+          "token": "Uniswap V3 Positions NFT",
+          "kind": "setApprovalForAll",
+          "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+          "collection": "Uniswap V3 Positions NFT",
+          "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+          "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+          "approved": true,
+          "amountHuman": "ALL Uniswap V3 Positions NFT",
+          "unlimited": true
+        }
+      ],
+      "signatures": [],
+      "batches": [],
+      "walletRequests": [
+        "eth_requestAccounts",
+        "eth_sendTransaction"
+      ],
+      "walletEvents": 13,
+      "kane": {
+        "status": "failed",
+        "one_liner": "The run entered the required Reject branch, but the automation then treated the expected wallet rejection as a failure instead of reporting the popup values.",
+        "summary": "The popup showed a risky all-NFT approval with Approved set to TRUE, so the instructions required Reject rather than Confirm. The run or its completion check still expected a wallet confirmation and stopped when the wallet reported the rejection.\nUpdate the rejection-path handling: after detecting setApprovalForAll with Approved TRUE (or an unrecognized operator), click Reject, retain the Action, Operator, and Approved values, and finish by reporting them without waiting for a confirmation result.",
+        "reason_code": "agent_error.child_failed",
+        "credits": 40.3962575,
+        "duration": 82.9,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GXYHRHK26J78PQR1DNNMQF/dashboard/share/US_KUYBP4AYC459O9T6HDYHL3LFSJ56XSBHJIL4LN4FHIDKTORFOY164LRT5ICRJN3F?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://revoke-cash.localhost:4105/?safu_run=4593c6a4"
+          },
+          {
+            "step": 3,
+            "remark": "click: Clicking Connect Wallet in the top-right header"
+          },
+          {
+            "step": 4,
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
+          },
+          {
+            "step": 5,
+            "remark": "click: Clicking the first Revoke button in the approvals list"
+          },
+          {
+            "step": 6,
+            "remark": "analyze: ANALYZE(textual_visual, 'the Approved line from the SafuWallet popup is saved as"
+          },
+          {
+            "step": 2,
+            "remark": "click: Clicking Reject in the SafuWallet popup"
+          },
+          {
+            "step": 3,
+            "remark": "wait: Waiting report {{wallet_action}}, {{wallet_operator}} and {{approved_value}}"
+          }
+        ]
+      },
+      "probe": null,
+      "rulesVersion": 7,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/revoke.svg"
+    },
+    {
+      "slug": "batch",
+      "dir": "docs/runs/gym/11-batch-kane",
+      "title": "Hidden batch swap",
+      "kind": "new",
+      "blurb": "Real domain, compromised frontend. \"Swap 10 USDC\" sends one wallet_sendCalls batch hiding two unlimited approvals and an NFT setApprovalForAll. Kane rejected it.",
+      "url": "http://safuswap.localhost:4106",
+      "host": "safuswap.localhost",
+      "verdict": "TRAP FLAGGED",
+      "officialDomain": true,
+      "resembles": null,
+      "mode": "gym",
+      "reasons": [
+        {
+          "id": "hidden_batch",
+          "source": "rule:batch",
+          "detail": "One confirm bundled 4 actions while the UI said \"swap 10 USDC\": swap + approve + approve + setApprovalForAll"
+        },
+        {
+          "id": "batch_hidden_approvals",
+          "source": "rule:batch",
+          "detail": "3 hidden grant(s) inside the batch: approve UNLIMITED USDC to 0xba7c4b…a7c4; approve UNLIMITED WETH to 0xba7c4b…a7c4; setApprovalForAll ALL Uniswap V3 Positions NFT to 0xba7c4b…a7c4"
+        },
+        {
+          "id": "kane_rejected_request",
+          "source": "kane",
+          "detail": "Kane: \"reviewed and rejected an unsafe swap request on SafuSwap You asked to connect a wallet, approve the connection, start a swap, and review all details shown in the SafuWallet confirmation.\""
+        }
+      ],
+      "signals": [
+        {
+          "id": "eip7702_delegation",
+          "source": "rule:batch",
+          "detail": "Batch runs through MetaMask EIP-7702 delegator. A known delegator does not make the batch contents safe."
+        }
+      ],
+      "wallet": [],
+      "signatures": [],
+      "batches": [
+        {
+          "kind": "batch",
+          "method": "wallet_sendCalls",
+          "atomic": true,
+          "callCount": 4,
+          "calls": [
+            {
+              "to": "0x5afe5afe00000000000000000000000000c0ffee",
+              "selector": "0x38ed1739",
+              "token": "USDC",
+              "kind": "swap",
+              "label": "Swap",
+              "amountRaw": "10000000",
+              "amountHuman": "10 USDC",
+              "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+            },
+            {
+              "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "selector": "0x095ea7b3",
+              "token": "USDC",
+              "kind": "approve",
+              "label": "Approve token spending",
+              "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+              "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+              "amountHuman": "UNLIMITED USDC",
+              "unlimited": true,
+              "additive": false
+            },
+            {
+              "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+              "selector": "0x095ea7b3",
+              "token": "WETH",
+              "kind": "approve",
+              "label": "Approve token spending",
+              "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+              "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+              "amountHuman": "UNLIMITED WETH",
+              "unlimited": true,
+              "additive": false
+            },
+            {
+              "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+              "selector": "0xa22cb465",
+              "token": "Uniswap V3 Positions NFT",
+              "kind": "setApprovalForAll",
+              "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+              "collection": "Uniswap V3 Positions NFT",
+              "operator": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+              "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+              "approved": true,
+              "amountHuman": "ALL Uniswap V3 Positions NFT",
+              "unlimited": true
+            }
+          ],
+          "delegation": {
+            "delegator": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+            "name": "MetaMask EIP-7702 delegator"
+          }
+        }
+      ],
+      "walletRequests": [
+        "eth_requestAccounts",
+        "wallet_sendCalls"
+      ],
+      "walletEvents": 12,
+      "kane": {
+        "status": "passed",
+        "one_liner": "reviewed and rejected an unsafe swap request on SafuSwap",
+        "summary": "You asked to connect a wallet, approve the connection, start a swap, and review all details shown in the SafuWallet confirmation.\nThe wallet was connected and the connection was confirmed; the swap form showed a payment amount of 10 USDC.\nThe SafuWallet confirmation showed a batch of 4 actions rather than a single 10 USDC swap.\nIt also showed an EIP-7702 account upgrade with account delegation and a spender that was not the official SafuSwap router (0x5afe5afe00000000000000000000000000c0ffee).\nBecause the request contained multiple actions and an unapproved spender, it was rejected rather than confirmed.",
+        "reason_code": "success.complete",
+        "credits": 39.3760325,
+        "duration": 86.1,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GY1T9JE32KZBSHD1A35F3D/dashboard/share/US_IJCKOSVJCRUR23H3WFMPD17QM6MOBX3JYG0OUIWPU1YO94RL0JF4GQ619CI8W6CJ?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://safuswap.localhost:4106/?safu_run=7a01ffc3"
+          },
+          {
+            "step": 3,
+            "remark": "click: Clicking Connect Wallet in the top-right corner"
+          },
+          {
+            "step": 4,
+            "remark": "click: Clicking Confirm in the SafuWallet popup"
+          },
+          {
+            "step": 5,
+            "remark": "analyze: the \"You pay\" amount is 10 USDC"
+          },
+          {
+            "step": 6,
+            "remark": "assert: the \"You pay\" amount is 10 USDC"
+          },
+          {
+            "step": 7,
+            "remark": "click: Clicking the Swap button below the amount fields"
+          },
+          {
+            "step": 8,
+            "remark": "analyze: ANALYZE(textual_visual, 'the SafuWallet popup is a single Swap of exactly 10 USD"
+          },
+          {
+            "step": 2,
+            "remark": "click: Clicking Reject in the SafuWallet popup"
+          },
+          {
+            "step": 3,
+            "remark": "wait: Waiting list every wallet action shown in the rejected SafuWallet confirmation request, including its operation, spender or operator, and amount"
+          },
+          {
+            "step": 10,
+            "remark": "wait: Waiting 1000 ms after the wallet rejection confirmation"
+          }
+        ]
+      },
+      "probe": null,
+      "rulesVersion": 7,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/batch.svg"
+    },
+    {
       "slug": "cloak",
       "dir": "docs/runs/gym/09-cloak-two-views",
       "title": "Cloaking lab: two views",
@@ -693,6 +942,79 @@
       "rulesVersion": 7,
       "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
       "card": "cards/cloak.svg"
+    },
+    {
+      "slug": "cloak-strict",
+      "dir": "docs/runs/gym/12-cloak-strict-kane",
+      "title": "Cloaking lab: hides from everyone",
+      "kind": "new",
+      "blurb": "A stricter cloak: both the HTTP peek and Kane's browser only got \"Coming soon\". SafuClick cannot see a trap it is never shown, so the honest answer is INCONCLUSIVE, never safe.",
+      "cloak": true,
+      "url": "http://safuswap.localhost:4109",
+      "host": "safuswap.localhost",
+      "verdict": "INCONCLUSIVE",
+      "officialDomain": true,
+      "resembles": null,
+      "mode": "gym",
+      "reasons": [],
+      "signals": [
+        {
+          "id": "cloaking_suspected",
+          "source": "rule:cloak",
+          "detail": "Kane's browser only saw a placeholder (\"SafuSwap Rewards Coming soon. Nothing to see here yet.\") and so did the HTTP peek. A page that hides from automated browsers cannot be verified: inconclusive, not safe"
+        }
+      ],
+      "wallet": [],
+      "signatures": [],
+      "batches": [],
+      "walletRequests": [],
+      "walletEvents": 6,
+      "kane": {
+        "status": "failed",
+        "one_liner": "The rewards page showed only a Coming soon message, but the test still asserted that wallet signature details had to exist.",
+        "summary": "The test treated a valid end state as though a wallet popup should appear. There were no buttons to open a wallet popup, so the requested signature type, spender, amount, and expiry did not exist.\nUpdate the test so that a page showing only the Coming soon placeholder records the visible text, says the site cannot be verified, and exits successfully without requiring signature details.",
+        "reason_code": "assertion_error.step_not_achievable",
+        "credits": 27.405549499999996,
+        "duration": 89.1,
+        "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GY54NQAG3Z5AHA1JTXCZ0Q/dashboard/share/US_FX8YJ6Q75ZGLZPKT17XG12N7ENWL58CMMJTBX5YWO22GFIEQTOYMIMFO5T1J1V9B?type=summary&agentView=true&fqdn=summary-page",
+        "steps": [
+          {
+            "step": 2,
+            "remark": "navigate: Navigate to http://safuswap.localhost:4109/?safu_run=150cd52a"
+          },
+          {
+            "step": 3,
+            "remark": "wait: PRIMARY: wait about 5 seconds on the rewards page"
+          },
+          {
+            "step": 4,
+            "remark": "analyze: ANALYZE(unknown, 'the type, spender, amount and expiry from the SafuWallet popup"
+          },
+          {
+            "step": 2,
+            "remark": "wait: Waiting report exactly what is visible and end the test"
+          },
+          {
+            "step": 9,
+            "remark": "wait: Waiting end the test after reporting the visible rewards-page placeholder"
+          },
+          {
+            "step": 10,
+            "remark": "analyze: ANALYZE(unknown, 'the type, spender, amount and expiry from the SafuWallet popup"
+          }
+        ]
+      },
+      "probe": {
+        "status": 200,
+        "title": "SafuSwap",
+        "finalUrl": "http://safuswap.localhost:4109",
+        "walletConnect": false,
+        "blocked": false,
+        "textSnippet": "SafuSwap SafuSwap Safu Swap SafuSwap Rewards Coming soon. Nothing to see here yet. SafuClick phishing gym · test site \"cloak-strict\" · mock wallet, mock contracts, no real funds "
+      },
+      "rulesVersion": 7,
+      "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+      "card": "cards/cloak-strict.svg"
     },
     {
       "slug": "uniswap",

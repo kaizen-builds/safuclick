@@ -190,6 +190,10 @@ The clone row is the point of the whole project. A pixel-perfect clone **passes*
 | increaseAllowance ice phishing (loop round 5) | passed after rejecting it | 🚨 TRAP FLAGGED | `increase_allowance`, `unlimited_approval`, `unknown_spender` to `0x1ce1ce…1ce1` |
 | Cloaking lab, two views | passed, *"reviewed the rewards page"* | 🚨 TRAP FLAGGED | HTTP peek: "Coming soon"; Kane + wallet: EIP-2612 Permit, UNLIMITED USDC to `0xc10a4c…10a4` → `cloaking_suspected` |
 | usdc082.com (real X DM, fake exchange) | v5: passed, missed. v6 re-check: stuck at max steps | MISSED → 🚨 TRAP FLAGGED | `ticker_digits_domain`; signals: title "onkeyon", Turnstile, registered 2025-12-29. Kane never logs in. |
+| Fake revoke site (Nov 16 verify run) | failed after rejecting the request (40.4 cr) | 🚨 TRAP FLAGGED | `fake_revoke`, `nft_approval_for_all`: setApprovalForAll(`0x0be7a7…a70b`, **true**) on Uniswap V3 Positions, `brand_impersonation` (looks like revoke.cash) |
+| Hidden batch swap (Nov 16 verify run) | passed, *"reviewed and rejected an unsafe swap request"* (39.4 cr) | 🚨 TRAP FLAGGED | `hidden_batch`: one `wallet_sendCalls` = swap + 2 UNLIMITED approvals + setApprovalForAll to `0xba7c4b…a7c4` |
+| Strict cloak (Nov 16 verify run) | failed: only a "Coming soon" page (27.4 cr) | ❔ INCONCLUSIVE | both views saw the placeholder; `cloaking_suspected` signal. Not safe, not flagged: SafuClick can't judge a trap it is never shown |
+| Official SafuSwap, rules v7 (Nov 16 verify run) | passed, "completed a 10 USDC swap" (34.3 cr) | ✅ NO KNOWN TRAPS FOUND | false-positive check on the real site |
 
 Both loop rounds were **MISSED → FIXED**: Kane followed the objective, rejected the request and reported "passed", so no rule fired; the builder then switched on Permit/Permit2 decoding (v2→v3) and `increaseAllowance` checks (v3→v4). Since v5, "Kane passed by rejecting the request" also counts as a Kane signal. Revoke, batch and cloak-strict are covered by scripted gym captures and tests (`test/new-traps.test.js`); their real Kane runs are still to do.
 
