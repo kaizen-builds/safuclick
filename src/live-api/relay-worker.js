@@ -14,22 +14,50 @@ if (!SECRET || !/^[A-Za-z0-9]{16,40}$/.test(SECRET)) { console.error('Set SAFU_R
 const T_JOBS = `sc-${SECRET}-jobs`, T_HB = `sc-${SECRET}-hb`, tResult = (id) => `sc-${SECRET}-r-${id}`;
 const CURSOR = path.join(STATE, 'live-api', 'relay-cursor.json');
 const MAX_REJECT_MSGS = Number(process.env.SAFU_MAX_REJECT_MSGS || 50);
-const HB_MS = 20 * 60 * 1000;
+// Heartbeats used to go out every 20 minutes, so a wedged worker could look
+// fine until /api/status noticed a 50-minute gap. Send often enough that a
+// missed run can trip the liveness exit below.
+const HB_MS = Number(process.env.SAFU_RELAY_HB_MS || 30_000);
+const LIVE_MS = Number(process.env.SAFU_RELAY_LIVE_MS || 180_000);
+const FETCH_MS = Number(process.env.SAFU_RELAY_FETCH_MS || 20_000);
 // ntfy sends a keepalive about every 30s. If the stream goes quiet, the TCP connection is
 // probably a zombie (the bug that left jup.ag sitting in the cache for ~9 minutes).
 const IDLE_MS = Number(process.env.SAFU_RELAY_IDLE_MS || 75_000);
 const POLL_MS = Number(process.env.SAFU_RELAY_POLL_MS || 45_000);
 const STALE_MS = 10 * 60 * 1000;
+const fetchSignal = () => AbortSignal.timeout(FETCH_MS);
 const log = (...a) => console.log(new Date().toISOString(), ...a);
 
 async function publish(topic, obj) {
   try {
-    const r = await fetch(`${NTFY}/${topic}`, { method: 'POST', body: JSON.stringify(obj), headers: { 'Cache': 'yes', 'Firebase': 'no' } });
-    if (!r.ok) log('publish failed', r.status, (await r.text()).slice(0, 200));
-  } catch (e) { log('publish error', e.message); }
+    const r = await fetch(`${NTFY}/${topic}`, { method: 'POST', body: JSON.stringify(obj), headers: { 'Cache': 'yes', 'Firebase': 'no' }, signal: fetchSignal() });
+    if (!r.ok) { log('publish failed', r.status, (await r.text()).slice(0, 200)); return false; }
+    return true;
+  } catch (e) { log('publish error', e.message); return false; }
 }
 const stats = () => { const u = usage(); return { day: u.day, global: { used: u.total, cap: CAPS.global }, perIpCap: CAPS.perIp }; };
-const heartbeat = () => publish(T_HB, { type: 'hb', at: new Date().toISOString(), online: kane.ok !== false, ...stats(), queue: q.length });
+let lastHbOk = Date.now();
+async function heartbeat() {
+  const ok = await publish(T_HB, { type: 'hb', at: new Date().toISOString(), online: kane.ok !== false, ...stats(), queue: q.length });
+  if (ok) lastHbOk = Date.now();
+}
+
+// Always reschedule, even when fn throws or returns a rejected promise.
+// setInterval plus an unhandled rejection (or a hung fetch with no timeout)
+// is what let heartbeats and interval polls go quiet while the process stayed up.
+function every(ms, fn, name, first = ms) {
+  const tick = () => {
+    Promise.resolve()
+      .then(() => fn())
+      .catch((e) => log(name, 'error', e && e.message ? e.message : e))
+      .finally(() => {
+        try { setTimeout(tick, ms); }
+        catch (e) { log(name, 'reschedule error', e.message); process.exit(1); }
+      });
+  };
+  try { setTimeout(tick, first); }
+  catch (e) { log(name, 'schedule error', e.message); process.exit(1); }
+}
 
 const q = createQueue({
   onChange: (job) => {
@@ -85,7 +113,7 @@ async function pollPending(reason) {
   polling = true;
   const since = sinceMark();
   try {
-    const r = await fetch(`${NTFY}/${T_JOBS}/json?poll=1&since=${encodeURIComponent(since)}`, { cache: 'no-store' });
+    const r = await fetch(`${NTFY}/${T_JOBS}/json?poll=1&since=${encodeURIComponent(since)}`, { cache: 'no-store', signal: fetchSignal() });
     if (!r.ok) { log('poll pending failed', r.status, reason); return 0; }
     const lines = (await r.text()).split('\n').filter(Boolean);
     let n = 0;
@@ -112,8 +140,15 @@ async function subscribe() {
     const ac = new AbortController();
     let idle;
     const bump = () => {
-      clearTimeout(idle);
-      idle = setTimeout(() => ac.abort(), IDLE_MS);
+      try {
+        clearTimeout(idle);
+        idle = setTimeout(() => {
+          try { ac.abort(); } catch (e) { log('idle abort error', e.message); }
+        }, IDLE_MS);
+      } catch (e) {
+        log('idle watchdog error', e.message);
+        try { ac.abort(); } catch (err) { log('idle abort error', err.message); }
+      }
     };
     try {
       bump();
@@ -145,9 +180,15 @@ async function subscribe() {
 }
 
 checkKane();
-setInterval(checkKane, 10 * 60 * 1000);
-setTimeout(heartbeat, 4000);
-setInterval(heartbeat, HB_MS);
-setInterval(() => { pollPending('interval').catch((e) => log('poll interval error', e.message)); }, POLL_MS);
+every(10 * 60 * 1000, () => { checkKane(); }, 'checkKane');
+every(HB_MS, heartbeat, 'heartbeat', 4000);
+every(POLL_MS, () => pollPending('interval'), 'poll');
+every(30_000, () => {
+  const quiet = Date.now() - lastHbOk;
+  if (quiet > LIVE_MS) {
+    log('liveness: no successful heartbeat for', Math.round(quiet / 1000) + 's, exiting');
+    process.exit(1);
+  }
+}, 'liveness');
 log(`SafuClick relay worker · ${NTFY} · caps ${CAPS.perIp}/visitor/day, ${CAPS.global}/day (${day()} ${'Africa/Lagos'}) · one Kane run at a time`);
-subscribe();
+subscribe().catch((e) => { log('subscribe loop died', e.message); process.exit(1); });
