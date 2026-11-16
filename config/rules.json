@@ -1,10 +1,15 @@
 {
-  "version": 2,
-  "_comment": "Hardened rules (v2), produced by the closed loop (npm run loop --promote) from Kane reports. Baseline: rules.baseline.json.",
+  "version": 7,
+  "_comment": "Hardened rules. v0->v2 and v2->v4 came from the closed loop (npm run loop --promote) using real Kane reports (permit-claim, ice-allowance). v5 adds fake revoke, 7702/5792 batches, cloaking and 'Kane rejected it' by hand. Baseline: rules.baseline.json. v7: stronger lookalike detection (Damerau typos, homoglyphs/punycode, wrong TLD, subdomain tricks, ticker+digits) by hand.",
   "domain": {
     "maxEditDistance": 2,
     "flagBrandTokens": true,
-    "flagPunycode": true
+    "flagPunycode": true,
+    "flagHomoglyphs": true,
+    "flagWrongTld": true,
+    "flagSubdomainTrick": true,
+    "flagTickerDigits": true,
+    "trustOfficialSubdomains": true
   },
   "contracts": {
     "requireKnownContract": true
@@ -13,7 +18,8 @@
     "flagMaxUint": true,
     "maxAllowanceRatio": 10,
     "requireKnownSpender": true,
-    "flagAddressPoisoning": true
+    "flagAddressPoisoning": true,
+    "includeIncrease": true
   },
   "seed": {
     "patterns": [
@@ -40,12 +46,96 @@
       "mismatch",
       "approv",
       "spender",
-      "secret words"
-    ]
+      "secret words",
+      "permit",
+      "signature",
+      "setApprovalForAll",
+      "batch",
+      "increaseAllowance",
+      "delegat"
+    ],
+    "flagRejectedPass": true,
+    "rejectPattern": "\\b(reject(ed|ing)?|refused|unsafe|did not (confirm|sign|approve))\\b"
   },
   "realSite": {
     "flagSeedInKaneOrHtml": true,
     "flagSuspiciousRedirect": true,
     "walletConnectIsSignalOnly": true
+  },
+  "signatures": {
+    "decodeTypedData": true,
+    "flagUnknownSpender": true,
+    "flagLargeAmount": true,
+    "maxDeadlineDays": 30,
+    "flagEthSign": true
+  },
+  "nft": {
+    "flagApprovalForAll": true,
+    "revokeWords": [
+      "revoke",
+      "approval checker",
+      "risky approvals"
+    ]
+  },
+  "batch": {
+    "flagMultiCallForSingleAction": true,
+    "flagBulkApprovals": true,
+    "flagUnknownDelegator": true
+  },
+  "cloak": {
+    "flagViewMismatch": true,
+    "placeholderIsInconclusive": true,
+    "placeholderPatterns": [
+      "coming soon",
+      "under maintenance",
+      "launching soon",
+      "nothing to see here"
+    ],
+    "minTextLength": 0
+  },
+  "fakeExchange": {
+    "flagTickerDigitsDomain": true,
+    "tickers": [
+      "usdc",
+      "usdt",
+      "btc",
+      "eth",
+      "bnb",
+      "sol",
+      "trx",
+      "xrp",
+      "doge",
+      "busd",
+      "dai",
+      "binance",
+      "coinbase",
+      "okx",
+      "bybit",
+      "kraken",
+      "kucoin",
+      "huobi",
+      "htx",
+      "bitget",
+      "mexc",
+      "gateio"
+    ],
+    "newDomainDays": 90,
+    "flagFakeExchangeSignals": true,
+    "loginPattern": "\\b(log ?in|sign ?in|register|sign ?up|password|username)\\b",
+    "exchangeWords": [
+      "withdraw",
+      "balance",
+      "deposit",
+      "customer service",
+      "online service",
+      "vip",
+      "assets",
+      "exchange",
+      "trading",
+      "invest",
+      "bitcoin",
+      "ethereum"
+    ],
+    "minSignals": 3
   }
 }

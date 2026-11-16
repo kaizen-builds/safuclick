@@ -7,7 +7,7 @@ const { values: o, positionals } = parseArgs({ args: rest, allowPositionals: tru
   rules: { type: 'string' }, allowlist: { type: 'string' }, amount: { type: 'string' }, 'max-steps': { type: 'string' },
   replay: { type: 'string' }, json: { type: 'boolean' }, markdown: { type: 'string' }, rounds: { type: 'string' },
   port: { type: 'string' }, 'fail-on-trap': { type: 'boolean' }, promote: { type: 'boolean' }, fresh: { type: 'boolean' },
-  'real-site': { type: 'boolean' }, help: { type: 'boolean', short: 'h' },
+  'real-site': { type: 'boolean' }, scenario: { type: 'string' }, 'two-views': { type: 'boolean' }, from: { type: 'string' }, moves: { type: 'string' }, real: { type: 'string' }, first: { type: 'string' }, help: { type: 'boolean', short: 'h' },
 } });
 
 const help = `
@@ -20,11 +20,16 @@ const help = `
       --rules config/rules.json     heuristics file  --json  --markdown report.md  --fail-on-trap
       --replay <runDir>             re-judge a saved Kane run with current rules (0 credits)
       --real-site                   no mock wallet: Kane observes the live page only (no signing)
+      --scenario swap|claim|revoke|batch|allowance|cloak   which gym flow Kane should drive
+      --two-views                   also take a plain HTTP peek (no JS) and compare it with Kane's view (cloaking)
   safuclick card <runDir>           (re)write a shareable SafuCard SVG from a saved verdict
   safuclick ui [--port 4200]        web UI for checks + Scam Arena at /arena
   safuclick loop [--rounds 2]       scammer vs builder rounds refereed by Kane (closed loop)
       --fresh                       restart from config/rules.baseline.json
       --promote                     copy hardened loop rules to config/rules.json at the end
+      --from config/rules.json      start the loop from this rules file instead of the baseline
+      --moves a,b                   only play these scammer moves (see src/loop/playbook.json)
+  safuclick loop --real <url> --first <runDir>   real-world round: replay a missed live run, harden rules, Kane re-checks the live site
 `;
 
 if (o.help || cmd === 'help' || cmd === '--help' || cmd === '-h') {
@@ -38,7 +43,7 @@ if (cmd === 'gym') {
 } else if (cmd === 'check') {
   if (!positionals[0] && !o.replay) { console.log(help); process.exit(2); }
   const { check } = await import('../src/check.js');
-  const { verdict } = await check(positionals[0], { ...o, maxSteps: o['max-steps'] && Number(o['max-steps']), realSite: o['real-site'] });
+  const { verdict } = await check(positionals[0], { ...o, maxSteps: o['max-steps'] && Number(o['max-steps']), realSite: o['real-site'], twoViews: o['two-views'] });
   process.exit(o['fail-on-trap'] && verdict.verdict === 'TRAP FLAGGED' ? 1 : 0);
 } else if (cmd === 'card') {
   const dir = positionals[0] || o.replay;
@@ -53,8 +58,9 @@ if (cmd === 'gym') {
   const { startUI } = await import('../src/ui/server.js');
   await startUI(Number(o.port || 4200));
 } else if (cmd === 'loop') {
-  const { runLoop } = await import('../src/loop/loop.js');
-  await runLoop({ rounds: Number(o.rounds || 2), promote: o.promote, fresh: o.fresh, maxSteps: o['max-steps'] && Number(o['max-steps']) });
+  const { runLoop, runRealRound } = await import('../src/loop/loop.js');
+  if (o.real) { await runRealRound({ url: o.real, first: o.first, from: o.from, promote: o.promote, maxSteps: o['max-steps'] && Number(o['max-steps']), name: positionals[0] || 'real-world miss' }); process.exit(0); }
+  await runLoop({ rounds: Number(o.rounds || 2), promote: o.promote, fresh: o.fresh, maxSteps: o['max-steps'] && Number(o['max-steps']), from: o.from, only: o.moves ? o.moves.split(',') : null });
   process.exit(0);
 } else {
   console.log(help);

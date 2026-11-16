@@ -27,7 +27,9 @@ export function terminalCard(v) {
     if (v.probe.status) out.push(`   http       ${v.probe.status}${v.probe.blocked ? yellow('  (cloaked/blocked?)') : ''}`);
   }
   out.push(`   wallet     ${v.walletSummary.requests.join(' → ') || 'no wallet requests'}`);
-  for (const t of v.walletSummary.transactions) out.push(`   tx         ${t.label}: ${t.amountHuman}${t.kind === 'approve' ? ' → spender ' + t.spender : ''} (contract ${t.to})`);
+  for (const t of v.walletSummary.transactions) out.push(`   tx         ${t.label}: ${t.amountHuman}${t.kind !== 'swap' ? ' → ' + (t.kind === 'setApprovalForAll' ? 'operator ' : 'spender ') + t.spender : ''} (contract ${t.to})`);
+  for (const s of v.walletSummary.signatures || []) out.push(`   signature  ${s.scheme}${(s.permits || []).map((p) => `: ${p.amountHuman} → spender ${p.spender}, expires ${p.expiryIso || 'never'}`).join('')}`);
+  for (const b of v.walletSummary.batches || []) out.push(`   batch      ${b.callCount} calls in one confirm: ${b.calls.map((c) => c.kind).join(' + ')}${b.delegation ? ' (7702 delegator ' + b.delegation.delegator + ')' : ''}`);
   if (v.kane) {
     out.push(`   kane       ${v.kane.status === 'passed' ? green('passed') : red(v.kane.status)} · ${v.kane.one_liner || ''}`);
     if (v.kane.credits) out.push(`   credits    ${Number(v.kane.credits).toFixed(1)}`);
@@ -46,7 +48,9 @@ export function markdown(v) {
   if (v.note) l.push(`> ${v.note}`, '');
   l.push('**Evidence**', '', `| | |`, `|---|---|`, `| Mode | ${v.mode === 'real-site' ? 'real-site (observe only)' : 'gym / mock wallet'} |`, `| Domain | \`${v.host}\` ${v.officialDomain ? '(official)' : '(not on known-good list)'} |`,
     `| Wallet requests | ${v.walletSummary.requests.join(' → ') || 'none'} |`);
-  for (const t of v.walletSummary.transactions) l.push(`| Transaction | ${t.label}: **${t.amountHuman}**${t.kind === 'approve' ? ` → spender \`${t.spender}\`` : ''} (contract \`${t.to}\`) |`);
+  for (const t of v.walletSummary.transactions) l.push(`| Transaction | ${t.label}: **${t.amountHuman}**${t.kind !== 'swap' ? ` → ${t.kind === 'setApprovalForAll' ? 'operator' : 'spender'} \`${t.spender}\`` : ''} (contract \`${t.to}\`) |`);
+  for (const s of v.walletSummary.signatures || []) l.push(`| Signature | ${s.scheme}${(s.permits || []).map((p) => `: **${p.amountHuman}** → spender \`${p.spender}\`, expires ${p.expiryIso || 'never'}`).join('')} |`);
+  for (const b of v.walletSummary.batches || []) l.push(`| Batch | ${b.callCount} calls in one confirm: ${b.calls.map((c) => c.kind).join(' + ')} |`);
   if (v.kane) l.push(`| Kane CLI | ${v.kane.status}: ${v.kane.one_liner || ''} |`, `| Kane credits | ${v.kane.credits ? Number(v.kane.credits).toFixed(1) : 'n/a'} |`, `| Kane report | ${v.kane.test_url ? `[open](${v.kane.test_url})` : 'n/a'} |`);
   l.push('', `_Rules v${v.rulesVersion}. ${v.disclaimer} SafuClick, powered by Kane CLI._`);
   return l.join('\n');

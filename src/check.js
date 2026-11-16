@@ -6,10 +6,10 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { p, readJSON, writeJSON, STATE } from './paths.js';
 import { startCollector, fetchLog } from './collector.js';
-import { runKane, loadKaneNdjson, realSiteObjective } from './kane.js';
+import { runKane, loadKaneNdjson, realSiteObjective, SCENARIOS } from './kane.js';
 import { evaluate } from './verdict.js';
 import { terminalCard, markdown, dim, cyan, yellow } from './report.js';
-import { probeUrl } from './probe.js';
+import { probeUrl, rdapAge } from './probe.js';
 import { writeCard } from './card.js';
 import { writeLive, patchLive } from './live.js';
 
@@ -53,6 +53,8 @@ export async function check(url, opts = {}) {
   if (realSite) {
     log(`  🔎 real-site mode: peeking at ${cyan(url)} (no mock wallet, no signing)…`);
     probe = await probeUrl(url, { guard: opts.urlGuard || null });
+    try { probe.rdap = await rdapAge(new URL(probe.finalUrl || url).hostname); } catch { probe.rdap = null; }
+    if (probe.rdap?.registered) log(dim(`     domain registered ${probe.rdap.registered.slice(0, 10)} (${probe.rdap.ageDays} days ago, RDAP)`));
     writeJSON(path.join(runDir, 'probe.json'), probe);
     if (probe.error) log(yellow(`     HTTP peek failed: ${probe.error}`));
     else log(dim(`     HTTP ${probe.status || '?'} · final ${probe.finalUrl} · title ${JSON.stringify(probe.title || '')}`));
@@ -78,6 +80,18 @@ export async function check(url, opts = {}) {
       });
     }
   } else {
+    const scenario = opts.scenario || 'swap';
+    if (!SCENARIOS[scenario]) throw new Error(`unknown --scenario ${scenario} (use ${Object.keys(SCENARIOS).join('|')})`);
+    if (opts.twoViews) {
+      // View 1: plain HTTP peek, no JavaScript, no wallet (what a crawler or a no-wallet visitor gets).
+      // *.localhost is resolved by browsers, not always by Node: peek the gym port on 127.0.0.1.
+      const u = new URL(url);
+      const peekUrl = u.hostname.endsWith('.localhost') ? url.replace(u.hostname, '127.0.0.1') : url;
+      probe = await probeUrl(peekUrl);
+      probe = { ...probe, startUrl: url, finalUrl: url, peekedVia: peekUrl };
+      writeJSON(path.join(runDir, 'probe.json'), probe);
+      log(dim(`  view 1 · HTTP peek (no JS, no wallet): ${JSON.stringify((probe.textSnippet || '').slice(0, 90))}`));
+    }
     const collector = await startCollector({ quiet: true });
     const runId = crypto.randomBytes(4).toString('hex');
     const target = new URL(url); target.searchParams.set('safu_run', runId);
@@ -85,7 +99,7 @@ export async function check(url, opts = {}) {
     patchLive({ phase: 'kane', runId, steps: [] });
     const steps = [];
     kane = await runKane({
-      url: target.toString(), amount, maxSteps: opts.maxSteps || 16, outDir: runDir,
+      url: target.toString(), amount, maxSteps: opts.maxSteps || 16, outDir: runDir, objective: SCENARIOS[scenario](amount),
       onEvent: (ev) => {
         if (ev.step && ev.status === 'done') {
           steps.push({ step: ev.step, remark: ev.remark });
@@ -101,6 +115,7 @@ export async function check(url, opts = {}) {
   }
 
   const verdict = evaluate({ url, intendedAmount: amount, kane, walletLog, probe, mode }, rules, allowlist);
+  if (!realSite) verdict.scenario = opts.scenario || 'swap';
   return finish(verdict, { kane, walletLog, runDir, opts, log, writeArtifacts: true });
 }
 

@@ -25,7 +25,8 @@ export function inspectHtml(html = '', pageUrl = '') {
   const text = (title + ' ' + html.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
   const walletConnect = /connect([\s-]?wallet|\s+metamask|\s+to\s+wallet)|import\s+(your\s+)?wallet|link\s+wallet/i.test(text);
   const blocked = /just a moment|attention required|access denied|cf-browser-verification|captcha|enable javascript and cookies|unfortunately (we )?can.t|forbidden/i.test(text);
-  return { title, fields, walletConnect, blocked, textSnippet: text.slice(0, 500), pageUrl };
+  const turnstile = /challenges\.cloudflare\.com\/turnstile|cf-turnstile/i.test(html);
+  return { title, fields, walletConnect, blocked, turnstile, textSnippet: text.slice(0, 500), pageUrl };
 }
 
 export async function probeUrl(raw, { timeoutMs = 8000, guard = null } = {}) {
@@ -59,4 +60,28 @@ export async function probeUrl(raw, { timeoutMs = 8000, guard = null } = {}) {
   const inspect = inspectHtml(html, finalUrl);
   const blocked = inspect.blocked || status === 403 || status === 451;
   return { startUrl: raw, finalUrl, status, hops, error, blocked, ...inspect };
+}
+
+// Domain age via RDAP (public, no key). Best effort: many ccTLDs have no RDAP; then we just say "unknown".
+export function registrable(host) {
+  const parts = String(host || '').toLowerCase().split('.').filter(Boolean);
+  const two = ['co.uk', 'com.au', 'co.jp', 'com.br', 'com.cn', 'com.ng', 'co.za', 'co.in'];
+  const last2 = parts.slice(-2).join('.');
+  return two.includes(last2) ? parts.slice(-3).join('.') : last2;
+}
+export async function rdapAge(host, { timeoutMs = 6000, now = Date.now() } = {}) {
+  const domain = registrable(host);
+  if (!domain || domain.endsWith('localhost') || /^[\d.]+$/.test(domain)) return null;
+  const ac = new AbortController();
+  const t = setTimeout(() => ac.abort(), timeoutMs);
+  try {
+    const r = await fetch(`https://rdap.org/domain/${encodeURIComponent(domain)}`, { signal: ac.signal, headers: { Accept: 'application/rdap+json', 'User-Agent': 'SafuClick/0.1 (+https://github.com/kaizen-builds/safuclick)' }, redirect: 'follow' });
+    if (!r.ok) return { domain, error: `rdap ${r.status}` };
+    const j = await r.json();
+    const ev = (j.events || []).find((e) => /registration/i.test(e.eventAction));
+    const registrar = ((j.entities || []).find((e) => (e.roles || []).includes('registrar'))?.vcardArray?.[1] || []).find((x) => x[0] === 'fn')?.[3] || null;
+    if (!ev) return { domain, registered: null, ageDays: null, registrar };
+    return { domain, registered: ev.eventDate, ageDays: Math.floor((now - Date.parse(ev.eventDate)) / 86400000), registrar };
+  } catch (e) { return { domain, error: e.name === 'AbortError' ? 'rdap timeout' : String(e.message || e) }; }
+  finally { clearTimeout(t); }
 }

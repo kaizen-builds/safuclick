@@ -23,12 +23,17 @@
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:500}
   .modal .box{background:#fff;color:#111;border-radius:16px;padding:22px;width:440px}
   .modal textarea{width:100%;height:90px;margin:10px 0;border-radius:10px;border:1px solid #ccc;padding:8px;font:inherit}
+  .list{list-style:none;padding:0;margin:10px 0}.list li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(0,0,0,.25);border-radius:14px;padding:12px;margin:8px 0}.list small{display:block;opacity:.7}
+  .mini{background:#facc15;color:#1e1b4b;border:0;border-radius:999px;padding:8px 14px;font-weight:700}
+  .soon{text-align:center;padding:60px 16px;opacity:.85}.soon h1{font-size:30px;margin:0 0 8px}
+  .big{font-size:34px;font-weight:800;margin:6px 0}.muted{opacity:.7;font-size:13px}
   .modal button{background:#7c3aed;color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700}
 </style>
 </head>
 <body>
 <header><div class="logo">Safu<span>Swap</span></div><button id="connect" type="button">Connect Wallet</button></header>
 <main>
+<!--MAIN-->
   <div class="card">
     <h1>Swap</h1>
     <div class="field"><label for="amount">You pay</label><div class="row"><input id="amount" name="amount" inputmode="decimal" value="10" aria-label="Amount to swap in USDC"><span class="tok">USDC</span></div></div>
@@ -36,6 +41,7 @@
     <button id="swap" type="button" disabled>Connect wallet to swap</button>
     <div id="status" role="status"></div>
   </div>
+<!--/MAIN-->
 </main>
 <footer>SafuClick phishing gym · test site "{{ID}}" · mock wallet, mock contracts, no real funds</footer>
 <script src="/app.js"></script>

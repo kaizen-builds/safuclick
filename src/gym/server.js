@@ -34,8 +34,13 @@ function serve(port) {
       return res.end(fs.readFileSync(p('src', 'gym', 'public', 'app.js')));
     }
     if (url.pathname === '/' || url.pathname === '/index.html') {
-      const pub = { id: site.id, title: site.title, router: site.router, traps: site.traps || [] };
-      const html = tpl().replaceAll('{{TITLE}}', site.title).replaceAll('{{ID}}', site.id)
+      const pub = { id: site.id, title: site.title, router: site.router, skin: site.skin || 'swap', traps: site.traps || [] };
+      let page = tpl();
+      // Cloaking lab: the raw HTML (what an HTTP peek or a no-JS crawler gets) is a harmless placeholder.
+      // The drainer is only revealed client-side, and only if an EIP-1193 wallet is present.
+      if (site.skin === 'cloak') page = page.replace(/<!--MAIN-->[\s\S]*<!--\/MAIN-->/, '<div class="soon" id="soon"><h1>SafuSwap Rewards</h1><p>Coming soon. Nothing to see here yet.</p></div>')
+        .replace('<button id="connect" type="button">Connect Wallet</button>', '<button id="connect" type="button" hidden></button>');
+      const html = page.replaceAll('{{TITLE}}', site.title).replaceAll('{{ID}}', site.id)
         .replace('{{COLLECTOR}}', JSON.stringify(COLLECTOR_URL)).replace('{{CONFIG}}', JSON.stringify(pub));
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
       return res.end(html);

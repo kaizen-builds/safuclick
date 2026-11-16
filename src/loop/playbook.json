@@ -58,6 +58,133 @@
         ]
       },
       "taunt": "No seed prompt on load \u2014 scanners see a clean page. After you connect: \u201ctype your 12 secret words to re-sync.\u201d No \u201cseed\u201d. No \u201cmnemonic\u201d. Catch that."
+    },
+    {
+      "name": "permit-claim",
+      "pitch": "Evolved off-chain: a gas-free 'sign to claim' airdrop on the REAL domain. No transaction at all, just an eth_signTypedData_v4 Permit2 PermitSingle: UNLIMITED USDC to an unknown spender, valid for 3 years.",
+      "site": {
+        "id": "loop-permit-claim",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap Airdrop",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "skin": "claim",
+        "scenario": "claim",
+        "traps": [
+          {
+            "type": "permit2",
+            "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+            "amount": "max",
+            "expirationDays": 1095
+          }
+        ]
+      },
+      "taunt": "No transaction. No gas. Just a signature. Your rules only read transactions."
+    },
+    {
+      "name": "ice-allowance",
+      "pitch": "Evolved: skip approve() entirely. 'Swap 10 USDC' calls increaseAllowance(attacker, MAX), which approve-only rules never decode.",
+      "site": {
+        "id": "loop-ice-allowance",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "scenario": "allowance",
+        "traps": [
+          {
+            "type": "increaseAllowance",
+            "spender": "0x1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1",
+            "amount": "max"
+          }
+        ]
+      },
+      "taunt": "approve() is watched. increaseAllowance() isn't. Same drain, different function name."
+    },
+    {
+      "name": "fake-revoke",
+      "pitch": "Evolved: a free 'approval checker'. The Revoke button sends setApprovalForAll(attacker, TRUE) on your Uniswap V3 positions.",
+      "site": {
+        "id": "loop-fake-revoke",
+        "host": "safuswap.localhost",
+        "title": "Approval Checker",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "skin": "revoke",
+        "scenario": "revoke",
+        "traps": [
+          {
+            "type": "setApprovalForAll",
+            "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+            "collection": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+            "approved": true
+          }
+        ]
+      },
+      "taunt": "The button says Revoke. The wallet says approve ALL. Who reads the Approved line?"
+    },
+    {
+      "name": "batch-swap",
+      "pitch": "Evolved post-Pectra: ONE wallet_sendCalls confirm (via the known MetaMask 7702 delegator) bundles the swap with 2 unlimited approvals and an NFT setApprovalForAll.",
+      "site": {
+        "id": "loop-batch-swap",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "scenario": "batch",
+        "traps": [
+          {
+            "type": "batch",
+            "delegator": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+            "calls": [
+              {
+                "kind": "swap"
+              },
+              {
+                "kind": "approve",
+                "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+                "amount": "max"
+              },
+              {
+                "kind": "approve",
+                "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+                "amount": "max"
+              },
+              {
+                "kind": "setApprovalForAll",
+                "collection": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+                "operator": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4"
+              }
+            ]
+          }
+        ]
+      },
+      "taunt": "One click, four actions. The delegator is even MetaMask's own. Good luck."
+    },
+    {
+      "name": "cloaked-claim",
+      "pitch": "Evolved: cloaking. Crawlers and no-wallet visitors get 'Coming soon'. Only a page with a wallet gets the EIP-2612 Permit drainer.",
+      "site": {
+        "id": "loop-cloaked-claim",
+        "host": "safuswap.localhost",
+        "title": "SafuSwap",
+        "router": "0x5afe5afe00000000000000000000000000c0ffee",
+        "skin": "cloak",
+        "scenario": "cloak",
+        "traps": [
+          {
+            "type": "cloak",
+            "hideFromAutomation": false,
+            "revealDelayMs": 1200
+          },
+          {
+            "type": "permit",
+            "spender": "0xc10a4c10a4c10a4c10a4c10a4c10a4c10a4c10a4",
+            "amount": "max",
+            "expirationDays": 1825
+          }
+        ]
+      },
+      "taunt": "Your scanner sees 'Coming soon'. Wallets see the drainer."
     }
   ]
 }

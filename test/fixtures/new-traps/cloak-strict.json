@@ -1,0 +1,51 @@
+{
+ "_note": "Captured from the gym with a scripted Playwright pass (no Kane, 0 credits): connect, click the action, read the popup, Reject.",
+ "url": "http://safuswap.localhost:4109/",
+ "walletLog": [
+  {
+   "run": "smoke-cloak-strict",
+   "seq": 1,
+   "ts": "2026-11-16T00:32:48.902Z",
+   "type": "page_loaded",
+   "origin": "http://safuswap.localhost:4109",
+   "href": "http://safuswap.localhost:4109/?safu_run=smoke-cloak-strict",
+   "title": "SafuSwap",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+   "webdriver": true,
+   "walletInjected": true
+  },
+  {
+   "run": "smoke-cloak-strict",
+   "seq": 2,
+   "ts": "2026-11-16T00:32:51.904Z",
+   "type": "page_snapshot",
+   "origin": "http://safuswap.localhost:4109",
+   "href": "http://safuswap.localhost:4109/?safu_run=smoke-cloak-strict",
+   "tag": "t+3s",
+   "title": "SafuSwap",
+   "text": "SafuSwap Rewards Coming soon. Nothing to see here yet.",
+   "textLength": 54,
+   "buttons": [],
+   "webdriver": true
+  }
+ ],
+ "probe": {
+  "startUrl": "http://safuswap.localhost:4109/",
+  "finalUrl": "http://safuswap.localhost:4109/",
+  "status": 200,
+  "hops": [
+   {
+    "url": "http://127.0.0.1:4109/",
+    "status": 200,
+    "location": null
+   }
+  ],
+  "error": null,
+  "blocked": false,
+  "title": "SafuSwap",
+  "fields": [],
+  "walletConnect": false,
+  "textSnippet": "SafuSwap SafuSwap Safu Swap SafuSwap Rewards Coming soon. Nothing to see here yet. SafuClick phishing gym · test site \"cloak-strict\" · mock wallet, mock contracts, no real funds ",
+  "pageUrl": "http://127.0.0.1:4109/"
+ }
+}

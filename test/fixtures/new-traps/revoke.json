@@ -1,0 +1,134 @@
+{
+ "_note": "Captured from the gym with a scripted Playwright pass (no Kane, 0 credits): connect, click the action, read the popup, Reject.",
+ "url": "http://revoke-cash.localhost:4105/",
+ "walletLog": [
+  {
+   "run": "smoke-revoke",
+   "seq": 1,
+   "ts": "2026-11-16T00:32:27.384Z",
+   "type": "page_loaded",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "title": "Approval Checker",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+   "webdriver": true,
+   "walletInjected": true
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 2,
+   "ts": "2026-11-16T00:32:27.390Z",
+   "type": "input_seen",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "field": {
+    "tag": "input",
+    "type": "text",
+    "id": "amount",
+    "name": "amount",
+    "placeholder": "",
+    "label": "You pay",
+    "nearbyText": "USDC"
+   }
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 3,
+   "ts": "2026-11-16T00:32:29.246Z",
+   "type": "wallet_request",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "method": "eth_requestAccounts",
+   "params": []
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 4,
+   "ts": "2026-11-16T00:32:29.293Z",
+   "type": "wallet_decision",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "method": "eth_requestAccounts",
+   "approved": true
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 5,
+   "ts": "2026-11-16T00:32:29.326Z",
+   "type": "wallet_request",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "method": "eth_sendTransaction",
+   "params": [
+    {
+     "from": "0x7e57000000000000000000000000000000000001",
+     "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+     "data": "0xa22cb4650000000000000000000000000be7a70b0be7a70b0be7a70b0be7a70b0be7a70b0000000000000000000000000000000000000000000000000000000000000001"
+    }
+   ]
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 6,
+   "ts": "2026-11-16T00:32:29.327Z",
+   "type": "tx_decoded",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "decoded": {
+    "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+    "selector": "0xa22cb465",
+    "token": "Uniswap V3 Positions NFT",
+    "kind": "setApprovalForAll",
+    "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+    "collection": "Uniswap V3 Positions NFT",
+    "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+    "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+    "approved": true,
+    "amountHuman": "ALL Uniswap V3 Positions NFT",
+    "unlimited": true
+   }
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 7,
+   "ts": "2026-11-16T00:32:29.377Z",
+   "type": "wallet_decision",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "method": "eth_sendTransaction",
+   "approved": false,
+   "decoded": {
+    "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+    "selector": "0xa22cb465",
+    "token": "Uniswap V3 Positions NFT",
+    "kind": "setApprovalForAll",
+    "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+    "collection": "Uniswap V3 Positions NFT",
+    "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+    "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+    "approved": true,
+    "amountHuman": "ALL Uniswap V3 Positions NFT",
+    "unlimited": true
+   }
+  },
+  {
+   "run": "smoke-revoke",
+   "seq": 8,
+   "ts": "2026-11-16T00:32:30.386Z",
+   "type": "page_snapshot",
+   "origin": "http://revoke.safuswap.localhost:4105",
+   "href": "http://revoke.safuswap.localhost:4105/?safu_run=smoke-revoke",
+   "tag": "t+3s",
+   "title": "Approval Checker",
+   "text": "Approval Checker Old approvals are how wallets get drained. Revoke risky ones for free. Uniswap V3 Positions NFT operator: old marketplace contract \u00b7 risk HIGH Revoke USDC spender: unknown router \u00b7 risk MEDIUM Revoke Transaction rejected in wallet",
+   "textLength": 247,
+   "buttons": [
+    "0x7e57\u20260001",
+    "Revoke",
+    "Revoke"
+   ],
+   "webdriver": true
+  }
+ ],
+ "probe": null
+}

@@ -1,27 +1,192 @@
 {
   "_comment": "Phishing gym sites. The scammer agent adds/evolves entries; the server re-reads this file on every request.",
   "official": {
-    "id": "official", "port": 4100, "host": "safuswap.localhost", "title": "SafuSwap",
-    "router": "0x5afe5afe00000000000000000000000000c0ffee", "traps": []
+    "id": "official",
+    "port": 4100,
+    "host": "safuswap.localhost",
+    "title": "SafuSwap",
+    "router": "0x5afe5afe00000000000000000000000000c0ffee",
+    "traps": []
   },
   "variants": [
     {
-      "id": "clone", "port": 4101, "host": "safuswep.localhost", "title": "SafuSwap",
+      "id": "clone",
+      "port": 4101,
+      "host": "safuswep.localhost",
+      "title": "SafuSwap",
       "router": "0xc10ec10e00000000000000000000000000bad000",
-      "traps": [{ "type": "lookalike_domain" }],
+      "traps": [
+        {
+          "type": "lookalike_domain"
+        }
+      ],
       "_truth": "Pixel-perfect clone on a typosquatted domain. Swap goes to the attacker's router."
     },
     {
-      "id": "seed", "port": 4102, "host": "safuswap-verify.localhost", "title": "SafuSwap",
+      "id": "seed",
+      "port": 4102,
+      "host": "safuswap-verify.localhost",
+      "title": "SafuSwap",
       "router": "0x5afe5afe00000000000000000000000000c0ffee",
-      "traps": [{ "type": "seed_prompt", "when": "load", "title": "Wallet verification required", "wording": "Enter your 12-word recovery phrase to verify your wallet and continue." }],
+      "traps": [
+        {
+          "type": "seed_prompt",
+          "when": "load",
+          "title": "Wallet verification required",
+          "wording": "Enter your 12-word recovery phrase to verify your wallet and continue."
+        }
+      ],
       "_truth": "Asks for the recovery phrase as soon as the page opens."
     },
     {
-      "id": "approval", "port": 4103, "host": "safuswap.localhost", "title": "SafuSwap",
+      "id": "approval",
+      "port": 4103,
+      "host": "safuswap.localhost",
+      "title": "SafuSwap",
       "router": "0x5afe5afe00000000000000000000000000c0ffee",
-      "traps": [{ "type": "approve", "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead", "amount": "max" }],
+      "traps": [
+        {
+          "type": "approve",
+          "spender": "0xd2a1e2d2a1e2d2a1e2d2a1e2d2a1e2d2a1e2dead",
+          "amount": "max"
+        }
+      ],
       "_truth": "UI says 'Swap 10 USDC' but the wallet is asked for approve(drainer, MAX_UINT256)."
+    },
+    {
+      "id": "claim",
+      "port": 4104,
+      "host": "claim.safuswap-airdrop.localhost",
+      "title": "SafuSwap Airdrop",
+      "router": "0x5afe5afe00000000000000000000000000c0ffee",
+      "skin": "claim",
+      "scenario": "claim",
+      "traps": [
+        {
+          "type": "permit2",
+          "spender": "0xc1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1ec1a1e",
+          "amount": "max",
+          "expirationDays": 1095
+        }
+      ],
+      "_truth": "Gas-free 'sign to claim' airdrop. The signature is a Permit2 PermitSingle: UNLIMITED USDC to an unknown spender for 3 years."
+    },
+    {
+      "id": "revoke",
+      "port": 4105,
+      "host": "revoke-cash.localhost",
+      "title": "Approval Checker",
+      "router": "0x5afe5afe00000000000000000000000000c0ffee",
+      "skin": "revoke",
+      "scenario": "revoke",
+      "traps": [
+        {
+          "type": "setApprovalForAll",
+          "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+          "collection": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+          "approved": true
+        }
+      ],
+      "_truth": "Fake revoke.cash on a lookalike domain. The Revoke button sends setApprovalForAll(attacker, TRUE) on the Uniswap V3 Positions NFT."
+    },
+    {
+      "id": "batch",
+      "port": 4106,
+      "host": "safuswap.localhost",
+      "title": "SafuSwap",
+      "router": "0x5afe5afe00000000000000000000000000c0ffee",
+      "scenario": "batch",
+      "traps": [
+        {
+          "type": "batch",
+          "delegator": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+          "calls": [
+            {
+              "kind": "swap"
+            },
+            {
+              "kind": "approve",
+              "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+              "amount": "max"
+            },
+            {
+              "kind": "approve",
+              "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+              "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+              "amount": "max"
+            },
+            {
+              "kind": "setApprovalForAll",
+              "collection": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+              "operator": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4"
+            }
+          ]
+        }
+      ],
+      "_truth": "Real domain, compromised frontend. 'Swap 10 USDC' sends ONE wallet_sendCalls batch (via the known MetaMask 7702 delegator) hiding 2 unlimited approvals and an NFT setApprovalForAll."
+    },
+    {
+      "id": "allowance",
+      "port": 4107,
+      "host": "safuswap.localhost",
+      "title": "SafuSwap",
+      "router": "0x5afe5afe00000000000000000000000000c0ffee",
+      "scenario": "allowance",
+      "traps": [
+        {
+          "type": "increaseAllowance",
+          "spender": "0x1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1ce1",
+          "amount": "max"
+        }
+      ],
+      "_truth": "Ice phishing: 'Swap 10 USDC' calls increaseAllowance(attacker, MAX) instead of approve(), dodging approve-only checks."
+    },
+    {
+      "id": "cloak",
+      "port": 4108,
+      "host": "safuswap.localhost",
+      "title": "SafuSwap",
+      "router": "0x5afe5afe00000000000000000000000000c0ffee",
+      "skin": "cloak",
+      "scenario": "cloak",
+      "traps": [
+        {
+          "type": "cloak",
+          "hideFromAutomation": false,
+          "revealDelayMs": 1200
+        },
+        {
+          "type": "permit",
+          "spender": "0xc10a4c10a4c10a4c10a4c10a4c10a4c10a4c10a4",
+          "amount": "max",
+          "expirationDays": 1825
+        }
+      ],
+      "_truth": "Cloaking lab (wallet-gated): HTTP peek and no-wallet visitors see 'Coming soon'. With a wallet present, an EIP-2612 Permit drainer appears."
+    },
+    {
+      "id": "cloak-strict",
+      "port": 4109,
+      "host": "safuswap.localhost",
+      "title": "SafuSwap",
+      "router": "0x5afe5afe00000000000000000000000000c0ffee",
+      "skin": "cloak",
+      "scenario": "cloak",
+      "traps": [
+        {
+          "type": "cloak",
+          "hideFromAutomation": true,
+          "revealDelayMs": 1200
+        },
+        {
+          "type": "permit",
+          "spender": "0xc10a4c10a4c10a4c10a4c10a4c10a4c10a4c10a4",
+          "amount": "max",
+          "expirationDays": 1825
+        }
+      ],
+      "_truth": "Cloaking lab (strict): also hides from automation (navigator.webdriver / HeadlessChrome). Kane should see only a placeholder, so the honest verdict is INCONCLUSIVE."
     }
   ]
 }
