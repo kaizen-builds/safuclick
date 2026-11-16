@@ -4,14 +4,14 @@ export const red = c('31;1'), green = c('32;1'), yellow = c('33;1'), dim = c('2'
 
 export function terminalCard(v) {
   const color = v.verdict === 'TRAP FLAGGED' ? red : v.verdict === 'INCONCLUSIVE' ? yellow : green;
-  const icon = v.verdict === 'TRAP FLAGGED' ? '🚨' : v.verdict === 'INCONCLUSIVE' ? '❔' : '✅';
+  const icon = v.verdict === 'TRAP FLAGGED' ? '[!]' : v.verdict === 'INCONCLUSIVE' ? '[?]' : '[ok]';
   const out = [];
   out.push('', '  ' + '━'.repeat(64));
   out.push(`  ${icon}  ${color(v.verdict === 'NO KNOWN TRAPS FOUND' ? 'NO KNOWN TRAPS FOUND' : v.verdict)}   ${dim(v.url)}`);
   out.push('  ' + '━'.repeat(64));
   if (v.reasons.length) {
     out.push(bold('  Why:'));
-    for (const r of v.reasons) out.push(`   ${red('✖')} ${r.detail} ${dim('[' + r.id + ' · ' + r.source + ']')}`);
+    for (const r of v.reasons) out.push(`   ${red('x')} ${r.detail} ${dim('[' + r.id + ' · ' + r.source + ']')}`);
   }
   if (v.signals && v.signals.length) {
     out.push(bold('  Signals:'));
@@ -41,7 +41,7 @@ export function terminalCard(v) {
 }
 
 export function markdown(v) {
-  const icon = v.verdict === 'TRAP FLAGGED' ? '🚨' : v.verdict === 'INCONCLUSIVE' ? '❔' : '✅';
+  const icon = v.verdict === 'TRAP FLAGGED' ? '[!]' : v.verdict === 'INCONCLUSIVE' ? '[?]' : '[ok]';
   const l = [`### ${icon} SafuClick: ${v.verdict}`, '', `**URL:** \`${v.url}\``, ''];
   if (v.reasons.length) { l.push('**Why:**'); for (const r of v.reasons) l.push(`- ${r.detail} \`${r.id}\` (${r.source})`); l.push(''); }
   if (v.signals && v.signals.length) { l.push('**Signals:**'); for (const s of v.signals) l.push(`- ${s.detail} \`${s.id}\``); l.push(''); }

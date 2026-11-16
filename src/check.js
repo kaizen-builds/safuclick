@@ -51,7 +51,7 @@ export async function check(url, opts = {}) {
   writeLive({ phase: 'starting', mode, url, steps: [], runDir });
 
   if (realSite) {
-    log(`  🔎 real-site mode: peeking at ${cyan(url)} (no mock wallet, no signing)…`);
+    log(`  real-site mode: peeking at ${cyan(url)} (no mock wallet, no signing)…`);
     probe = await probeUrl(url, { guard: opts.urlGuard || null });
     try { probe.rdap = await rdapAge(new URL(probe.finalUrl || url).hostname); } catch { probe.rdap = null; }
     if (probe.rdap?.registered) log(dim(`     domain registered ${probe.rdap.registered.slice(0, 10)} (${probe.rdap.ageDays} days ago, RDAP)`));
@@ -65,7 +65,7 @@ export async function check(url, opts = {}) {
       log(yellow('     skipping Kane to save credits — site was not reachable from this machine.'));
       kane = null;
     } else {
-      log(`  🤖 Kane CLI is reviewing ${cyan(url)} in headless Chrome (observe only, run ${path.basename(runDir)})…`);
+      log(`  Kane CLI is reviewing ${cyan(url)} in headless Chrome (observe only, run ${path.basename(runDir)})…`);
       patchLive({ phase: 'kane', steps: [] });
       const steps = [];
       kane = await runKane({
@@ -95,7 +95,7 @@ export async function check(url, opts = {}) {
     const collector = await startCollector({ quiet: true });
     const runId = crypto.randomBytes(4).toString('hex');
     const target = new URL(url); target.searchParams.set('safu_run', runId);
-    log(`  🤖 Kane CLI is driving ${cyan(url)} in headless Chrome (run ${runId})…`);
+    log(`  Kane CLI is driving ${cyan(url)} in headless Chrome (run ${runId})…`);
     patchLive({ phase: 'kane', runId, steps: [] });
     const steps = [];
     kane = await runKane({

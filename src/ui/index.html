@@ -36,10 +36,10 @@ $('#f').onsubmit=async e=>{e.preventDefault();$('#b').disabled=true;$('#out').in
  const r=await fetch('/api/check',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});const j=await r.json();if(!r.ok){$('#log').textContent=j.error;$('#b').disabled=false;return}
  const t=setInterval(async()=>{const s=await (await fetch('/api/job/'+j.id)).json();$('#log').textContent=(s.log||[]).join('\n');$('#log').scrollTop=1e9;
   if(s.status!=='running'){clearInterval(t);$('#b').disabled=false;if(s.verdict)render(s);else $('#out').textContent=s.error}},1200)};
-function render(s){const v=s.verdict;const cls=v.verdict==='TRAP FLAGGED'?'trap':v.verdict==='INCONCLUSIVE'?'inc':'ok';const icon={trap:'🚨',ok:'✅',inc:'❔'}[cls];
+function render(s){const v=s.verdict;const cls=v.verdict==='TRAP FLAGGED'?'trap':v.verdict==='INCONCLUSIVE'?'inc':'ok';const icon={trap:'[!]',ok:'[ok]',inc:'[?]'}[cls];
  const steps=(s.steps||v.kane?.steps||[]);
  $('#out').innerHTML=`<div class="card ${cls}"><div class="v">${icon} ${esc(v.verdict)}</div><div class="ev">${esc(v.url)}${v.mode==='real-site'?' · real-site mode':''}</div>
- ${v.reasons.map(r=>`<div class="reason">✖ ${esc(r.detail)} <code>${esc(r.id)}</code></div>`).join('')}
+ ${v.reasons.map(r=>`<div class="reason">x ${esc(r.detail)} <code>${esc(r.id)}</code></div>`).join('')}
  ${(v.signals||[]).map(r=>`<div class="reason">· ${esc(r.detail)} <code>${esc(r.id)}</code></div>`).join('')}
  ${v.note?`<div class="reason">? ${esc(v.note)}</div>`:''}
  <hr style="border-color:#30363d"><div class="ev">Domain: ${esc(v.host)} ${v.officialDomain?'(official)':'(not on known-good list)'}</div>

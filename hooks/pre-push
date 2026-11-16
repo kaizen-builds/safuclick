@@ -4,9 +4,9 @@
 # Configure: export SAFU_STAGING_URL=http://safuswap.localhost:4100/
 set -euo pipefail
 URL="${SAFU_STAGING_URL:-http://safuswap.localhost:4100/}"
-echo "🛡️  SafuClick pre-push: Kane is checking $URL"
+echo "SafuClick pre-push: Kane is checking $URL"
 mkdir -p .safuclick
 if ! node bin/safuclick.js check "$URL" --markdown .safuclick/last-report.md --fail-on-trap; then
-  echo "🚨 SafuClick flagged a trap. Report: .safuclick/last-report.md (feed it to your coding agent)"
+  echo "SafuClick flagged a trap. Report: .safuclick/last-report.md (feed it to your coding agent)"
   exit 1
 fi

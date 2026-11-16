@@ -34,9 +34,9 @@ button{font:inherit;cursor:pointer;border:1px solid #30363d;background:#161b22;c
   <h1>Scam <span>Arena</span></h1>
   <div class="sub">A closed loop: the scammer plants a trap, Kane CLI referees it with a mock wallet, the builder hardens the rules, Kane re-checks. Built for the demo — and honest about what it flags.</div>
   <div class="vs">
-    <div class="side bad"><h2>😈 Scammer</h2><p>Plants and evolves traps on the gym’s loop slot.</p></div>
+    <div class="side bad"><h2>Scammer</h2><p>Plants and evolves traps on the gym’s loop slot.</p></div>
     <div class="mid">KANE<br>REFEREE</div>
-    <div class="side good"><h2>🛠 Builder</h2><p>Turns Kane’s report into deterministic rules.</p></div>
+    <div class="side good"><h2>Builder</h2><p>Turns Kane’s report into deterministic rules.</p></div>
   </div>
   <div class="live" id="live">Loading arena…</div>
   <div class="meta" id="meta"></div>
@@ -46,7 +46,7 @@ button{font:inherit;cursor:pointer;border:1px solid #30363d;background:#161b22;c
 <script>
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const tag=o=>{const t=(o||'').toLowerCase();const cls=t.includes('fixed')||t==='caught'?'caught':t.includes('kane')?'kaneonly':t.includes('missed')||t.includes('open')?'missed':'';return `<span class="tag ${cls}">${esc(o||'')}</span>`};
-function reasons(v){return (v?.reasons||[]).map(r=>`<div class="why">✖ ${esc(r.detail)}</div>`).join('')||'<div class="why">No known trap patterns.</div>'}
+function reasons(v){return (v?.reasons||[]).map(r=>`<div class="why">x ${esc(r.detail)}</div>`).join('')||'<div class="why">No known trap patterns.</div>'}
 function timeline(steps,id){if(!steps||!steps.length)return '<div class="why">No Kane steps saved for this bout.</div>';
  return `<ol class="tl" id="${id}">${steps.map((s,i)=>`<li data-i="${i}"><b>${esc(s.step)}</b> · ${esc(s.remark||'')}</li>`).join('')}</ol><button data-play="${id}">Replay Kane’s steps</button>`}
 function bout(ev,label,id){if(!ev)return '';const v=ev.verdict||ev;const steps=ev.kane?.steps||[];
@@ -60,7 +60,7 @@ async function load(){
     : 'No live loop right now. Showing the last recorded fight (0 credits to replay).';
   document.getElementById('meta').innerHTML=`<span>Source: ${esc(a.source)}</span><span>Kane credits (that loop): ${Number(a.credits||0).toFixed(1)}</span><span>${a.history.length} rounds</span>${a.finishedAt?`<span>Finished ${esc(a.finishedAt)}</span>`:''}`;
   document.getElementById('rounds').innerHTML=(a.history||[]).map((h,i)=>`<article class="round">
-    <h3>Round ${esc(h.round)} · 😈 ${esc(h.move)} ${tag(h.outcome)}</h3>
+    <h3>Round ${esc(h.round)} · ${esc(h.move)} ${tag(h.outcome)}</h3>
     <p class="pitch">${esc(h.pitch||'')}</p>
     ${h.taunt?`<p class="taunt">“${esc(h.taunt)}”</p>`:''}
     <div class="grid">

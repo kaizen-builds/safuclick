@@ -1,4 +1,4 @@
-// 😈 Scammer agent: plants (and evolves) a trap on the gym's loop slot.
+// Scammer agent: plants (and evolves) a trap on the gym's loop slot.
 // Default: scripted playbook. Plug in an LLM agent with SAFU_SCAMMER_CMD (see README).
 import fs from 'node:fs';
 import path from 'node:path';

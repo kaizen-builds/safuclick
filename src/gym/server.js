@@ -62,9 +62,9 @@ export async function startGym({ quiet = false } = {}) {
     servers.push(srv);
   }
   if (!quiet) {
-    console.log('\n  🏋️  SafuClick phishing gym is up (mock wallet, mock contracts, no real funds)\n');
-    for (const s of loadSites()) console.log(`  ${s.id === 'official' ? '✅' : '🎣'} ${s.id.padEnd(10)} ${siteUrl(s)}${s._truth ? '   ← ' + s._truth : ''}`);
-    console.log(`  🧪 loop slot   http://<any>.localhost:${LOOP_PORT}/  (scammer agent plants evolved traps here)\n`);
+    console.log('\n  SafuClick phishing gym is up (mock wallet, mock contracts, no real funds)\n');
+    for (const s of loadSites()) console.log(`  ${s.id === 'official' ? 'ok  ' : 'trap'} ${s.id.padEnd(10)} ${siteUrl(s)}${s._truth ? '   ← ' + s._truth : ''}`);
+    console.log(`  loop slot   http://<any>.localhost:${LOOP_PORT}/  (scammer agent plants evolved traps here)\n`);
   }
   return { close: () => servers.forEach((s) => s && s.close()) };
 }

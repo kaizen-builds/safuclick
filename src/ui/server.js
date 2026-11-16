@@ -108,6 +108,6 @@ export function startUI(port = 4200) {
     if (m) { const j = jobs.get(m[1]); return j ? json(200, j) : json(404, { error: 'no such job' }); }
     res.writeHead(404); res.end();
   });
-  srv.listen(port, '127.0.0.1', () => console.log(`\n  🛡️  SafuClick UI → http://127.0.0.1:${port}  ·  Scam Arena → http://127.0.0.1:${port}/arena\n      (start the gym in another terminal: npm run gym)\n`));
+  srv.listen(port, '127.0.0.1', () => console.log(`\n  SafuClick UI → http://127.0.0.1:${port}  ·  Scam Arena → http://127.0.0.1:${port}/arena\n      (start the gym in another terminal: npm run gym)\n`));
   return srv;
 }

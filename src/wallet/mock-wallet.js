@@ -129,7 +129,7 @@
       el.setAttribute('role', 'dialog');
       el.setAttribute('aria-label', 'SafuWallet popup');
       el.innerHTML =
-        '<div class="sw-card"><div class="sw-head">🦊 SafuWallet <span class="sw-badge">TEST WALLET</span></div>' +
+        '<div class="sw-card"><div class="sw-head"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f6851b;margin-right:7px;vertical-align:middle"></span>SafuWallet <span class="sw-badge">TEST WALLET</span></div>' +
         '<div class="sw-title">' + title + '</div>' +
         rows.map(function (r) { return '<div class="sw-row"><span class="sw-k">' + r[0] + ':</span> <span class="sw-v" data-field="' + r[0].toLowerCase() + '">' + r[1] + '</span></div>'; }).join('') +
         '<div class="sw-btns"><button id="safu-wallet-reject" type="button">Reject</button><button id="safu-wallet-confirm" type="button">Confirm</button></div></div>';
