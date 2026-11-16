@@ -1,6 +1,12 @@
 # SafuClick
 
-Paste a crypto link before you connect your wallet. Kane CLI walks the page with a throwaway mock wallet, and SafuClick flags known trap patterns: lookalike domains, seed-phrase prompts, and a "Swap 10 USDC" button that actually asks for an unlimited approval.
+Two agents: one builds, one breaks, Kane referees.
+
+An LLM **scammer** writes new wallet-drainer pages. **Kane CLI** clicks through each one in a real browser with a throwaway mock wallet. An LLM **builder** reads Kane's output and patches SafuClick's rules. A fix only sticks if Kane re-checks the same trap and confirms it now gets flagged. In the recorded run below, the scammer slipped a "recovery key" prompt past the rules, the builder added a pattern, and Kane confirmed the fix (rules v8).
+
+The same Kane check works as a recipe for your own dApp: **catch a hidden unlimited token approval before it ships.** The UI says "Swap 10 USDC", the wallet is asked for `approve(drainer, MAX)`, and the check fails. Drop [`hooks/pre-push`](hooks/pre-push) in to block the push, or [`hooks/claude-code-stop-hook.sh`](hooks/claude-code-stop-hook.sh) in to send Kane's report straight back to your coding agent as its next instruction.
+
+And for everyone else: paste a crypto link into SafuClick before you connect your wallet. It flags lookalike domains, seed-phrase prompts, and approvals that don't match the button.
 
 Built for the [KaneCLI Online Hackathon](https://www.kaneclihack.sh/). Try it at [safuclick.vercel.app](https://safuclick.vercel.app): 14 recorded Kane checks (10 gym, 4 live), the Agent <-> Kane transcripts in Scam Arena, and a few live observe-only checks each day. This repo runs locally against a phishing gym: no chain, no real funds.
 
