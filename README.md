@@ -1,124 +1,100 @@
 # SafuClick
 
-Two agents: one builds, one breaks, Kane referees.
+## What is SafuClick
 
-An LLM **scammer** writes new wallet-drainer pages. **Kane CLI** clicks through each one in a real browser with a throwaway mock wallet. An LLM **builder** reads Kane's output and patches SafuClick's rules. A fix only sticks if Kane re-checks the same trap and confirms it now gets flagged. In the recorded run below, the scammer slipped a "recovery key" prompt past the rules, the builder added a pattern, and Kane confirmed the fix (rules v8).
+Wallet drainers trick people into signing approvals, for example a "Swap 10 USDC" button that actually requests unlimited spending. SafuClick uses Kane CLI to click through a crypto page the way a user would, with a fake wallet that has no keys. It records what the page asks the wallet to sign and gives a verdict. Agents keep improving its rules, and Kane must confirm each fix.
 
-The same Kane check works as a recipe for your own dApp: **catch a hidden unlimited token approval before it ships.** The UI says "Swap 10 USDC", the wallet is asked for `approve(drainer, MAX)`, and the check fails. Drop [`hooks/pre-push`](hooks/pre-push) in to block the push, or [`hooks/claude-code-stop-hook.sh`](hooks/claude-code-stop-hook.sh) in to send Kane's report straight back to your coding agent as its next instruction.
-
-And for everyone else: paste a crypto link into SafuClick before you connect your wallet. It flags lookalike domains, seed-phrase prompts, and approvals that don't match the button.
-
-Built for the [KaneCLI Online Hackathon](https://www.kaneclihack.sh/). Try it at [safuclick.vercel.app](https://safuclick.vercel.app): 14 recorded Kane checks (10 gym, 4 live), the Agent <-> Kane transcripts in Scam Arena, and a few live observe-only checks each day. This repo runs locally against a phishing gym: no chain, no real funds.
+Built for the [KaneCLI Online Hackathon](https://www.kaneclihack.sh/). Recorded checks and the agent-loop transcript are at [safuclick.vercel.app](https://safuclick.vercel.app) (14 recorded Kane checks: 10 gym, 4 live). The gym uses no chain and no real funds.
 
 ![Hidden approval: the UI says "Swap 10 USDC", the wallet is asked for UNLIMITED](docs/img/gym-approval-popup.png)
 
-## Quickstart
-
-```bash
-# Node 20+ and Kane CLI (one-time)
-npm install -g @testmuai/kane-cli && kane-cli login
-
-git clone https://github.com/kaizen-builds/safuclick && cd safuclick
-npm run gym                                      # terminal 1, no npm install needed
-
-# terminal 2
-npm run check -- http://safuswap.localhost:4100/        # official
-npm run check -- http://safuswap.localhost:4103/        # hidden unlimited approval
-npm run check -- http://safuswep.localhost:4101/        # lookalike clone
-
-npm test
-npm run check -- --replay docs/runs/loop/02-poisoned-approve-first
-```
-
-`*.localhost` resolves to 127.0.0.1, so the gym needs no DNS. A typical check uses about 10 to 40 Kane credits. Local UI: `npm run ui`, then http://127.0.0.1:4200 (Scam Arena is at `/arena`). Observe a live site with `npm run check -- --real-site https://app.uniswap.org` (no mock wallet, no signing).
-
 ## How it works
 
-1. Kane CLI (`kane-cli run --agent --headless`) opens the page, clicks Connect and Swap, and reads the wallet popup.
-2. SafuWallet (`src/wallet/mock-wallet.js`) is an in-page EIP-1193 mock with no keys and no chain. It logs every request, decoded approval, signature, batch call and secret-looking field.
-3. The verdict engine (`src/verdict.js`) combines that wallet evidence, DOM prompts, lookalike-domain checks, and Kane's own assertions.
+On the local phishing gym:
 
-Three verdicts: `TRAP FLAGGED`, `INCONCLUSIVE`, and `NO KNOWN TRAPS FOUND`. The last one only means this run showed none of the patterns SafuClick knows about.
+1. Kane opens the page in a real browser, then clicks Connect and Swap.
+2. The mock wallet logs every request (no keys, no chain).
+3. The verdict engine combines wallet evidence, page text, the domain check, and Kane's assertions.
+4. The result is a verdict card.
 
-## The phishing gym (`npm run gym`)
+On a live third-party site, Kane still opens the page, but there is no mock wallet, so the check is observe-only and cannot see what the page would ask a wallet to sign.
 
-| Site | URL | Trap |
-|---|---|---|
-| official | `http://safuswap.localhost:4100/` | none |
-| clone | `http://safuswep.localhost:4101/` | lookalike domain; swap goes to an attacker router |
-| seed | `http://safuswap-verify.localhost:4102/` | asks for a 12-word recovery phrase |
-| approval | `http://safuswap.localhost:4103/` | real domain: "Swap 10 USDC" sends `approve(drainer, MAX)` |
-| claim | `http://claim.safuswap-airdrop.localhost:4104/` | Permit2 signature, unlimited USDC, 3 years |
-| revoke | `http://revoke-cash.localhost:4105/` | fake revoke: `setApprovalForAll(attacker, true)` |
-| batch | `http://safuswap.localhost:4106/` | one `wallet_sendCalls` hides extra unlimited approvals |
-| allowance | `http://safuswap.localhost:4107/` | `increaseAllowance(attacker, MAX)` instead of `approve` |
-| cloak | `http://safuswap.localhost:4108/` | "Coming soon" to crawlers; Permit drainer if a wallet is present |
-| cloak-strict | `http://safuswap.localhost:4109/` | also hides from automation; verdict is INCONCLUSIVE |
-| loop slot | `http://*.localhost:4110/` | whatever the scammer agent plants |
+The agent loop:
 
-Variants live in `gym/variants.json` and reload on each request. Pick Kane's flow with `--scenario swap|claim|revoke|batch|allowance|cloak`. `--two-views` compares a no-JS HTTP peek with Kane's view.
+1. A scammer agent writes a new trap in the gym.
+2. Kane runs it.
+3. A builder agent may patch the rules.
+4. Kane re-checks the same trap.
+5. The fix is kept only if Kane flags it.
 
-## Agent <-> Kane loop (`npm run agent-loop`)
+## Quickstart
 
-A real LLM **scammer** reads the current rules and writes a new gym variant inside an existing trap family (local `*.localhost` only; `src/agents/variant-guard.js` rejects anything else). **Kane CLI** runs it. A real LLM **builder** reads Kane's NDJSON, the wallet evidence and the verdict, and may write a `config/rules.json` fix. Kane then re-checks the same trap.
+Node 20+. No `npm install` (this repo has no package dependencies). Replay commands use 0 Kane credits.
 
-Before a fix is applied it must pass the rules schema, a hardening-only check (no flags switched off, no deletions, thresholds only tighten), a `--replay` of every recorded run with no verdict changes, a check that the missed trap now flags, and the full test suite. Failures are rolled back and logged. Only a Kane-confirmed fix is kept; `--promote` locks it in.
+```bash
+git clone https://github.com/kaizen-builds/safuclick && cd safuclick
+npm test
 
-Recorded run (16 Nov 2026), scammer and builder = `anthropic/claude-sonnet-5` via NEAR AI Cloud, 70.7 Kane credits billed:
+# terminal 1
+npm run gym
+
+# terminal 2
+npm run check -- --replay docs/runs/gym/02-approval
+npm run agent-loop -- --agent replay --kane replay
+```
+
+The gym listens on 127.0.0.1. Official: `http://safuswap.localhost:4100/`. Hidden approval: `:4103/`. Lookalike clone: `http://safuswep.localhost:4101/`. Other variants print at startup and live in `gym/variants.json`.
+
+To have Kane drive a gym page (typically 10 to 40 credits):
+
+```bash
+npm install -g @testmuai/kane-cli && kane-cli login
+npm run check -- http://safuswap.localhost:4103/
+```
+
+Observe a live site (no mock wallet, no signing): `npm run check -- --real-site https://app.uniswap.org`. Local UI: `npm run ui` at http://127.0.0.1:4200.
+
+## How Kane closes the loop
+
+`npm run agent-loop` runs the loop above. The scammer may only plant traps in an existing family on a local `*.localhost` host. Kane CLI (`kane-cli run --agent --headless`) reads the SafuWallet popup (`src/wallet/mock-wallet.js`, no keys, no chain). A builder fix must pass the rules schema, a hardening-only check, a `--replay` of every recorded run, a check that the missed trap now flags, and `npm test`. Only a Kane-confirmed fix is kept. `--promote` writes it to `config/rules.json`.
+
+[`hooks/pre-push`](hooks/pre-push) blocks a git push when the check flags a trap. [`hooks/claude-code-stop-hook.sh`](hooks/claude-code-stop-hook.sh) returns Kane's report to Claude Code as the next instruction. Both default to the official gym URL and spend Kane credits when used for real.
+
+Recorded run, 16 Nov 2026, `anthropic/claude-sonnet-5` via NEAR AI Cloud, 70.7 Kane credits billed, rules v7 to v8:
 
 | Round | Trick | First check | Builder | Recheck |
 |---|---|---|---|---|
-| 1 | "backup phrase" on `safuswap-restore.localhost` | TRAP FLAGGED | no fix | — |
+| 1 | "backup phrase" on `safuswap-restore.localhost` | TRAP FLAGGED | no fix | - |
 | 2 | "recovery key" on `wallet-securitycheck.localhost` | INCONCLUSIVE | added `recovery[- ]key` to seed patterns | TRAP FLAGGED (rules v8) |
-| 3 | "sync code" on `safuswap-relink.localhost` | TRAP FLAGGED | no fix | — |
+| 3 | "sync code" on `safuswap-relink.localhost` | TRAP FLAGGED | no fix | - |
 
-Transcripts are in `docs/runs/agent-loop/round-N/transcript.md`, and on the site under "Agent <-> Kane transcript".
-
-```bash
-npm run agent-loop -- --rounds 3 --budget 250 --promote     # live LLM + Kane
-npm run agent-loop -- --agent replay --kane replay          # recorded answers, 0 credits, no network
-```
-
-Set a provider with `NEARAI_API_KEY`, `AI_GATEWAY_API_KEY` or `OPENAI_API_KEY`. If none is set, or it errors mid-run, the loop falls back to the recorded answers and marks that turn `fallback`. `--kane replay` re-judges the recorded Kane runs instead of calling Kane.
-
-`npm run loop` is a scripted, no-API-key version of the same idea. It started from `config/rules.baseline.json` (v0) and produced the earlier hardenings. Those runs are in `docs/runs/loop` and `docs/runs/loop2`.
+Transcripts: `docs/runs/agent-loop/round-N/transcript.md`. Live run: `npm run agent-loop -- --rounds 3 --budget 250 --promote` (needs `NEARAI_API_KEY`, `AI_GATEWAY_API_KEY`, or `OPENAI_API_KEY`). If no key is set, or the provider errors, the loop falls back to the recorded answers. `npm run loop` is a scripted, no-key version; those runs are in `docs/runs/loop` and `docs/runs/loop2`.
 
 ## What Kane caught
 
-Real `kane-cli` 0.10.4 runs. Full logs are in [`docs/runs/`](docs/runs).
+Real `kane-cli` 0.10.4 runs, re-judged with rules v8. Logs: [`docs/runs/`](docs/runs).
 
 | Target | Verdict | Flagged | Credits |
 |---|---|---|---|
-| official SafuSwap | NO KNOWN TRAPS FOUND | — | 34.3 |
+| official SafuSwap | NO KNOWN TRAPS FOUND | - | 34.3 |
 | hidden approval | TRAP FLAGGED | `unlimited_approval` | 25.2 |
 | seed prompt | TRAP FLAGGED | `seed_phrase_prompt` | 16.6 |
 | lookalike clone (`safuswep`) | TRAP FLAGGED | `lookalike_domain` (Kane still completed the swap) | 35.9 |
 | strict cloak | INCONCLUSIVE | both views saw "Coming soon" | 27.4 |
 | app.uniswap.org | NO KNOWN TRAPS FOUND | observe-only | 29.7 |
 | curvegov.icu / aave-fi.info | TRAP FLAGGED | `brand_impersonation` | 35.6 / 31.7 |
-| usdc082.com | TRAP FLAGGED | `ticker_digits_domain` (missed on v5) | 60.5 |
+| usdc082.com | TRAP FLAGGED | `ticker_digits_domain` (missed under rules v2, flagged under v7) | 60.5 |
 
-The clone is the useful case: Kane completes the swap because the page looks right. SafuClick flags it from the wallet evidence and the typosquat.
+The clone is the useful case: Kane finished the swap because the page looked right. SafuClick flagged the typosquat and the attacker router. Verdicts are `TRAP FLAGGED`, `INCONCLUSIVE`, and `NO KNOWN TRAPS FOUND` (this run showed none of the known patterns, not a safety guarantee).
 
-## Known limitations
+## Limitations
 
-- It flags known trap patterns. It is not a safety guarantee. A clean result only means this run, with this wallet and browser, showed none of the patterns SafuClick knows about.
-- Real drainers can cloak: detect automation or test wallets, serve a clean page to scanners, or arm the trap later.
-- SafuWallet is injected by the gym, so on real sites SafuClick cannot see what a page would ask a wallet to sign. Injecting the mock wallet into third-party pages is not built yet.
-- Kane's wording varies run to run, so wallet and DOM rules carry the verdict. Stuck or max-step Kane runs are INCONCLUSIVE, not a trap.
+- Known patterns only. Real drainers can cloak, fingerprint a test wallet, or arm the trap later.
+- The mock wallet is injected by the gym, so live third-party checks cannot see what a page would ask a wallet to sign.
+- Kane's wording varies, so wallet and DOM rules carry the verdict. Stuck or max-step Kane runs are INCONCLUSIVE, not a trap.
 
 ## Layout
 
-```
-bin/safuclick.js           CLI: gym, check, ui, loop, agent-loop
-src/gym/                   phishing gym + SafuSwap mini dApp
-src/wallet/mock-wallet.js  SafuWallet mock + evidence logging
-src/verdict.js             verdict engine (wallet, DOM, domain, Kane)
-src/agents/                LLM scammer and builder (agent-loop)
-src/loop/                  scripted scammer / builder
-config/                    allowlist, rules.json (v8), rules.baseline.json (v0)
-docs/runs/                 Kane logs and agent-loop transcripts
-site/                      website at safuclick.vercel.app
-```
+`bin/safuclick.js` is the CLI (`gym`, `check`, `ui`, `loop`, `agent-loop`). The gym and mock wallet are in `src/gym/` and `src/wallet/mock-wallet.js`. Verdicts are `src/verdict.js`, the LLM loop is `src/agents/`, and rules are `config/rules.json` (v8). Recorded Kane runs and transcripts are in `docs/runs/`. Example hooks are in `hooks/`. The site is `site/`, live at safuclick.vercel.app.
 
-MIT licensed. No real keys or funds are used in the gym. SafuWallet's account `0x7e57…0001` is a placeholder.
+MIT licensed. No real keys or funds are used in the gym.
