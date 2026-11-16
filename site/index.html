@@ -87,7 +87,7 @@
   <section class="wrap sec" id="arena">
     <div class="sec-head">
       <h2>Scam Arena</h2>
-      <p>A scammer agent plants a new trick each round. Kane referees. When the rules miss, a builder agent hardens them and Kane checks the fix. Round 6 is a real scam link that got past us.</p>
+      <p>A scammer agent plants a new trick each round. Kane referees. When the rules miss, a builder agent hardens them and Kane checks the fix. Below the scoreboard: the full conversation between the LLM agents and Kane CLI.</p>
     </div>
     <div class="panel arena">
       <div class="score">
@@ -97,6 +97,14 @@
       </div>
       <div class="rounds" id="rounds"></div>
       <p class="fine mono" id="arenaFoot"></p>
+      <div class="xscript hidden" id="xscript">
+        <div class="xs-head">
+          <h3>Agent &harr; Kane transcript</h3>
+          <div class="xs-tabs" id="xsTabs" role="tablist" aria-label="Agent loop rounds"></div>
+        </div>
+        <p class="xs-meta mono" id="xsMeta"></p>
+        <ol class="xs-log" id="xsLog"></ol>
+      </div>
     </div>
   </section>
 

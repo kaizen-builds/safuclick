@@ -7,7 +7,7 @@ const { values: o, positionals } = parseArgs({ args: rest, allowPositionals: tru
   rules: { type: 'string' }, allowlist: { type: 'string' }, amount: { type: 'string' }, 'max-steps': { type: 'string' },
   replay: { type: 'string' }, json: { type: 'boolean' }, markdown: { type: 'string' }, rounds: { type: 'string' },
   port: { type: 'string' }, 'fail-on-trap': { type: 'boolean' }, promote: { type: 'boolean' }, fresh: { type: 'boolean' },
-  'real-site': { type: 'boolean' }, scenario: { type: 'string' }, 'two-views': { type: 'boolean' }, from: { type: 'string' }, moves: { type: 'string' }, real: { type: 'string' }, first: { type: 'string' }, help: { type: 'boolean', short: 'h' },
+  'real-site': { type: 'boolean' }, scenario: { type: 'string' }, 'two-views': { type: 'boolean' }, from: { type: 'string' }, moves: { type: 'string' }, real: { type: 'string' }, first: { type: 'string' }, agent: { type: 'string' }, kane: { type: 'string' }, budget: { type: 'string' }, out: { type: 'string' }, help: { type: 'boolean', short: 'h' },
 } });
 
 const help = `
@@ -29,6 +29,11 @@ const help = `
       --promote                     copy hardened loop rules to config/rules.json at the end
       --from config/rules.json      start the loop from this rules file instead of the baseline
       --moves a,b                   only play these scammer moves (see src/loop/playbook.json)
+  safuclick agent-loop [--rounds 3] REAL LLM scammer + builder agents talk to Kane CLI (transcripts in docs/runs/agent-loop)
+      --agent llm|replay            llm (default; NEARAI_API_KEY / AI_GATEWAY_API_KEY / OPENAI_API_KEY) or replay recorded answers
+      --kane live|replay            live kane-cli runs (default) or re-judge the recorded Kane runs (0 credits)
+      --from docs/runs/agent-loop   recorded run used by replay and as the fallback if the LLM provider errors
+      --budget 250 --max-steps 14   Kane credit cap and step budget  --promote  copy Kane-confirmed rules to config/rules.json
   safuclick loop --real <url> --first <runDir>   real-world round: replay a missed live run, harden rules, Kane re-checks the live site
 `;
 
@@ -61,6 +66,11 @@ if (cmd === 'gym') {
   const { runLoop, runRealRound } = await import('../src/loop/loop.js');
   if (o.real) { await runRealRound({ url: o.real, first: o.first, from: o.from, promote: o.promote, maxSteps: o['max-steps'] && Number(o['max-steps']), name: positionals[0] || 'real-world miss' }); process.exit(0); }
   await runLoop({ rounds: Number(o.rounds || 2), promote: o.promote, fresh: o.fresh, maxSteps: o['max-steps'] && Number(o['max-steps']), from: o.from, only: o.moves ? o.moves.split(',') : null });
+  process.exit(0);
+} else if (cmd === 'agent-loop') {
+  const { runAgentLoop } = await import('../src/agents/agent-loop.js');
+  const r = await runAgentLoop({ rounds: o.rounds, agent: o.agent, kane: o.kane, from: o.from, outDir: o.out, maxSteps: o['max-steps'] && Number(o['max-steps']), budget: o.budget, promote: o.promote });
+  console.log(`\n  ${r.history.map((h) => `R${h.round} ${h.name || '?'}: ${h.outcome}`).join('\n  ')}\n  Kane credits: ${r.kaneMode === 'live' ? (r.creditsBilled ?? r.creditsKaneReported) : '0 (re-judged recorded runs)'} · LLM calls: ${r.llmCalls} (${r.llmSources.join(', ')})`);
   process.exit(0);
 } else {
   console.log(help);

@@ -1,0 +1,148 @@
+[
+  {
+    "run": "02468e63",
+    "seq": 1,
+    "ts": "2026-11-16T01:46:47.294Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "title": "SafuSwap Wallet Sync",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "02468e63",
+    "seq": 2,
+    "ts": "2026-11-16T01:46:47.323Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "02468e63",
+    "seq": 3,
+    "ts": "2026-11-16T01:46:47.325Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "Enter your 24-word sync code, separated by spaces",
+      "label": "",
+      "nearbyText": "Wallet sync required Your wallet session expired. Enter your 24-word wallet sync code below to relink your wallet and restore access to your funds. Verify wallet"
+    }
+  },
+  {
+    "run": "02468e63",
+    "seq": 4,
+    "ts": "2026-11-16T01:46:50.296Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "tag": "t+3s",
+    "title": "SafuSwap Wallet Sync",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify wallet"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "02468e63",
+    "seq": 1,
+    "ts": "2026-11-16T01:46:54.599Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "title": "SafuSwap Wallet Sync",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "02468e63",
+    "seq": 2,
+    "ts": "2026-11-16T01:46:54.601Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "02468e63",
+    "seq": 3,
+    "ts": "2026-11-16T01:46:54.602Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "Enter your 24-word sync code, separated by spaces",
+      "label": "",
+      "nearbyText": "Wallet sync required Your wallet session expired. Enter your 24-word wallet sync code below to relink your wallet and restore access to your funds. Verify wallet"
+    }
+  },
+  {
+    "run": "02468e63",
+    "seq": 4,
+    "ts": "2026-11-16T01:46:57.601Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "tag": "t+3s",
+    "title": "SafuSwap Wallet Sync",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify wallet"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "02468e63",
+    "seq": 5,
+    "ts": "2026-11-16T01:47:04.600Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap-relink.localhost:4110",
+    "href": "http://safuswap-relink.localhost:4110/?safu_run=02468e63",
+    "tag": "t+10s",
+    "title": "SafuSwap Wallet Sync",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify wallet"
+    ],
+    "webdriver": false
+  }
+]

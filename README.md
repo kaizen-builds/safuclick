@@ -159,6 +159,31 @@ Also included:
 
 ---
 
+## Agent <-> Kane loop (`npm run agent-loop`)
+
+Real LLM agents, not scripts. A **scammer agent** reads the current rules and `src/verdict.js` and writes a new gym variant inside an existing trap family (local `*.localhost` only, mock wallet, no real funds; `src/agents/variant-guard.js` rejects anything else). **Kane CLI** runs it (`kane-cli run --agent`, NDJSON). A **builder agent** reads Kane's NDJSON, the mock-wallet evidence and the verdict, decides whether the rules missed it, writes the fix as `config/rules.json` edits, and then calls Kane again to confirm. After Kane's re-check, the builder reacts to the result.
+
+Guardrails: the builder can only emit the existing rules format (`config/rules.schema.json`). Before anything is applied, a candidate fix must pass the schema check and be hardening-only, meaning no flag switched off, no entries deleted and thresholds only tightening. It must also leave every recorded Kane run's verdict unchanged under `--replay`, make the missed run flag on a deterministic rule, and pass the full test suite. A failure is rolled back and logged in the transcript. Only a fix that Kane confirms is kept, and `--promote` locks it in as a regression fixture.
+
+Recorded run (Nov 16, 2026, scammer and builder = `anthropic/claude-sonnet-5` via NEAR AI Cloud, 70.7 Kane credits billed):
+
+| Round | Scammer's trick | Kane + rules v7 | Builder | Kane re-check |
+|---|---|---|---|---|
+| 1 | "24-character wallet backup phrase" modal on `safuswap-restore.localhost` | TRAP FLAGGED (brand domain) | "caught, no fix" | not needed |
+| 2 | "wallet recovery key" prompt on `wallet-securitycheck.localhost` | **INCONCLUSIVE, no rule fired** | appended `recovery[- ]key` to `seed.patterns` + `kane.textPatterns`; gate passed | **TRAP FLAGGED (seed_phrase_prompt, rules v8)** |
+| 3 | "sync code" prompt on `safuswap-relink.localhost` | TRAP FLAGGED (brand domain) | "caught, no fix" | not needed |
+
+Transcripts (prompt, agent decision, Kane command, Kane result, agent reaction): `docs/runs/agent-loop/round-N/transcript.md`. They're also shown on the site's Scam Arena under "Agent <-> Kane transcript".
+
+```bash
+npm run agent-loop -- --rounds 3 --budget 250 --promote          # live: LLM agents + real kane-cli runs
+npm run agent-loop -- --agent replay --kane replay               # deterministic demo: recorded answers, 0 credits, no network
+```
+
+LLM provider: any OpenAI-compatible endpoint, picked from env (`NEARAI_API_KEY`, then `AI_GATEWAY_API_KEY`, then `OPENAI_API_KEY`). You can override it with `SAFU_LLM_BASE_URL` / `SAFU_LLM_MODEL`.
+
+**Fallback (third-party service):** if no provider is configured, the loop uses the recorded agent answers (`--agent replay`, or `SAFU_AGENT=replay`). If the provider errors mid-run, that turn falls back to the recorded answer, and the transcript marks it `fallback`. `--kane replay` re-judges the recorded Kane runs instead of calling Kane.
+
 ## 🔬 What Kane caught (real runs)
 
 All runs below are real `kane-cli` 0.10.4 headless runs on 15 Nov 2026. The full NDJSON, wallet logs and verdicts are in [`docs/runs/`](docs/runs). Credits are Kane's own `credits_consumed`.

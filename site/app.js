@@ -162,6 +162,41 @@ $('#arenaPlay').addEventListener('click', () => {
   setTimeout(tick, 400);
 });
 
+/* -- Agent <-> Kane transcript (real LLM agents + real kane-cli runs, docs/runs/agent-loop) */
+let XS = null;
+const WHO = { scammer: ['scammer', 'w-scammer'], builder: ['builder', 'w-builder'], kane: ['Kane CLI', 'w-kane'], harness: ['harness', 'w-harness'] };
+function shortCmd(c) { return String(c || '').replace(/^(kane-cli run )'[\s\S]*?'(?= --url)/, (m, a) => `${a}'<objective>'`); }
+function xsEntry(e) {
+  const [name, wc] = WHO[e.from] || [e.from, 'w-harness'];
+  const to = e.to ? `<small>to ${esc(WHO[e.to]?.[0] || e.to)}</small>` : '';
+  const llm = e.model ? `<small>${esc(e.model)}${e.source && e.source !== 'llm' ? ' · ' + esc(e.source) : ''}</small>` : '';
+  let b = '';
+  if (e.kind === 'prompt') b = `<p>Prompt${e.attempt > 1 ? ` (attempt ${e.attempt})` : ''}, ${(e.chars / 1000).toFixed(1)}k chars: ${esc(e.includes.map((x) => x.replace(/\s*\(.*$/, '')).join(' · '))}</p>`;
+  else if (e.kind === 'decision' && e.from === 'scammer') b = `<p><b>${esc(e.name)}</b> <span class="mono">(${esc(e.family)})</span></p><p class="q">&ldquo;${esc(e.taunt)}&rdquo;</p><p>${esc(e.pitch)}</p><details><summary>Gap it is aiming for, and the variant it wrote</summary><p>${esc(e.gap)}</p><pre>${esc(JSON.stringify(e.site, null, 2))}</pre></details>`;
+  else if (e.kind === 'decision') b = `<p><b class="${e.missed ? 'no' : 'ok'}">${e.missed ? 'Missed by the rules' : 'Caught by the rules'}</b>${e.missed && e.fixable === false ? ' · not fixable in rules format' : ''}</p><p>${esc(e.diagnosis)}</p>${(e.ops || []).length ? `<pre>${esc(e.ops.map((o) => `${o.op} ${o.path} ${JSON.stringify(o.value)}`).join('\n'))}</pre>` : ''}${e.kane_recheck?.run ? `<p class="mono" style="font-size:11.5px;margin-top:6px">kane_recheck: max_steps ${esc(e.kane_recheck.max_steps)}</p>` : ''}`;
+  else if (e.kind === 'command') b = `${e.why ? `<p>${esc(e.why)}</p>` : ''}<pre>${esc(shortCmd(e.command))}</pre><details><summary>Full command (objective for scenario ${esc(e.scenario)})</summary><pre>${esc(e.command)}</pre></details>`;
+  else if (e.kind === 'result') b = `<p>Kane <b>${esc(e.status)}</b> in ${e.steps.length} steps${e.credits != null ? ` · ${Number(e.credits).toFixed(1)} credits` : ''}${e.test_url ? ` · <a href="${esc(e.test_url)}" target="_blank" rel="noopener">TestMu run</a>` : ''}</p>${e.one_liner ? `<p class="q">&ldquo;${esc(e.one_liner)}&rdquo;</p>` : ''}<p>SafuClick with rules v${esc(e.rulesVersion)}: <span class="${vcls(e.verdict)}">${esc(e.verdict)}</span> · rule catch: <b class="${e.caughtByRule ? 'ok' : 'no'}">${e.caughtByRule ? 'yes' : 'no'}</b>${e.reasons.length ? ` (${esc(e.reasons.map((r) => `${r.id} [${r.source}]`).join(', '))})` : ''}</p><details><summary>Kane steps and NDJSON</summary><ol>${e.steps.map((x) => `<li>${esc(x)}</li>`).join('')}</ol><p class="mono" style="font-size:11.5px">${esc(e.ndjson)}</p></details>`;
+  else if (e.kind === 'gate') b = `<p><b class="${e.ok ? 'ok' : 'no'}">${e.ok ? (e.notApplied ? 'Fix passed the gate, not applied: a rule already flagged this trap' : 'Fix accepted') : 'Fix rejected at ' + esc(e.rejectedAt) + ', rolled back'}</b></p><ul>${(e.steps || []).map((s) => `<li><span class="${s.ok ? 'ok' : 'no'}">${esc(s.step)}</span>${s.detail ? ': ' + esc(s.detail) : ''}${s.errors?.length ? ': ' + esc(s.errors.join(' | ')) : ''}</li>`).join('')}</ul>`;
+  else if (e.kind === 'reaction') b = `<p><b class="${e.confirmed_fixed ? 'ok' : 'no'}">${e.confirmed_fixed ? 'Confirmed fixed' : 'Not fixed'}</b></p><p>${esc(e.comment)}</p>${e.next ? `<p style="color:var(--mute)">Next: ${esc(e.next)}</p>` : ''}`;
+  else b = `<p class="${e.ok === false ? 'no' : ''}">${esc(e.detail || (e.errors || []).join(' | '))}</p>`;
+  return `<li><div class="xs-who ${wc}">${esc(name)}${to}${llm}</div><div class="xs-body">${b}</div></li>`;
+}
+function renderXs(k) {
+  const r = XS.rounds[k];
+  $('#xsTabs').innerHTML = XS.rounds.map((x, i) => `<button class="xs-tab${i === k ? ' on' : ''}" role="tab" aria-selected="${i === k}" data-k="${i}">R${x.round} ${esc(x.outcome.replace(/ \(.*\)$/, ''))}</button>`).join('');
+  $('#xsTabs').querySelectorAll('button').forEach((bt) => bt.addEventListener('click', () => renderXs(Number(bt.dataset.k))));
+  $('#xsLog').innerHTML = r.entries.map(xsEntry).join('');
+  $('#xsLog').scrollTop = 0;
+}
+fetch('data/agent-loop.json').then((r) => (r.ok ? r.json() : null)).then((d) => {
+  if (!d || !d.rounds?.length) return;
+  XS = d; $('#xscript').classList.remove('hidden');
+  const when = new Date(d.finishedAt).toLocaleString('en-GB', { timeZone: 'Africa/Lagos', dateStyle: 'medium', timeStyle: 'short' });
+  $('#xsMeta').innerHTML = `Scammer and builder: ${esc(d.provider?.model || 'LLM')} via ${esc(d.provider?.name || '?')} &middot; referee: kane-cli run --agent &middot; ${d.rounds.length} rounds, rules v${d.rulesStart} to v${d.rulesEnd} &middot; ${Number(d.creditsBilled ?? d.creditsKaneReported).toFixed(1)} Kane credits &middot; ${esc(when)} Lagos time &middot; <a href="https://github.com/kaizen-builds/safuclick/tree/main/docs/runs/agent-loop" target="_blank" rel="noopener">raw transcripts</a>`;
+  const fixed = d.rounds.findIndex((x) => /FIXED/.test(x.outcome));
+  renderXs(fixed >= 0 ? fixed : 0);
+}).catch(() => {});
+
 /* -- live check (same-origin API, secret relay, Kane CLI on the host machine) */
 let LIVE = false;
 function metaLine(s) {

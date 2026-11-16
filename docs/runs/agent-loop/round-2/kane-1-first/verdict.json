@@ -1,0 +1,46 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "url": "http://wallet-securitycheck.localhost:4110/",
+  "host": "wallet-securitycheck.localhost",
+  "officialDomain": false,
+  "resembles": null,
+  "reasons": [],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [],
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The recovery-key dialog remained on screen after Escape, blocking the swap flow without asking the user to enter sensitive information.",
+    "summary": "The page showed a wallet recovery-key prompt and did not close it when Escape was used. The prompt blocked all normal swap controls, while the only visible way forward required entering a recovery key.\nMake the recovery-key prompt dismissible with Escape and provide a visible cancel or close control so users can continue without entering sensitive wallet recovery information.\nevidence: objective_contradiction: PRIMARY: press the Escape key to dismiss the recovery-key verification dialog",
+    "credits": 13.3252575,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7H0AJ9JRJ4FPZMKWQQ0PZVM/dashboard/share/US_6O0ZTDA2Q58ADM15TZ7THA8A3ABIWSFI2NQHSTEWR22VMCKTW3SE0I1115JRNI6A?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "assertion_error.confirmed_product_bug",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71"
+      },
+      {
+        "step": 3,
+        "remark": "wait: Waiting while the recovery-key verification dialog blocks the page"
+      },
+      {
+        "step": 4,
+        "remark": "press_key: PRIMARY: press the Escape key to dismiss the recovery-key verification dialog"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 7,
+  "note": "Kane could not complete the flow (assertion_error.confirmed_product_bug): AP determined agent is stuck — no viable actions remain",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "scenario": "swap",
+  "runDir": "/workspace/safuclick/docs/runs/agent-loop/round-2/kane-1-first",
+  "card": "/workspace/safuclick/docs/runs/agent-loop/round-2/kane-1-first/card.svg"
+}

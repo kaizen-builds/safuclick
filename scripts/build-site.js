@@ -68,3 +68,26 @@ const rounds = loop.history.map((h) => ({
 }));
 writeJSON(p('site', 'data', 'arena.json'), { finishedAt: loop.finishedAt, credits: loop.credits, rounds });
 console.log(`site data: ${checks.length} checks, ${rounds.length} arena rounds`);
+
+// Agent <-> Kane transcripts (docs/runs/agent-loop): real LLM agents talking to real kane-cli runs.
+const AL = p('docs', 'runs', 'agent-loop');
+const alh = readJSON(path.join(AL, 'history.json'), null);
+if (alh) {
+  const cut = (s, n) => (s == null ? s : String(s).length > n ? String(s).slice(0, n) + '…' : String(s));
+  const compact = (e, outcome) => {
+    const o = { i: e.i, from: e.from, to: e.to, kind: e.kind };
+    if (e.kind === 'prompt') Object.assign(o, { attempt: e.attempt, includes: e.includes, chars: e.chars });
+    else if (e.kind === 'decision' && e.from === 'scammer') Object.assign(o, { model: e.model, source: e.source, name: e.name, family: e.family, gap: cut(e.gap, 600), pitch: e.pitch, taunt: e.taunt, site: e.site });
+    else if (e.kind === 'decision') Object.assign(o, { model: e.model, source: e.source, missed: e.missed, fixable: e.fixable, diagnosis: cut(e.diagnosis, 700), ops: e.ops, kane_recheck: e.kane_recheck });
+    else if (e.kind === 'command') Object.assign(o, { command: e.command, why: e.why, scenario: e.scenario, maxSteps: e.maxSteps });
+    else if (e.kind === 'result') Object.assign(o, { status: e.status, one_liner: cut(e.one_liner, 300), credits: e.credits, steps: e.steps.map((s) => cut(s.remark, 160)), test_url: e.test_url, ndjson: e.ndjson, verdict: e.verdict, rulesVersion: e.rulesVersion, reasons: e.reasons.map((r) => ({ id: r.id, source: r.source, detail: cut(r.detail, 200) })), caughtByRule: e.caughtByRule });
+    else if (e.kind === 'gate') Object.assign(o, { notApplied: e.ok && outcome === 'CAUGHT', ok: e.ok, rejectedAt: e.rejectedAt, applied: e.applied, steps: (e.steps || []).map((s) => ({ step: s.step, ok: s.ok, detail: s.detail, errors: (s.errors || []).map((x) => cut(x, 220)) })) });
+    else if (e.kind === 'reaction') Object.assign(o, { source: e.source, confirmed_fixed: e.confirmed_fixed, comment: e.comment, next: e.next });
+    else Object.assign(o, { ok: e.ok, detail: e.detail, errors: e.errors });
+    return o;
+  };
+  const rounds = alh.history.map((h) => ({ round: h.round, name: h.name, family: h.family, outcome: h.outcome, url: h.url, rulesBefore: h.rulesBefore, fix: h.fix || null, transcript: h.transcript,
+    entries: readJSON(p(h.transcript), { entries: [] }).entries.map((e) => compact(e, h.outcome)) }));
+  writeJSON(p('site', 'data', 'agent-loop.json'), { provider: alh.provider, agentMode: alh.agentMode, kaneMode: alh.kaneMode, startedAt: alh.startedAt, finishedAt: alh.finishedAt, rulesStart: alh.rulesStart, rulesEnd: alh.rulesEnd, creditsBilled: alh.creditsBilled, creditsKaneReported: alh.creditsKaneReported, llmCalls: alh.llmCalls, rounds });
+  console.log(`site data: agent loop, ${rounds.length} rounds`);
+}

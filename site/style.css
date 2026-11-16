@@ -176,3 +176,27 @@ h4{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.07em;color
 /* round grid holds 6 rounds: scroll sideways instead of growing the page */
 .rounds{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(260px,1fr);overflow-x:auto}
 @media (max-width:860px){.rounds{grid-auto-flow:row;grid-auto-columns:auto}}
+
+/* agent <-> Kane transcript */
+.xscript{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.xs-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px}
+.xs-head h3{margin:0;font:400 26px/1.1 var(--serif)}
+.xs-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.xs-tab{font:500 11.5px var(--mono);background:none;border:1px solid var(--line);border-radius:3px;color:var(--mute);padding:5px 10px;cursor:pointer}
+.xs-tab:hover{color:var(--plum)}
+.xs-tab.on{background:var(--plum);border-color:var(--plum);color:var(--paper)}
+.xs-meta{font-size:11.5px;color:var(--mute);margin:8px 0 10px}
+.xs-log{list-style:none;margin:0;padding:0;max-height:440px;overflow:auto;border:1px solid var(--sand);border-radius:6px;background:var(--cream)}
+.xs-log li{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:10px 14px;border-top:1px solid var(--sand);font-size:13px}
+.xs-log li:first-child{border-top:0}
+.xs-who{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+.xs-who small{display:block;font-weight:400;text-transform:none;letter-spacing:0;color:var(--soft);margin-top:2px}
+.w-scammer{color:var(--trap)}.w-builder{color:var(--plum2)}.w-kane{color:var(--clean)}.w-harness{color:var(--soft)}
+.xs-body p{margin:0 0 4px}
+.xs-body .q{font:italic 400 16px/1.35 var(--serif);color:#5d3e53}
+.xs-body code,.xs-body pre{font:11.5px/1.5 var(--mono);background:var(--sand);border-radius:3px}
+.xs-body pre{padding:8px 10px;margin:6px 0 0;white-space:pre-wrap;word-break:break-word;max-height:180px;overflow:auto}
+.xs-body details{margin-top:4px}.xs-body summary{cursor:pointer;color:var(--plum2);font-size:12px}
+.xs-body ul{margin:4px 0 0;padding-left:18px}
+.ok{color:var(--clean)}.no{color:var(--trap)}
+@media (max-width:860px){.xs-log li{grid-template-columns:1fr;gap:4px}}

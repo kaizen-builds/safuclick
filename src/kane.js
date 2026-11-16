@@ -77,9 +77,18 @@ export function realSiteObjective() {
   ].join('\n');
 }
 
+// The exact kane-cli invocation (shown in the agent <-> Kane transcript).
+export function kaneArgs({ url, objective: obj, maxSteps = 16, timeout = 300 }) {
+  return ['run', obj, '--url', url, '--headless', '--agent', '--max-steps', String(maxSteps), '--timeout', String(timeout)];
+}
+export function kaneCommandLine(a) {
+  const q = (x) => (/^[\w@%+=:,./-]+$/.test(x) ? x : `'${String(x).replace(/'/g, `'\\''`)}'`);
+  return [process.env.KANE_BIN || 'kane-cli', ...kaneArgs(a)].map(q).join(' ');
+}
+
 export function runKane({ url, amount = 10, maxSteps = 16, timeout = 300, outDir, onEvent = () => {}, objective: obj }) {
   return new Promise((resolve) => {
-    const args = ['run', obj || objective(amount), '--url', url, '--headless', '--agent', '--max-steps', String(maxSteps), '--timeout', String(timeout)];
+    const args = kaneArgs({ url, objective: obj || objective(amount), maxSteps, timeout });
     if (process.env.LT_USERNAME && process.env.LT_ACCESS_KEY) args.push('--username', process.env.LT_USERNAME, '--access-key', process.env.LT_ACCESS_KEY);
     const bin = process.env.KANE_BIN || 'kane-cli';
     fs.mkdirSync(outDir, { recursive: true });

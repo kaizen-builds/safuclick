@@ -1,0 +1,55 @@
+{
+  "from": 7,
+  "to": 8,
+  "ops": [
+    {
+      "op": "append",
+      "path": "seed.patterns",
+      "value": "recovery[- ]key"
+    },
+    {
+      "op": "append",
+      "path": "seed.patterns",
+      "value": "\\bwallet recovery key\\b"
+    },
+    {
+      "op": "append",
+      "path": "kane.textPatterns",
+      "value": "recovery[- ]key"
+    }
+  ],
+  "applied": [
+    "append seed.patterns += \"recovery[- ]key\"",
+    "append seed.patterns += \"\\\\bwallet recovery key\\\\b\"",
+    "append kane.textPatterns += \"recovery[- ]key\""
+  ],
+  "gate": [
+    {
+      "step": "ops",
+      "ok": true
+    },
+    {
+      "step": "schema",
+      "ok": true
+    },
+    {
+      "step": "hardening-only",
+      "ok": true
+    },
+    {
+      "step": "fix-effective",
+      "ok": true,
+      "detail": "missed run now TRAP FLAGGED via seed_phrase_prompt"
+    },
+    {
+      "step": "replay-recorded-runs",
+      "ok": true,
+      "detail": "28 recorded Kane runs re-judged, 0 verdict changes"
+    },
+    {
+      "step": "unit-tests",
+      "ok": true,
+      "detail": "70/70 tests pass with the candidate rules"
+    }
+  ]
+}

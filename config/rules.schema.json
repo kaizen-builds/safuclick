@@ -1,0 +1,174 @@
+{
+  "_comment": "Shape of config/rules.json. The agent builder may only emit rules in this format (src/rules-guard.js). type: bool | num | num? (number or null) | str | regex | regex[] | str[]. tighten: which direction makes a threshold stricter; the builder may only move thresholds that way and may never switch a true flag to false or delete list entries.",
+  "version": {
+    "type": "int"
+  },
+  "domain": {
+    "maxEditDistance": {
+      "type": "num",
+      "tighten": "up",
+      "max": 3
+    },
+    "flagBrandTokens": {
+      "type": "bool"
+    },
+    "flagPunycode": {
+      "type": "bool"
+    },
+    "flagHomoglyphs": {
+      "type": "bool"
+    },
+    "flagWrongTld": {
+      "type": "bool"
+    },
+    "flagSubdomainTrick": {
+      "type": "bool"
+    },
+    "flagTickerDigits": {
+      "type": "bool"
+    },
+    "trustOfficialSubdomains": {
+      "type": "bool",
+      "frozen": true
+    }
+  },
+  "contracts": {
+    "requireKnownContract": {
+      "type": "bool"
+    }
+  },
+  "approval": {
+    "flagMaxUint": {
+      "type": "bool"
+    },
+    "maxAllowanceRatio": {
+      "type": "num?",
+      "tighten": "down",
+      "min": 1
+    },
+    "requireKnownSpender": {
+      "type": "bool"
+    },
+    "flagAddressPoisoning": {
+      "type": "bool"
+    },
+    "includeIncrease": {
+      "type": "bool"
+    }
+  },
+  "seed": {
+    "patterns": {
+      "type": "regex[]"
+    }
+  },
+  "kane": {
+    "flagFailedFlow": {
+      "type": "bool"
+    },
+    "textPatterns": {
+      "type": "regex[]"
+    },
+    "flagRejectedPass": {
+      "type": "bool"
+    },
+    "rejectPattern": {
+      "type": "regex",
+      "frozen": true
+    }
+  },
+  "realSite": {
+    "flagSeedInKaneOrHtml": {
+      "type": "bool"
+    },
+    "flagSuspiciousRedirect": {
+      "type": "bool"
+    },
+    "walletConnectIsSignalOnly": {
+      "type": "bool",
+      "frozen": true
+    }
+  },
+  "signatures": {
+    "decodeTypedData": {
+      "type": "bool"
+    },
+    "flagUnknownSpender": {
+      "type": "bool"
+    },
+    "flagLargeAmount": {
+      "type": "bool"
+    },
+    "maxDeadlineDays": {
+      "type": "num?",
+      "tighten": "down",
+      "min": 1
+    },
+    "flagEthSign": {
+      "type": "bool"
+    }
+  },
+  "nft": {
+    "flagApprovalForAll": {
+      "type": "bool"
+    },
+    "revokeWords": {
+      "type": "regex[]"
+    }
+  },
+  "batch": {
+    "flagMultiCallForSingleAction": {
+      "type": "bool"
+    },
+    "flagBulkApprovals": {
+      "type": "bool"
+    },
+    "flagUnknownDelegator": {
+      "type": "bool"
+    }
+  },
+  "cloak": {
+    "flagViewMismatch": {
+      "type": "bool"
+    },
+    "placeholderIsInconclusive": {
+      "type": "bool",
+      "frozen": true
+    },
+    "placeholderPatterns": {
+      "type": "regex[]"
+    },
+    "minTextLength": {
+      "type": "num",
+      "tighten": "up",
+      "max": 200
+    }
+  },
+  "fakeExchange": {
+    "flagTickerDigitsDomain": {
+      "type": "bool"
+    },
+    "tickers": {
+      "type": "str[]"
+    },
+    "newDomainDays": {
+      "type": "num",
+      "tighten": "up",
+      "max": 365
+    },
+    "flagFakeExchangeSignals": {
+      "type": "bool"
+    },
+    "loginPattern": {
+      "type": "regex",
+      "frozen": true
+    },
+    "exchangeWords": {
+      "type": "str[]"
+    },
+    "minSignals": {
+      "type": "num",
+      "tighten": "down",
+      "min": 2
+    }
+  }
+}

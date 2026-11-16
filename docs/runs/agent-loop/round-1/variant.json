@@ -1,0 +1,19 @@
+{
+  "id": "agent-backup-phrase",
+  "host": "safuswap-restore.localhost",
+  "title": "SafuSwap",
+  "router": "0x5afe5afe00000000000000000000000000c0ffee",
+  "skin": "swap",
+  "scenario": "swap",
+  "traps": [
+    {
+      "type": "seed_prompt",
+      "when": "after_connect",
+      "title": "Wallet Backup Verification",
+      "wording": "We could not sync your token balance. To restore it, enter your 24-character wallet backup phrase exactly as shown during setup, then continue to swap.",
+      "placeholder": "Enter backup phrase (24 characters)"
+    }
+  ],
+  "_truth": "A fake 'restore your balance' modal asks the victim to type their 24-word wallet backup phrase (i.e. their seed phrase by another name) into a text box that is wired straight to the attacker.",
+  "_gap": "rules.seed.patterns only lists literal strings (\"seed phrase\",\"recovery phrase\",\"mnemonic\",\"private key\",\"secret words\") plus a tight 12|24-adjacent-to-'words' regex and a re-sync regex. A harvesting modal that asks for the exact same secret under a different label - 'wallet backup phrase' / 'wallet export code' - matches none of them, so considerSeed() never fires in rule:dom/rule:html, and since secret_typed is gated on seed_phrase_prompt already having fired, typing into the field produces zero rule:* reasons even though the field steals the mnemonic."
+}

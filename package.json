@@ -11,6 +11,7 @@
     "check": "node bin/safuclick.js check",
     "ui": "node bin/safuclick.js ui",
     "loop": "node bin/safuclick.js loop",
+    "agent-loop": "node bin/safuclick.js agent-loop",
     "test": "node --test test/*.test.js",
     "live-api": "node src/live-api/server.js",
     "site:data": "node scripts/build-site.js"

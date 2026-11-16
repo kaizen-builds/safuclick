@@ -1,0 +1,148 @@
+[
+  {
+    "run": "79c8b913",
+    "seq": 1,
+    "ts": "2026-11-16T01:38:24.467Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "79c8b913",
+    "seq": 2,
+    "ts": "2026-11-16T01:38:24.537Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "79c8b913",
+    "seq": 3,
+    "ts": "2026-11-16T01:38:27.476Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "tag": "t+3s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "79c8b913",
+    "seq": 1,
+    "ts": "2026-11-16T01:38:33.962Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "79c8b913",
+    "seq": 2,
+    "ts": "2026-11-16T01:38:33.964Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "79c8b913",
+    "seq": 3,
+    "ts": "2026-11-16T01:38:36.963Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "tag": "t+3s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "79c8b913",
+    "seq": 4,
+    "ts": "2026-11-16T01:38:43.963Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "tag": "t+10s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "79c8b913",
+    "seq": 5,
+    "ts": "2026-11-16T01:38:46.303Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "79c8b913",
+    "seq": 6,
+    "ts": "2026-11-16T01:38:53.915Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "79c8b913",
+    "seq": 7,
+    "ts": "2026-11-16T01:38:54.719Z",
+    "type": "input_seen",
+    "origin": "http://safuswap-restore.localhost:4110",
+    "href": "http://safuswap-restore.localhost:4110/?safu_run=79c8b913",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "Enter backup phrase (24 characters)",
+      "label": "",
+      "nearbyText": "Wallet Backup Verification We could not sync your token balance. To restore it, enter your 24-character wallet backup phrase exactly as shown during setup, then continue to swap. Verify wallet"
+    }
+  }
+]

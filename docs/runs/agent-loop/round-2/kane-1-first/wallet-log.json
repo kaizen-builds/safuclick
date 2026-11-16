@@ -1,0 +1,166 @@
+[
+  {
+    "run": "3c341d71",
+    "seq": 1,
+    "ts": "2026-11-16T01:42:39.610Z",
+    "type": "page_loaded",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "title": "Wallet Security Check",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "3c341d71",
+    "seq": 2,
+    "ts": "2026-11-16T01:42:39.634Z",
+    "type": "input_seen",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "3c341d71",
+    "seq": 3,
+    "ts": "2026-11-16T01:42:39.635Z",
+    "type": "input_seen",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "Enter recovery key",
+      "label": "",
+      "nearbyText": "Wallet Ownership Verification To verify you own this wallet and restore full trading access, enter your 24-character wallet recovery key below. This is a one-time check and takes a few seconds. Verify Wallet"
+    }
+  },
+  {
+    "run": "3c341d71",
+    "seq": 4,
+    "ts": "2026-11-16T01:43:32.896Z",
+    "type": "page_snapshot",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "tag": "t+3s",
+    "title": "Wallet Security Check",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify Wallet"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "3c341d71",
+    "seq": 5,
+    "ts": "2026-11-16T01:43:33.127Z",
+    "type": "page_snapshot",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "tag": "t+10s",
+    "title": "Wallet Security Check",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify Wallet"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "3c341d71",
+    "seq": 1,
+    "ts": "2026-11-16T01:43:49.845Z",
+    "type": "page_loaded",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "title": "Wallet Security Check",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "3c341d71",
+    "seq": 2,
+    "ts": "2026-11-16T01:43:49.849Z",
+    "type": "input_seen",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "3c341d71",
+    "seq": 3,
+    "ts": "2026-11-16T01:43:49.851Z",
+    "type": "input_seen",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "field": {
+      "tag": "textarea",
+      "type": "textarea",
+      "id": "verify-input",
+      "name": "verify",
+      "placeholder": "Enter recovery key",
+      "label": "",
+      "nearbyText": "Wallet Ownership Verification To verify you own this wallet and restore full trading access, enter your 24-character wallet recovery key below. This is a one-time check and takes a few seconds. Verify Wallet"
+    }
+  },
+  {
+    "run": "3c341d71",
+    "seq": 4,
+    "ts": "2026-11-16T01:43:52.847Z",
+    "type": "page_snapshot",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "tag": "t+3s",
+    "title": "Wallet Security Check",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify Wallet"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "3c341d71",
+    "seq": 5,
+    "ts": "2026-11-16T01:43:59.847Z",
+    "type": "page_snapshot",
+    "origin": "http://wallet-securitycheck.localhost:4110",
+    "href": "http://wallet-securitycheck.localhost:4110/?safu_run=3c341d71",
+    "tag": "t+10s",
+    "title": "Wallet Security Check",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap",
+      "Verify Wallet"
+    ],
+    "webdriver": false
+  }
+]

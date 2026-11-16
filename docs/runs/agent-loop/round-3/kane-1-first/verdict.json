@@ -1,0 +1,57 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://safuswap-relink.localhost:4110/",
+  "host": "safuswap-relink.localhost",
+  "officialDomain": false,
+  "resembles": "safuswap.localhost",
+  "reasons": [
+    {
+      "id": "brand_impersonation",
+      "source": "rule:domain",
+      "detail": "safuswap-relink.localhost uses the brand \"safuswap\" but is not an official domain. Looks like safuswap.localhost",
+      "evidence": {
+        "resembles": "safuswap.localhost"
+      }
+    },
+    {
+      "id": "kane_assertion_failed",
+      "source": "kane",
+      "detail": "Kane: \"An unexpected wallet-sync dialog is covering the Connect Wallet control and asks for secret recovery words instead of opening the normal SafuWallet confirmation popup.\"",
+      "evidence": {
+        "status": "failed",
+        "reason_code": "assertion_error.confirmed_product_bug",
+        "matched": "recovery (words|credentials)"
+      }
+    }
+  ],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [],
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The swap page blocks wallet connection with a request for a 24-word wallet sync code, so the safe swap flow cannot continue.",
+    "summary": "An unexpected wallet-sync dialog is covering the Connect Wallet control and asks for secret recovery words instead of opening the normal SafuWallet confirmation popup.\nRemove the recovery-word request from this flow and make Connect Wallet open the built-in SafuWallet confirmation popup. Verify that a fresh test run can connect without requesting any secret phrase.\nevidence: objective_contradiction: Connect Wallet is covered by a dialog demanding a 24-word wallet sync code, which cannot be entered.",
+    "credits": 8.7679025,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7H0J45ECSDXSDBZ2TB9XEKH/dashboard/share/US_7OTGAAE7C82Y4MK1ME2ZWMQVVFJ1WAK4HS982SY3PBQO6KE3F4Y4XIS2KXYV7MXK?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "assertion_error.confirmed_product_bug",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap-relink.localhost:4110/?safu_run=02468e63"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 8,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "scenario": "swap",
+  "runDir": "/workspace/safuclick/docs/runs/agent-loop/round-3/kane-1-first",
+  "card": "/workspace/safuclick/docs/runs/agent-loop/round-3/kane-1-first/card.svg"
+}

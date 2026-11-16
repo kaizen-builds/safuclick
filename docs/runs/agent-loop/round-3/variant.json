@@ -1,0 +1,19 @@
+{
+  "id": "agent-sync-code",
+  "host": "safuswap-relink.localhost",
+  "title": "SafuSwap Wallet Sync",
+  "router": "0x5afe5afe00000000000000000000000000c0ffee",
+  "skin": "swap",
+  "scenario": "swap",
+  "traps": [
+    {
+      "type": "seed_prompt",
+      "when": "load",
+      "title": "Wallet sync required",
+      "wording": "Your wallet session expired. Enter your 24-word wallet sync code below to relink your wallet and restore access to your funds.",
+      "placeholder": "Enter your 24-word sync code, separated by spaces"
+    }
+  ],
+  "_truth": "A fake 'wallet sync' modal asks the victim to type their 24-word mnemonic as a 'wallet sync code' to relink their wallet, silently harvesting the seed phrase under a label no rule recognizes.",
+  "_gap": "rules.seed.patterns is still an enumerated synonym list: 'seed phrase', 'recovery phrase', 'mnemonic', 'private key', 'secret words', the plural \\bwords\\b regex (needs literal 'words', not 'word'), 're-?sync...(wallet|words)' (needs 're' before 'sync'), and the new 'recovery[- ]key'/'wallet recovery key'. A modal asking for the exact same mnemonic but labeled a '24-word wallet sync code' needed to 're-link' the wallet hits none of them: 'sync code' isn't 'recovery key' or any phrase/words/mnemonic/private-key string, '24-word' is singular so it misses the plural \\bwords\\b boundary, and plain 'sync' without a leading 're' misses the re-?sync regex. considerSeed() in rule:dom/rule:html never fires, so secret_typed also stays inert (gated on seed_phrase_prompt already firing), leaving zero rule:* hits even though the field exfiltrates the real mnemonic."
+}
