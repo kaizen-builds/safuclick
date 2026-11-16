@@ -1,4 +1,4 @@
-# 🛡️ SafuClick
+# SafuClick
 
 **Paste a crypto link before you connect your wallet.** SafuClick uses **Kane CLI** to walk through the site like a real user, with a throwaway mock wallet. It records exactly what the page asks that wallet to sign, then flags known trap patterns: lookalike domains, seed-phrase prompts, and "Swap 10 USDC" buttons that actually request an **unlimited approval**.
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 🌐 Website: [safuclick.vercel.app](https://safuclick.vercel.app)
+## Website: [safuclick.vercel.app](https://safuclick.vercel.app)
 
 Try it without installing anything:
 
@@ -21,7 +21,7 @@ How the live check is hosted: the site runs on Vercel, but Kane needs a browser 
 
 Rebuild the site data from run files with `npm run site:data`. The site lives in `site/`.
 
-## ⚡ 60-second quickstart
+## 60-second quickstart
 
 ```bash
 # 0. Node 20+ and Kane CLI (one-time)
@@ -32,10 +32,10 @@ git clone https://github.com/kaizen-builds/safuclick && cd safuclick
 npm run gym                                                 # terminal 1
 
 # 2. Check links (terminal 2): Kane drives headless Chrome
-npm run check -- http://safuswap.localhost:4100/            # ✅ official
-npm run check -- http://safuswap.localhost:4103/            # 🚨 hidden unlimited approval
-npm run check -- http://safuswep.localhost:4101/            # 🚨 lookalike clone
-npm run check -- http://safuswap-verify.localhost:4102/     # 🚨 seed-phrase prompt
+npm run check -- http://safuswap.localhost:4100/            # official
+npm run check -- http://safuswap.localhost:4103/            # hidden unlimited approval
+npm run check -- http://safuswep.localhost:4101/            # lookalike clone
+npm run check -- http://safuswap-verify.localhost:4102/     # seed-phrase prompt
 
 # 3. Watch the closed loop: scammer vs builder, refereed by Kane
 npm run loop -- --rounds 3 --fresh
@@ -57,12 +57,11 @@ npm run check -- --real-site https://app.uniswap.org
 
 Every check also writes a shareable SafuCard (`card.svg`) into the run folder. Re-render one with `npx safuclick card <runDir>`. A clean real-site result is still not a guarantee of safety: sites can cloak or fingerprint test browsers.
 
-
 ![Web UI verdict](docs/img/ui-verdict.png)
 
 ---
 
-## 🧠 How it works
+## How it works
 
 ```mermaid
 flowchart LR
@@ -86,23 +85,23 @@ flowchart LR
    - **Domain check:** typosquats (edit distance), brand-in-subdomain, punycode.
    - **Kane's own judgement:** a failed assertion (`assertion_error.*`) whose text describes a trap. Kane runs that get stuck or hit max steps are reported as **INCONCLUSIVE**, never as "safe".
 
-Three verdicts are possible: `🚨 TRAP FLAGGED`, `❔ INCONCLUSIVE` and `✅ NO KNOWN TRAPS FOUND`. The last one deliberately doesn't say "safe".
+Three verdicts are possible: `TRAP FLAGGED`, `INCONCLUSIVE` and `NO KNOWN TRAPS FOUND`. The last one deliberately doesn't say "safe".
 
 ### The phishing gym (`npm run gym`)
 
 | Site | URL | Trap |
 |---|---|---|
-| ✅ official | `http://safuswap.localhost:4100/` | none |
-| 🎣 clone | `http://safuswep.localhost:4101/` | pixel-perfect copy on a typosquatted domain; the swap goes to the attacker's router |
-| 🎣 seed | `http://safuswap-verify.localhost:4102/` | "Enter your 12-word recovery phrase" modal |
-| 🎣 approval | `http://safuswap.localhost:4103/` | **real domain**, compromised frontend: "Swap 10 USDC" sends `approve(drainer, MAX_UINT256)` |
-| 🎣 claim | `http://claim.safuswap-airdrop.localhost:4104/` | gas-free "sign to claim": Permit2 `PermitSingle`, unlimited USDC to an unknown spender, 3 years |
-| 🎣 revoke | `http://revoke-cash.localhost:4105/` | fake revoke tool: "Revoke" sends `setApprovalForAll(attacker, true)` |
-| 🎣 batch | `http://safuswap.localhost:4106/` | real domain: one `wallet_sendCalls` confirm (EIP-7702 delegator) hides 2 unlimited approvals + an NFT grant |
-| 🎣 allowance | `http://safuswap.localhost:4107/` | ice phishing: `increaseAllowance(attacker, MAX)` instead of `approve` |
-| 🎣 cloak | `http://safuswap.localhost:4108/` | "Coming soon" to crawlers and no-wallet visitors, EIP-2612 Permit drainer when a wallet is present |
-| 🎣 cloak-strict | `http://safuswap.localhost:4109/` | also hides from automation (`navigator.webdriver`), so the honest verdict is INCONCLUSIVE |
-| 🧪 loop slot | `http://*.localhost:4110/` | whatever the scammer agent plants (hot-reloaded) |
+| official | `http://safuswap.localhost:4100/` | none |
+| clone | `http://safuswep.localhost:4101/` | pixel-perfect copy on a typosquatted domain; the swap goes to the attacker's router |
+| seed | `http://safuswap-verify.localhost:4102/` | "Enter your 12-word recovery phrase" modal |
+| approval | `http://safuswap.localhost:4103/` | **real domain**, compromised frontend: "Swap 10 USDC" sends `approve(drainer, MAX_UINT256)` |
+| claim | `http://claim.safuswap-airdrop.localhost:4104/` | gas-free "sign to claim": Permit2 `PermitSingle`, unlimited USDC to an unknown spender, 3 years |
+| revoke | `http://revoke-cash.localhost:4105/` | fake revoke tool: "Revoke" sends `setApprovalForAll(attacker, true)` |
+| batch | `http://safuswap.localhost:4106/` | real domain: one `wallet_sendCalls` confirm (EIP-7702 delegator) hides 2 unlimited approvals + an NFT grant |
+| allowance | `http://safuswap.localhost:4107/` | ice phishing: `increaseAllowance(attacker, MAX)` instead of `approve` |
+| cloak | `http://safuswap.localhost:4108/` | "Coming soon" to crawlers and no-wallet visitors, EIP-2612 Permit drainer when a wallet is present |
+| cloak-strict | `http://safuswap.localhost:4109/` | also hides from automation (`navigator.webdriver`), so the honest verdict is INCONCLUSIVE |
+| loop slot | `http://*.localhost:4110/` | whatever the scammer agent plants (hot-reloaded) |
 
 Variants are config-driven (`gym/variants.json`, re-read on every request), so the scammer agent can add or evolve traps without code changes. Supported traps: `approve`, `increaseAllowance`, `permit2` / `permit` (typed-data signatures), `setApprovalForAll`, `batch` (`wallet_sendCalls` + 7702), `cloak`, `seed_prompt`, and lookalike `host`. Pick Kane's flow with `--scenario swap|claim|revoke|batch|allowance|cloak`; `--two-views` adds a no-JS HTTP peek to compare with Kane's view.
 
@@ -110,14 +109,14 @@ The mock wallet decodes `eth_signTypedData_v4` (EIP-2612 Permit, Permit2 PermitS
 
 ---
 
-## 🔁 The closed loop (`npm run loop`)
+## The closed loop (`npm run loop`)
 
 ```mermaid
 sequenceDiagram
-  participant S as 😈 Scammer agent
+  participant S as Scammer agent
   participant G as Phishing gym
-  participant K as 🤖 Kane CLI (referee)
-  participant B as 🛠 Builder agent
+  participant K as Kane CLI (referee)
+  participant B as Builder agent
   S->>G: plant / evolve trap (loop-variant.json, hot reload)
   K->>G: drive the page with the mock wallet
   K-->>B: verdict + Kane NDJSON + wallet log → fix prompt (round-N-fix.md)
@@ -127,12 +126,12 @@ sequenceDiagram
 ```
 
 Each round goes like this:
-1. 😈 **The scammer** plants a trap on the loop slot.
-2. 🤖 **Kane** referees it with the current rules.
+1. **The scammer** plants a trap on the loop slot.
+2. **Kane** referees it with the current rules.
 3. If deterministic rules catch it, the result is **CAUGHT** and the scammer evolves.
 4. If only Kane's LLM judgement caught it (**KANE-ONLY**), or nothing did (**MISSED**), Kane's report becomes a **fix prompt** ([example](docs/runs/loop/prompts/round-2-fix.md)) containing Kane's summary, steps, `test_url` and the wallet evidence.
-5. 🛠 **The builder** hardens `rules.json`, writes a **regression fixture from the real Kane run**, and runs the tests.
-6. 🤖 **Kane re-runs** the same trap live to verify the fix.
+5. **The builder** hardens `rules.json`, writes a **regression fixture from the real Kane run**, and runs the tests.
+6. **Kane re-runs** the same trap live to verify the fix.
 
 The loop starts from deliberately naive day-zero rules (`config/rules.baseline.json`). `--promote` copies the hardened rules into `config/rules.json`, which is how the shipped rules were produced.
 
@@ -184,7 +183,7 @@ LLM provider: any OpenAI-compatible endpoint, picked from env (`NEARAI_API_KEY`,
 
 **Fallback (third-party service):** if no provider is configured, the loop uses the recorded agent answers (`--agent replay`, or `SAFU_AGENT=replay`). If the provider errors mid-run, that turn falls back to the recorded answer, and the transcript marks it `fallback`. `--kane replay` re-judges the recorded Kane runs instead of calling Kane.
 
-## 🔬 What Kane caught (real runs)
+## What Kane caught (real runs)
 
 All runs below are real `kane-cli` 0.10.4 headless runs on 15 Nov 2026. The full NDJSON, wallet logs and verdicts are in [`docs/runs/`](docs/runs). Credits are Kane's own `credits_consumed`.
 
@@ -192,33 +191,33 @@ All runs below are real `kane-cli` 0.10.4 headless runs on 15 Nov 2026. The full
 
 | Target | Kane | SafuClick verdict | What was flagged | Credits |
 |---|---|---|---|---|
-| official | ✅ passed: "completed a 10 USDC swap on SafuSwap" | ✅ NO KNOWN TRAPS FOUND | nothing | 31.2 |
-| hidden approval (real domain) | ❌ assertion failed: *"The wallet popup did not match the requested swap: it asked to approve token spending for an unlimited USDC amount."* | 🚨 TRAP FLAGGED | `unlimited_approval` to `0xd2a1…dead` + Kane assertion | 25.2 |
-| seed prompt | ❌ refused to continue: *"A wallet verification dialog requests recovery words, so I will not fill it."* | 🚨 TRAP FLAGGED | `seed_phrase_prompt`, `brand_impersonation` (+ Kane) | 16.6 |
-| lookalike clone | ✅ **passed**: "completed a 10 USDC swap on SafuSWEp" | 🚨 TRAP FLAGGED | `lookalike_domain` (1 edit from safuswap), `unknown_contract` (swap sent to attacker router `0xc10e…d000`) | 35.9 |
+| official | passed: "completed a 10 USDC swap on SafuSwap" | NO KNOWN TRAPS FOUND | nothing | 31.2 |
+| hidden approval (real domain) | assertion failed: *"The wallet popup did not match the requested swap: it asked to approve token spending for an unlimited USDC amount."* | TRAP FLAGGED | `unlimited_approval` to `0xd2a1…dead` + Kane assertion | 25.2 |
+| seed prompt | refused to continue: *"A wallet verification dialog requests recovery words, so I will not fill it."* | TRAP FLAGGED | `seed_phrase_prompt`, `brand_impersonation` (+ Kane) | 16.6 |
+| lookalike clone | **passed**: "completed a 10 USDC swap on SafuSWEp" | TRAP FLAGGED | `lookalike_domain` (1 edit from safuswap), `unknown_contract` (swap sent to attacker router `0xc10e…d000`) | 35.9 |
 
 The clone row is the point of the whole project. A pixel-perfect clone **passes** a purely visual end-to-end test, because Kane happily completes the swap. SafuClick still flags it, because the wallet evidence that Kane's run produced shows the transaction going to an unknown contract on a typosquatted domain.
 
 **Closed loop** ([transcript](docs/runs/loop/transcript.txt), [history](docs/runs/loop/history.json))
 
-| Round | 😈 Scammer move | First Kane run | Builder patch (from Kane's report) | Kane re-check |
+| Round | Scammer move | First Kane run | Builder patch (from Kane's report) | Kane re-check |
 |---|---|---|---|---|
-| R1 | `unlimited-approve`: MAX_UINT approval on the real domain | 🚨 caught by rules **and** Kane (25.0 cr) | none needed: **scammer must evolve** | n/a |
-| R2 | `poisoned-approve`: 5,000,000 USDC (not MAX), spender `0x5afe9d…c0ffee` imitating router `0x5afe5a…c0ffee` | ⚠ **KANE-ONLY**: no rule fired, Kane caught it: *"The SafuWallet request did not match the requested 10 USDC swap: it asked to approve token spending for 5,000,000 USDC."* (20.5 cr) | rules v0→v1: `maxAllowanceRatio=10`, `requireKnownSpender`, `flagAddressPoisoning`, plus a regression fixture | 🚨 **FIXED**: `excessive_approval` (500000x), `address_poisoning`, `unknown_spender` + Kane (21.4 cr) |
-| R3 | `delayed-seed`: clean on load, then after connect a "Session expired, type your 12 secret words" modal that avoids the words seed/recovery/mnemonic | ❔ **MISSED** (INCONCLUSIVE). Kane got blocked: *"required secret words, so the safe swap flow could not continue"*, but no rule matched (20.7 cr) | rules v1→v2: seed patterns `secret words`, `(12\|24) … words`, `re-sync`, plus a regression fixture | 🚨 **FIXED**: `seed_phrase_prompt` (10.0 cr) |
+| R1 | `unlimited-approve`: MAX_UINT approval on the real domain | caught by rules **and** Kane (25.0 cr) | none needed: **scammer must evolve** | n/a |
+| R2 | `poisoned-approve`: 5,000,000 USDC (not MAX), spender `0x5afe9d…c0ffee` imitating router `0x5afe5a…c0ffee` | **KANE-ONLY**: no rule fired, Kane caught it: *"The SafuWallet request did not match the requested 10 USDC swap: it asked to approve token spending for 5,000,000 USDC."* (20.5 cr) | rules v0→v1: `maxAllowanceRatio=10`, `requireKnownSpender`, `flagAddressPoisoning`, plus a regression fixture | **FIXED**: `excessive_approval` (500000x), `address_poisoning`, `unknown_spender` + Kane (21.4 cr) |
+| R3 | `delayed-seed`: clean on load, then after connect a "Session expired, type your 12 secret words" modal that avoids the words seed/recovery/mnemonic | **MISSED** (INCONCLUSIVE). Kane got blocked: *"required secret words, so the safe swap flow could not continue"*, but no rule matched (20.7 cr) | rules v1→v2: seed patterns `secret words`, `(12\|24) … words`, `re-sync`, plus a regression fixture | **FIXED**: `seed_phrase_prompt` (10.0 cr) |
 
 **2026 drainer traps** (16 Nov 2026, rules v7, [loop2 transcript](docs/runs/loop2/transcript.txt))
 
 | Trap | Kane | SafuClick verdict | Evidence |
 |---|---|---|---|
-| Sign-to-claim Permit2 (loop round 4) | passed, *"reviewed and rejected an unlimited USDC permit"* | 🚨 TRAP FLAGGED | `permit_signature`: PermitSingle, UNLIMITED USDC to `0xc1a1ec…1a1e`, expires 2029-11-15 |
-| increaseAllowance ice phishing (loop round 5) | passed after rejecting it | 🚨 TRAP FLAGGED | `increase_allowance`, `unlimited_approval`, `unknown_spender` to `0x1ce1ce…1ce1` |
-| Cloaking lab, two views | passed, *"reviewed the rewards page"* | 🚨 TRAP FLAGGED | HTTP peek: "Coming soon"; Kane + wallet: EIP-2612 Permit, UNLIMITED USDC to `0xc10a4c…10a4` → `cloaking_suspected` |
-| usdc082.com (real X DM, fake exchange) | v5: passed, missed. v6 re-check: stuck at max steps | MISSED → 🚨 TRAP FLAGGED | `ticker_digits_domain`; signals: title "onkeyon", Turnstile, registered 2025-12-29. Kane never logs in. |
-| Fake revoke site (Nov 16 verify run) | failed after rejecting the request (40.4 cr) | 🚨 TRAP FLAGGED | `fake_revoke`, `nft_approval_for_all`: setApprovalForAll(`0x0be7a7…a70b`, **true**) on Uniswap V3 Positions, `brand_impersonation` (looks like revoke.cash) |
-| Hidden batch swap (Nov 16 verify run) | passed, *"reviewed and rejected an unsafe swap request"* (39.4 cr) | 🚨 TRAP FLAGGED | `hidden_batch`: one `wallet_sendCalls` = swap + 2 UNLIMITED approvals + setApprovalForAll to `0xba7c4b…a7c4` |
-| Strict cloak (Nov 16 verify run) | failed: only a "Coming soon" page (27.4 cr) | ❔ INCONCLUSIVE | both views saw the placeholder; `cloaking_suspected` signal. Not safe, not flagged: SafuClick can't judge a trap it is never shown |
-| Official SafuSwap, rules v7 (Nov 16 verify run) | passed, "completed a 10 USDC swap" (34.3 cr) | ✅ NO KNOWN TRAPS FOUND | false-positive check on the real site |
+| Sign-to-claim Permit2 (loop round 4) | passed, *"reviewed and rejected an unlimited USDC permit"* | TRAP FLAGGED | `permit_signature`: PermitSingle, UNLIMITED USDC to `0xc1a1ec…1a1e`, expires 2029-11-15 |
+| increaseAllowance ice phishing (loop round 5) | passed after rejecting it | TRAP FLAGGED | `increase_allowance`, `unlimited_approval`, `unknown_spender` to `0x1ce1ce…1ce1` |
+| Cloaking lab, two views | passed, *"reviewed the rewards page"* | TRAP FLAGGED | HTTP peek: "Coming soon"; Kane + wallet: EIP-2612 Permit, UNLIMITED USDC to `0xc10a4c…10a4` → `cloaking_suspected` |
+| usdc082.com (real X DM, fake exchange) | v5: passed, missed. v6 re-check: stuck at max steps | MISSED → TRAP FLAGGED | `ticker_digits_domain`; signals: title "onkeyon", Turnstile, registered 2025-12-29. Kane never logs in. |
+| Fake revoke site (Nov 16 verify run) | failed after rejecting the request (40.4 cr) | TRAP FLAGGED | `fake_revoke`, `nft_approval_for_all`: setApprovalForAll(`0x0be7a7…a70b`, **true**) on Uniswap V3 Positions, `brand_impersonation` (looks like revoke.cash) |
+| Hidden batch swap (Nov 16 verify run) | passed, *"reviewed and rejected an unsafe swap request"* (39.4 cr) | TRAP FLAGGED | `hidden_batch`: one `wallet_sendCalls` = swap + 2 UNLIMITED approvals + setApprovalForAll to `0xba7c4b…a7c4` |
+| Strict cloak (Nov 16 verify run) | failed: only a "Coming soon" page (27.4 cr) | INCONCLUSIVE | both views saw the placeholder; `cloaking_suspected` signal. Not safe, not flagged: SafuClick can't judge a trap it is never shown |
+| Official SafuSwap, rules v7 (Nov 16 verify run) | passed, "completed a 10 USDC swap" (34.3 cr) | NO KNOWN TRAPS FOUND | false-positive check on the real site |
 
 Both loop rounds were **MISSED → FIXED**: Kane followed the objective, rejected the request and reported "passed", so no rule fired; the builder then switched on Permit/Permit2 decoding (v2→v3) and `increaseAllowance` checks (v3→v4). Since v5, "Kane passed by rejecting the request" also counts as a Kane signal. Revoke, batch and cloak-strict are covered by scripted gym captures and tests (`test/new-traps.test.js`); their real Kane runs are still to do.
 
@@ -231,7 +230,7 @@ Both loop rounds were **MISSED → FIXED**: Kane followed the objective, rejecte
 
 ---
 
-## ⚠️ Known limitations
+## Known limitations
 
 - **It flags known trap patterns. It is not a safety guarantee.** A clean result only means that *this run*, with *this* wallet and browser, showed none of the patterns SafuClick knows about.
 - **Cloaking and fingerprinting:** real drainers can detect automation or test wallets (for example `isSafuWallet`, headless Chrome or the IP address), serve a clean page to scanners, or arm the trap after N visits, at certain times, or only for wallets with a balance.
@@ -243,19 +242,7 @@ Both loop rounds were **MISSED → FIXED**: Kane followed the objective, rejecte
 
 ---
 
-## 🎬 Demo video script (3 to 5 min)
-
-1. **0:00 to 0:20, hook.** "Wallet drainers are one of the most common ways people lose crypto, and most of them start with one click on a link that looks legit." Show the clone and the official site side by side: they're identical.
-2. **0:20 to 0:50, what SafuClick is.** "Paste a link before you connect. Kane CLI walks through it with a throwaway wallet and records what the site asks that wallet to sign." Show the architecture diagram.
-3. **0:50 to 1:40, the hidden approval.** `npm run check -- http://safuswap.localhost:4103/`. Narrate Kane's steps as they stream. Show the popup screenshot ("Swap 10 USDC" vs UNLIMITED), then the 🚨 card: `unlimited_approval` plus Kane's assertion quote and test_url link. Open the Kane report in Test Manager.
-4. **1:40 to 2:20, the clone.** Kane **passes** ("completed a 10 USDC swap"), but SafuClick flags `lookalike_domain` and `unknown_contract`. "A visual test says ship it. The wallet evidence says scam."
-5. **2:20 to 3:40, the closed loop.** `npm run loop -- --rounds 3 --fresh`. R1 caught → the scammer evolves to address poisoning with a 5M approval → KANE-ONLY → show `round-2-fix.md` → the builder patches rules v0→v1 and adds a regression test → the Kane re-check is FIXED. Then R3's delayed "12 secret words" prompt: MISSED → patch → FIXED. End on the scoreboard.
-6. **3:40 to 4:20, plug in your agent.** `SAFU_BUILDER_CMD='claude -p …'`, the Claude Code Stop hook and the PR comment Action.
-7. **4:20 to 4:40, honesty and close.** "It flags known trap patterns, not guarantees. Cloaking is real." Then the repo link and "SafuClick, powered by Kane CLI."
-
----
-
-## 📁 Layout
+## Layout
 
 ```
 bin/safuclick.js           CLI: gym | check | ui | loop
