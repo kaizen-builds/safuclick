@@ -55,7 +55,19 @@ export function createQueue({ onChange = () => {} } = {}) {
       ]);
       job.verdict = publicVerdict(verdict); job.steps = k?.steps || verdict.kane?.steps || []; job.status = 'done';
     } catch (e) {
-      job.status = 'error'; job.error = String(e.message || e);
+      const msg = String(e.message || e);
+      if (/timed out/i.test(msg)) {
+        job.status = 'done';
+        job.verdict = {
+          verdict: 'INCONCLUSIVE',
+          url: job.url,
+          reasons: [{ source: 'kane', detail: 'Kane did not finish in time. Try again, or browse the recorded checks.' }],
+          signals: [],
+          kane: { reason: msg },
+        };
+      } else {
+        job.status = 'error'; job.error = msg;
+      }
     } finally {
       clearTimeout(timer);
       job.finishedAt = new Date().toISOString();
