@@ -125,3 +125,34 @@ test('check --replay works when probe.json is missing (older gym runs)', async (
   const { verdict } = await check(null, { replay: p('docs', 'runs', 'gym', '07-official-final'), quiet: true });
   assert.equal(verdict.verdict, 'NO KNOWN TRAPS FOUND');
 });
+
+// Real Kane runs recorded Nov 16, 2026 (verification round) + a regression for Kane-only false positives.
+function recorded(dir) {
+  const d = p('docs', 'runs', 'gym', dir);
+  const saved = readJSON(path.join(d, 'verdict.json'));
+  return evaluate({ url: saved.url, intendedAmount: 10, kane: loadKaneNdjson(path.join(d, 'kane.ndjson')), walletLog: readJSON(path.join(d, 'wallet-log.json'), []), probe: readJSON(path.join(d, 'probe.json'), null), mode: 'gym' }, rules, allow);
+}
+test('real Kane: fake revoke site flagged (setApprovalForAll grants, not revokes)', () => {
+  const v = recorded('10-revoke-kane');
+  assert.equal(v.verdict, 'TRAP FLAGGED');
+  assert.ok(v.reasons.some((r) => r.id === 'fake_revoke'));
+  assert.ok(v.reasons.some((r) => r.id === 'nft_approval_for_all'));
+});
+test('real Kane: hidden wallet_sendCalls batch flagged', () => {
+  const v = recorded('11-batch-kane');
+  assert.equal(v.verdict, 'TRAP FLAGGED');
+  assert.ok(v.reasons.some((r) => r.id === 'hidden_batch'));
+  assert.ok(v.reasons.some((r) => r.id === 'batch_hidden_approvals'));
+});
+test('real Kane: strict cloak (placeholder for every browser) is INCONCLUSIVE, not TRAP and not safe', () => {
+  const v = recorded('12-cloak-strict-kane');
+  assert.equal(v.verdict, 'INCONCLUSIVE');
+  assert.ok(v.signals.some((s) => s.id === 'cloaking_suspected'));
+});
+test('real Kane: official SafuSwap stays clean under current rules (false-positive check)', () => {
+  assert.equal(recorded('13-official-v7').verdict, 'NO KNOWN TRAPS FOUND');
+  assert.equal(recorded('07-official-final').verdict, 'NO KNOWN TRAPS FOUND');
+});
+test('a failed Kane assertion alone on the official domain is INCONCLUSIVE, not a trap', () => {
+  assert.equal(recorded('05-official-v2-objective-bug').verdict, 'INCONCLUSIVE');
+});

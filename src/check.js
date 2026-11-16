@@ -28,7 +28,7 @@ export async function check(url, opts = {}) {
   const rules = readJSON(opts.rules || DEFAULT_RULES);
   const allowlist = readJSON(opts.allowlist || p('config', 'allowlist.json'));
   const amount = Number(opts.amount || 10);
-  const log = opts.quiet ? () => {} : (s) => console.log(s);
+  const log = opts.quiet ? () => {} : opts.json ? (s) => console.error(s) : (s) => console.log(s);
   const realSite = !!(opts.realSite || opts['real-site']);
   const mode = realSite ? 'real-site' : 'gym';
   let kane, walletLog = [], probe, runDir;

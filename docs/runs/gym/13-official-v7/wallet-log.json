@@ -1,0 +1,202 @@
+[
+  {
+    "run": "10e20e42",
+    "seq": 1,
+    "ts": "2026-11-16T01:07:18.321Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "10e20e42",
+    "seq": 2,
+    "ts": "2026-11-16T01:07:18.343Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "10e20e42",
+    "seq": 3,
+    "ts": "2026-11-16T01:07:21.322Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "tag": "t+3s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "10e20e42",
+    "seq": 4,
+    "ts": "2026-11-16T01:07:28.322Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "tag": "t+10s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "10e20e42",
+    "seq": 1,
+    "ts": "2026-11-16T01:07:32.641Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "10e20e42",
+    "seq": 2,
+    "ts": "2026-11-16T01:07:32.643Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "10e20e42",
+    "seq": 3,
+    "ts": "2026-11-16T01:07:35.642Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "tag": "t+3s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "10e20e42",
+    "seq": 4,
+    "ts": "2026-11-16T01:07:42.642Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "tag": "t+10s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "10e20e42",
+    "seq": 5,
+    "ts": "2026-11-16T01:07:47.330Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "10e20e42",
+    "seq": 6,
+    "ts": "2026-11-16T01:07:50.909Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "10e20e42",
+    "seq": 7,
+    "ts": "2026-11-16T01:07:55.193Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "method": "eth_sendTransaction",
+    "params": [
+      {
+        "from": "0x7e57000000000000000000000000000000000001",
+        "to": "0x5afe5afe00000000000000000000000000c0ffee",
+        "data": "0x38ed173900000000000000000000000000000000000000000000000000000000009896800000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  },
+  {
+    "run": "10e20e42",
+    "seq": 8,
+    "ts": "2026-11-16T01:07:55.193Z",
+    "type": "tx_decoded",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "decoded": {
+      "to": "0x5afe5afe00000000000000000000000000c0ffee",
+      "selector": "0x38ed1739",
+      "token": "USDC",
+      "kind": "swap",
+      "label": "Swap",
+      "amountRaw": "10000000",
+      "amountHuman": "10 USDC",
+      "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+    }
+  },
+  {
+    "run": "10e20e42",
+    "seq": 9,
+    "ts": "2026-11-16T01:08:13.408Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4100",
+    "href": "http://safuswap.localhost:4100/?safu_run=10e20e42",
+    "method": "eth_sendTransaction",
+    "approved": true,
+    "decoded": {
+      "to": "0x5afe5afe00000000000000000000000000c0ffee",
+      "selector": "0x38ed1739",
+      "token": "USDC",
+      "kind": "swap",
+      "label": "Swap",
+      "amountRaw": "10000000",
+      "amountHuman": "10 USDC",
+      "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+    }
+  }
+]

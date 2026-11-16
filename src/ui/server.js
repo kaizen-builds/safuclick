@@ -15,7 +15,7 @@ let busy = false;
 function safePath(input) {
   if (!input) return null;
   const resolved = path.resolve(ROOT, input);
-  if (!resolved.startsWith(ROOT)) return null;
+  if (resolved !== ROOT && !resolved.startsWith(ROOT + path.sep)) return null;
   return fs.existsSync(resolved) ? resolved : null;
 }
 
@@ -49,7 +49,13 @@ function attachLoopSteps(history) {
 function arenaPayload() {
   const live = readLive();
   const local = readJSON(path.join(STATE, 'loop', 'history.json'), null);
-  const recorded = readJSON(p('docs', 'runs', 'loop', 'history.json'), null);
+  // Recorded arena = every recorded loop (loop, loop2, loop-real), same as the website.
+  const parts = ['loop', 'loop2', 'loop-real'].map((d) => readJSON(p('docs', 'runs', d, 'history.json'), null)).filter(Boolean);
+  const recorded = parts.length ? {
+    finishedAt: parts[parts.length - 1].finishedAt,
+    credits: parts.reduce((a, x) => a + (x.credits || 0), 0),
+    history: parts.flatMap((x) => x.history || []).map((h, i) => ({ ...h, round: i + 1 })),
+  } : null;
   const history = attachLoopSteps((local?.history?.length ? local.history : recorded?.history) || []);
   const playbook = readJSON(p('src', 'loop', 'playbook.json'));
   return {

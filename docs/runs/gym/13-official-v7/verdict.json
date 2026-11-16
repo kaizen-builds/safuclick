@@ -1,0 +1,88 @@
+{
+  "verdict": "NO KNOWN TRAPS FOUND",
+  "url": "http://safuswap.localhost:4100",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "resembles": null,
+  "reasons": [],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "to": "0x5afe5afe00000000000000000000000000c0ffee",
+        "selector": "0x38ed1739",
+        "token": "USDC",
+        "kind": "swap",
+        "label": "Swap",
+        "amountRaw": "10000000",
+        "amountHuman": "10 USDC",
+        "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+      }
+    ],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "passed",
+    "one_liner": "completed a 10 USDC swap on SafuSwap",
+    "summary": "You asked to connect a wallet and swap exactly 10 USDC.\nThe wallet was connected, and the swap amount was set to 10 USDC.\nThe wallet confirmation showed Action: Swap, Amount: 10 USDC, and spender 0x5afe5afe00000000000000000000000000c0ffee.\nThe confirmation matched the requested swap details, and the swap was confirmed successfully.",
+    "credits": 34.264185000000005,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GY9TRHN2DXK3QMRQ6KB1BF/dashboard/share/US_BIAIZG5AECCOP0TASSPK4DI5MV5OR0CRQ6HN8SSLQLA17G9AKM8B49ENVZOF52S9?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "success.complete",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap.localhost:4100/?safu_run=10e20e42"
+      },
+      {
+        "step": 3,
+        "remark": "click: Clicking Connect Wallet"
+      },
+      {
+        "step": 4,
+        "remark": "click: Clicking Confirm in the SafuWallet connection popup"
+      },
+      {
+        "step": 5,
+        "remark": "click: Clicking the Swap button"
+      },
+      {
+        "step": 6,
+        "remark": "analyze: ANALYZE(textual_visual, 'Get the popup Amount line and save it as {{popup_amount"
+      },
+      {
+        "step": 7,
+        "remark": "assert: Verify that the popup Action is \"Swap\" and the popup Amount is exactly \"10 USDC\""
+      },
+      {
+        "step": 2,
+        "remark": "click: Clicking Confirm in the SafuWallet popup"
+      },
+      {
+        "step": 3,
+        "remark": "analyze: the page says the swap is complete"
+      },
+      {
+        "step": 4,
+        "remark": "assert: the page says the swap is complete"
+      },
+      {
+        "step": 9,
+        "remark": "wait: Waiting after confirming the swap completion message"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 7,
+  "note": null,
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/gym/13-official-v7",
+  "scenario": "swap",
+  "card": "card.svg"
+}

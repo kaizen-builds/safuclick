@@ -179,7 +179,13 @@ export function evaluate({ url, intendedAmount = 10, kane, walletLog = [], probe
     const sentences = [...String(kane.summary || '').split(/(?<=[.!?])\s+|\n+/), kane.one_liner || ''];
     const pats = (rules.kane.textPatterns || []).map(rx);
     const quote = sentences.find((x) => pats.some((r) => r.test(x))) || said;
-    if (kHit && assertive) add('kane_assertion_failed', 'kane', `Kane: "${quote.trim().slice(0, 220)}"`, { status: kane.status, reason_code: kane.reason_code, matched: kHit.source });
+    // Kane's text alone is not trap evidence when there is nothing to judge: an official domain with no
+    // other rule hits (objective/flow bugs), or a gym run where the wallet was never asked to sign anything
+    // and the page showed no secret prompt (e.g. a cloaked placeholder). Those are inconclusive, not traps.
+    const signingAsks = walletLog.filter((e) => e.type === 'wallet_request' && !['eth_chainId', 'eth_accounts', 'eth_requestAccounts', 'wallet_switchEthereumChain'].includes(e.method));
+    const kaneSawSecret = seedRx.some((r) => r.test(text)) && !negatedSecret(text);
+    const nothingToJudge = !reasons.length && (dom.official || (mode === 'gym' && !signingAsks.length && !kaneSawSecret));
+    if (kHit && assertive && !nothingToJudge) add('kane_assertion_failed', 'kane', `Kane: "${quote.trim().slice(0, 220)}"`, { status: kane.status, reason_code: kane.reason_code, matched: kHit.source });
     else kaneNote = `Kane could not complete the flow (${kane.reason_code || kane.status}): ${(kane.reason || said).slice(0, 160)}`;
   }
 

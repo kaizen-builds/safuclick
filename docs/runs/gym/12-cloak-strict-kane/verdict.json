@@ -1,0 +1,81 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "url": "http://safuswap.localhost:4109",
+  "host": "safuswap.localhost",
+  "officialDomain": true,
+  "resembles": null,
+  "reasons": [],
+  "signals": [
+    {
+      "id": "cloaking_suspected",
+      "source": "rule:cloak",
+      "detail": "Kane's browser only saw a placeholder (\"SafuSwap Rewards Coming soon. Nothing to see here yet.\") and so did the HTTP peek. A page that hides from automated browsers cannot be verified: inconclusive, not safe"
+    }
+  ],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [],
+    "transactions": [],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The rewards page showed only a Coming soon message, but the test still asserted that wallet signature details had to exist.",
+    "summary": "The test treated a valid end state as though a wallet popup should appear. There were no buttons to open a wallet popup, so the requested signature type, spender, amount, and expiry did not exist.\nUpdate the test so that a page showing only the Coming soon placeholder records the visible text, says the site cannot be verified, and exits successfully without requiring signature details.",
+    "credits": 27.405549499999996,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GY54NQAG3Z5AHA1JTXCZ0Q/dashboard/share/US_FX8YJ6Q75ZGLZPKT17XG12N7ENWL58CMMJTBX5YWO22GFIEQTOYMIMFO5T1J1V9B?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "assertion_error.step_not_achievable",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://safuswap.localhost:4109/?safu_run=150cd52a"
+      },
+      {
+        "step": 3,
+        "remark": "wait: PRIMARY: wait about 5 seconds on the rewards page"
+      },
+      {
+        "step": 4,
+        "remark": "analyze: ANALYZE(unknown, 'the type, spender, amount and expiry from the SafuWallet popup"
+      },
+      {
+        "step": 2,
+        "remark": "wait: Waiting report exactly what is visible and end the test"
+      },
+      {
+        "step": 9,
+        "remark": "wait: Waiting end the test after reporting the visible rewards-page placeholder"
+      },
+      {
+        "step": 10,
+        "remark": "analyze: ANALYZE(unknown, 'the type, spender, amount and expiry from the SafuWallet popup"
+      }
+    ]
+  },
+  "probe": {
+    "finalUrl": "http://safuswap.localhost:4109",
+    "status": 200,
+    "title": "SafuSwap",
+    "hops": [
+      {
+        "url": "http://127.0.0.1:4109",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "blocked": false,
+    "error": null,
+    "walletConnect": false,
+    "turnstile": false,
+    "rdap": null,
+    "textSnippet": "SafuSwap SafuSwap Safu Swap SafuSwap Rewards Coming soon. Nothing to see here yet. SafuClick phishing gym · test site \"cloak-strict\" · mock wallet, mock contracts, no real funds "
+  },
+  "rulesVersion": 7,
+  "note": "Kane could not complete the flow (assertion_error.step_not_achievable): The page only has a Coming soon placeholder, so required signature details do not exist and the site cannot be verified.",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/gym/12-cloak-strict-kane",
+  "scenario": "cloak",
+  "card": "card.svg"
+}

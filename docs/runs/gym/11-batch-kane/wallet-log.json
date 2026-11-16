@@ -1,0 +1,311 @@
+[
+  {
+    "run": "7a01ffc3",
+    "seq": 1,
+    "ts": "2026-11-16T01:02:55.707Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 2,
+    "ts": "2026-11-16T01:02:55.732Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 3,
+    "ts": "2026-11-16T01:02:58.708Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "tag": "t+3s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 1,
+    "ts": "2026-11-16T01:03:02.576Z",
+    "type": "page_loaded",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "title": "SafuSwap",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 2,
+    "ts": "2026-11-16T01:03:02.578Z",
+    "type": "input_seen",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 3,
+    "ts": "2026-11-16T01:03:05.577Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "tag": "t+3s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 4,
+    "ts": "2026-11-16T01:03:12.577Z",
+    "type": "page_snapshot",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "tag": "t+10s",
+    "title": "SafuSwap",
+    "text": "Swap You pay USDC You receive (est.) 0.0031 ETH Connect wallet to swap",
+    "textLength": 70,
+    "buttons": [
+      "Connect Wallet",
+      "Connect wallet to swap"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 5,
+    "ts": "2026-11-16T01:03:15.872Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 6,
+    "ts": "2026-11-16T01:03:20.135Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 7,
+    "ts": "2026-11-16T01:03:36.470Z",
+    "type": "wallet_request",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "method": "wallet_sendCalls",
+    "params": [
+      {
+        "version": "2.0.0",
+        "chainId": "0xaa36a7",
+        "from": "0x7e57000000000000000000000000000000000001",
+        "atomicRequired": true,
+        "calls": [
+          {
+            "to": "0x5afe5afe00000000000000000000000000c0ffee",
+            "data": "0x38ed173900000000000000000000000000000000000000000000000000000000009896800000000000000000000000000000000000000000000000000000000000000000",
+            "value": "0x0"
+          },
+          {
+            "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "data": "0x095ea7b3000000000000000000000000ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "value": "0x0"
+          },
+          {
+            "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "data": "0x095ea7b3000000000000000000000000ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "value": "0x0"
+          },
+          {
+            "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+            "data": "0xa22cb465000000000000000000000000ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c40000000000000000000000000000000000000000000000000000000000000001",
+            "value": "0x0"
+          }
+        ],
+        "capabilities": {
+          "eip7702Auth": {
+            "address": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 8,
+    "ts": "2026-11-16T01:03:36.471Z",
+    "type": "batch_decoded",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "decoded": {
+      "kind": "batch",
+      "method": "wallet_sendCalls",
+      "atomic": true,
+      "callCount": 4,
+      "calls": [
+        {
+          "to": "0x5afe5afe00000000000000000000000000c0ffee",
+          "selector": "0x38ed1739",
+          "token": "USDC",
+          "kind": "swap",
+          "label": "Swap",
+          "amountRaw": "10000000",
+          "amountHuman": "10 USDC",
+          "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+        },
+        {
+          "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "selector": "0x095ea7b3",
+          "token": "USDC",
+          "kind": "approve",
+          "label": "Approve token spending",
+          "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "amountHuman": "UNLIMITED USDC",
+          "unlimited": true,
+          "additive": false
+        },
+        {
+          "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "selector": "0x095ea7b3",
+          "token": "WETH",
+          "kind": "approve",
+          "label": "Approve token spending",
+          "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "amountHuman": "UNLIMITED WETH",
+          "unlimited": true,
+          "additive": false
+        },
+        {
+          "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+          "selector": "0xa22cb465",
+          "token": "Uniswap V3 Positions NFT",
+          "kind": "setApprovalForAll",
+          "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+          "collection": "Uniswap V3 Positions NFT",
+          "operator": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "approved": true,
+          "amountHuman": "ALL Uniswap V3 Positions NFT",
+          "unlimited": true
+        }
+      ],
+      "delegation": {
+        "delegator": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+        "name": "MetaMask EIP-7702 delegator"
+      }
+    }
+  },
+  {
+    "run": "7a01ffc3",
+    "seq": 9,
+    "ts": "2026-11-16T01:04:02.800Z",
+    "type": "wallet_decision",
+    "origin": "http://safuswap.localhost:4106",
+    "href": "http://safuswap.localhost:4106/?safu_run=7a01ffc3",
+    "method": "wallet_sendCalls",
+    "approved": false,
+    "decoded": {
+      "kind": "batch",
+      "method": "wallet_sendCalls",
+      "atomic": true,
+      "callCount": 4,
+      "calls": [
+        {
+          "to": "0x5afe5afe00000000000000000000000000c0ffee",
+          "selector": "0x38ed1739",
+          "token": "USDC",
+          "kind": "swap",
+          "label": "Swap",
+          "amountRaw": "10000000",
+          "amountHuman": "10 USDC",
+          "spender": "0x5afe5afe00000000000000000000000000c0ffee"
+        },
+        {
+          "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "selector": "0x095ea7b3",
+          "token": "USDC",
+          "kind": "approve",
+          "label": "Approve token spending",
+          "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "amountHuman": "UNLIMITED USDC",
+          "unlimited": true,
+          "additive": false
+        },
+        {
+          "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "selector": "0x095ea7b3",
+          "token": "WETH",
+          "kind": "approve",
+          "label": "Approve token spending",
+          "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "amountRaw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "amountHuman": "UNLIMITED WETH",
+          "unlimited": true,
+          "additive": false
+        },
+        {
+          "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+          "selector": "0xa22cb465",
+          "token": "Uniswap V3 Positions NFT",
+          "kind": "setApprovalForAll",
+          "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+          "collection": "Uniswap V3 Positions NFT",
+          "operator": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "spender": "0xba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4ba7c4",
+          "approved": true,
+          "amountHuman": "ALL Uniswap V3 Positions NFT",
+          "unlimited": true
+        }
+      ],
+      "delegation": {
+        "delegator": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+        "name": "MetaMask EIP-7702 delegator"
+      }
+    }
+  }
+]

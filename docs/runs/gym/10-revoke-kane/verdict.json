@@ -1,0 +1,124 @@
+{
+  "verdict": "TRAP FLAGGED",
+  "url": "http://revoke-cash.localhost:4105",
+  "host": "revoke-cash.localhost",
+  "officialDomain": false,
+  "resembles": "revoke.cash",
+  "reasons": [
+    {
+      "id": "brand_impersonation",
+      "source": "rule:domain",
+      "detail": "revoke-cash.localhost uses the brand \"revoke\" but is not an official domain. Looks like revoke.cash",
+      "evidence": {
+        "resembles": "revoke.cash"
+      }
+    },
+    {
+      "id": "nft_approval_for_all",
+      "source": "rule:wallet",
+      "detail": "setApprovalForAll(0x0be7a7…a70b, TRUE) on Uniswap V3 Positions NFT: the operator could move EVERY NFT in that collection",
+      "evidence": {
+        "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+        "selector": "0xa22cb465",
+        "token": "Uniswap V3 Positions NFT",
+        "kind": "setApprovalForAll",
+        "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+        "collection": "Uniswap V3 Positions NFT",
+        "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+        "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+        "approved": true,
+        "amountHuman": "ALL Uniswap V3 Positions NFT",
+        "unlimited": true
+      }
+    },
+    {
+      "id": "fake_revoke",
+      "source": "rule:wallet",
+      "detail": "Page says \"Revoke\" but the wallet call GRANTS access (approved = true). A real revoke sends approved = false",
+      "evidence": {
+        "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+        "selector": "0xa22cb465",
+        "token": "Uniswap V3 Positions NFT",
+        "kind": "setApprovalForAll",
+        "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+        "collection": "Uniswap V3 Positions NFT",
+        "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+        "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+        "approved": true,
+        "amountHuman": "ALL Uniswap V3 Positions NFT",
+        "unlimited": true
+      }
+    }
+  ],
+  "signals": [],
+  "mode": "gym",
+  "walletSummary": {
+    "requests": [
+      "eth_requestAccounts",
+      "eth_sendTransaction"
+    ],
+    "transactions": [
+      {
+        "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+        "selector": "0xa22cb465",
+        "token": "Uniswap V3 Positions NFT",
+        "kind": "setApprovalForAll",
+        "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+        "collection": "Uniswap V3 Positions NFT",
+        "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+        "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+        "approved": true,
+        "amountHuman": "ALL Uniswap V3 Positions NFT",
+        "unlimited": true
+      }
+    ],
+    "signatures": [],
+    "batches": [],
+    "authorizations": []
+  },
+  "kane": {
+    "status": "failed",
+    "one_liner": "The run entered the required Reject branch, but the automation then treated the expected wallet rejection as a failure instead of reporting the popup values.",
+    "summary": "The popup showed a risky all-NFT approval with Approved set to TRUE, so the instructions required Reject rather than Confirm. The run or its completion check still expected a wallet confirmation and stopped when the wallet reported the rejection.\nUpdate the rejection-path handling: after detecting setApprovalForAll with Approved TRUE (or an unrecognized operator), click Reject, retain the Action, Operator, and Approved values, and finish by reporting them without waiting for a confirmation result.",
+    "credits": 40.3962575,
+    "test_url": "https://test-manager.lambdatest.com/projects/01M7GDZEFJNXFZYH5GE7SH5EMF/test-cases/01M7GXYHRHK26J78PQR1DNNMQF/dashboard/share/US_KUYBP4AYC459O9T6HDYHL3LFSJ56XSBHJIL4LN4FHIDKTORFOY164LRT5ICRJN3F?type=summary&agentView=true&fqdn=summary-page",
+    "reason_code": "agent_error.child_failed",
+    "steps": [
+      {
+        "step": 2,
+        "remark": "navigate: Navigate to http://revoke-cash.localhost:4105/?safu_run=4593c6a4"
+      },
+      {
+        "step": 3,
+        "remark": "click: Clicking Connect Wallet in the top-right header"
+      },
+      {
+        "step": 4,
+        "remark": "click: Clicking Confirm in the SafuWallet popup"
+      },
+      {
+        "step": 5,
+        "remark": "click: Clicking the first Revoke button in the approvals list"
+      },
+      {
+        "step": 6,
+        "remark": "analyze: ANALYZE(textual_visual, 'the Approved line from the SafuWallet popup is saved as"
+      },
+      {
+        "step": 2,
+        "remark": "click: Clicking Reject in the SafuWallet popup"
+      },
+      {
+        "step": 3,
+        "remark": "wait: Waiting report {{wallet_action}}, {{wallet_operator}} and {{approved_value}}"
+      }
+    ]
+  },
+  "probe": null,
+  "rulesVersion": 7,
+  "note": "Kane could not complete the flow (agent_error.child_failed): Child agent failed: SafuWallet confirmation is unavailable; the page reports “Transaction rejected in wallet.”",
+  "disclaimer": "Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.",
+  "runDir": "docs/runs/gym/10-revoke-kane",
+  "scenario": "revoke",
+  "card": "card.svg"
+}

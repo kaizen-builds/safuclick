@@ -1,0 +1,212 @@
+[
+  {
+    "run": "4593c6a4",
+    "seq": 1,
+    "ts": "2026-11-16T01:01:08.659Z",
+    "type": "page_loaded",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "title": "Approval Checker",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 2,
+    "ts": "2026-11-16T01:01:08.682Z",
+    "type": "input_seen",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 3,
+    "ts": "2026-11-16T01:01:11.661Z",
+    "type": "page_snapshot",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "tag": "t+3s",
+    "title": "Approval Checker",
+    "text": "Approval Checker Old approvals are how wallets get drained. Revoke risky ones for free. Uniswap V3 Positions NFT operator: old marketplace contract · risk HIGH Revoke USDC spender: unknown router · risk MEDIUM Revoke Connect your wallet to scan approvals.",
+    "textLength": 255,
+    "buttons": [
+      "Connect Wallet",
+      "Revoke",
+      "Revoke"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 4,
+    "ts": "2026-11-16T01:01:18.661Z",
+    "type": "page_snapshot",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "tag": "t+10s",
+    "title": "Approval Checker",
+    "text": "Approval Checker Old approvals are how wallets get drained. Revoke risky ones for free. Uniswap V3 Positions NFT operator: old marketplace contract · risk HIGH Revoke USDC spender: unknown router · risk MEDIUM Revoke Connect your wallet to scan approvals.",
+    "textLength": 255,
+    "buttons": [
+      "Connect Wallet",
+      "Revoke",
+      "Revoke"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 1,
+    "ts": "2026-11-16T01:01:20.402Z",
+    "type": "page_loaded",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "title": "Approval Checker",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+    "webdriver": false,
+    "walletInjected": true
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 2,
+    "ts": "2026-11-16T01:01:20.404Z",
+    "type": "input_seen",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "field": {
+      "tag": "input",
+      "type": "text",
+      "id": "amount",
+      "name": "amount",
+      "placeholder": "",
+      "label": "You pay",
+      "nearbyText": "USDC"
+    }
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 3,
+    "ts": "2026-11-16T01:01:23.403Z",
+    "type": "page_snapshot",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "tag": "t+3s",
+    "title": "Approval Checker",
+    "text": "Approval Checker Old approvals are how wallets get drained. Revoke risky ones for free. Uniswap V3 Positions NFT operator: old marketplace contract · risk HIGH Revoke USDC spender: unknown router · risk MEDIUM Revoke Connect your wallet to scan approvals.",
+    "textLength": 255,
+    "buttons": [
+      "Connect Wallet",
+      "Revoke",
+      "Revoke"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 4,
+    "ts": "2026-11-16T01:01:30.403Z",
+    "type": "page_snapshot",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "tag": "t+10s",
+    "title": "Approval Checker",
+    "text": "Approval Checker Old approvals are how wallets get drained. Revoke risky ones for free. Uniswap V3 Positions NFT operator: old marketplace contract · risk HIGH Revoke USDC spender: unknown router · risk MEDIUM Revoke Connect your wallet to scan approvals.",
+    "textLength": 255,
+    "buttons": [
+      "Connect Wallet",
+      "Revoke",
+      "Revoke"
+    ],
+    "webdriver": false
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 5,
+    "ts": "2026-11-16T01:01:33.958Z",
+    "type": "wallet_request",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "method": "eth_requestAccounts",
+    "params": []
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 6,
+    "ts": "2026-11-16T01:01:39.421Z",
+    "type": "wallet_decision",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "method": "eth_requestAccounts",
+    "approved": true
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 7,
+    "ts": "2026-11-16T01:01:44.593Z",
+    "type": "wallet_request",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "method": "eth_sendTransaction",
+    "params": [
+      {
+        "from": "0x7e57000000000000000000000000000000000001",
+        "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+        "data": "0xa22cb4650000000000000000000000000be7a70b0be7a70b0be7a70b0be7a70b0be7a70b0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    ]
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 8,
+    "ts": "2026-11-16T01:01:44.594Z",
+    "type": "tx_decoded",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "decoded": {
+      "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+      "selector": "0xa22cb465",
+      "token": "Uniswap V3 Positions NFT",
+      "kind": "setApprovalForAll",
+      "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+      "collection": "Uniswap V3 Positions NFT",
+      "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+      "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+      "approved": true,
+      "amountHuman": "ALL Uniswap V3 Positions NFT",
+      "unlimited": true
+    }
+  },
+  {
+    "run": "4593c6a4",
+    "seq": 9,
+    "ts": "2026-11-16T01:02:06.972Z",
+    "type": "wallet_decision",
+    "origin": "http://revoke-cash.localhost:4105",
+    "href": "http://revoke-cash.localhost:4105/?safu_run=4593c6a4",
+    "method": "eth_sendTransaction",
+    "approved": false,
+    "decoded": {
+      "to": "0xc36442b4a4522e871399cd717abdd847ab11fe88",
+      "selector": "0xa22cb465",
+      "token": "Uniswap V3 Positions NFT",
+      "kind": "setApprovalForAll",
+      "label": "setApprovalForAll (GRANT access to ALL NFTs)",
+      "collection": "Uniswap V3 Positions NFT",
+      "operator": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+      "spender": "0x0be7a70b0be7a70b0be7a70b0be7a70b0be7a70b",
+      "approved": true,
+      "amountHuman": "ALL Uniswap V3 Positions NFT",
+      "unlimited": true
+    }
+  }
+]
