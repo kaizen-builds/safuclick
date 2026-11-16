@@ -19,7 +19,7 @@ function segD(px, py, ax, ay, bx, by) {
   return Math.hypot(px - ax - t * dx, py - ay - t * dy);
 }
 const segDist = (x, y) => Math.min(segD(x, y, -0.3, 0.0, -0.08, 0.24), segD(x, y, -0.08, 0.24, 0.34, -0.22));
-function dither(canvas, { cell = 5, shield = true, color = [218, 255, 82] } = {}) {
+function dither(canvas, { cell = 5, shield = true, color = [74, 29, 63] } = {}) {
   const ctx = canvas.getContext('2d');
   let W, H, t0 = performance.now();
   const resize = () => { const r = canvas.getBoundingClientRect(); W = canvas.width = Math.max(1, Math.floor(r.width)); H = canvas.height = Math.max(1, Math.floor(r.height)); };

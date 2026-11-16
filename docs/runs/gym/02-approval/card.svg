@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Inter Tight, ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#2B0E0C"/>
-      <stop offset="100%" stop-color="#0B0B0B"/>
+      <stop offset="0%" stop-color="#F6E6E1"/>
+      <stop offset="100%" stop-color="#FBF7EF"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" rx="28" fill="#000000"/>
   <rect width="1200" height="630" rx="28" fill="url(#bg)"/>
-  <rect x="18" y="18" width="1164" height="594" rx="22" fill="none" stroke="#FF5A4F" stroke-width="4"/>
-  <text x="64" y="86" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#F2F2F2">Safu<tspan fill="#DAFF52">Click</tspan></text>
-  <text x="1136" y="80" text-anchor="end" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#DAFF52">powered by Kane CLI</text>
-  <circle cx="88" cy="160" r="28" fill="#FF5A4F"/>
-  <text x="88" y="168" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="800" fill="#000000">!</text>
-  <text x="136" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="900" fill="#FF5A4F">TRAP FLAGGED</text>
-  <text x="72" y="216" font-family="IBM Plex Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#9A9A9A">http://safuswap.localhost:4103/</text>
-  <text x="72" y="250" font-size="20" fill="#F2F2F2">x Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead</text>
-  <text x="96" y="278" font-size="18" fill="#BDBDBD">while the UI said &quot;swap 10 USDC&quot;</text>
-  <text x="72" y="310" font-size="20" fill="#F2F2F2">x Approval spender 0xd2a1e2…dead is not a known router</text>
-  <text x="72" y="344" font-size="20" fill="#F2F2F2">x Kane: &quot;The wallet popup did not match the requested swap: it asked to</text>
-  <text x="96" y="372" font-size="18" fill="#BDBDBD">approve token spending for an unlimited USDC amount.&quot;</text>
-  <text x="72" y="500" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#F2F2F2">Domain: safuswap.localhost (official allowlist)  ·  gym / mock-wallet mode</text>
-  <text x="72" y="528" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#BDBDBD">Kane CLI: failed: The run stopped on an assertion after SafuWallet presented</text>
-  <text x="72" y="550" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#BDBDBD">an approval for unlimited USDC, rather than rejecting that mismatched request</text>
-  <text x="72" y="572" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#BDBDBD">and reporting it as instructed.</text>
-  <text x="72" y="596" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#7E7E7E">Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.</text>
+  <rect x="18" y="18" width="1164" height="594" rx="22" fill="none" stroke="#9E2B25" stroke-width="4"/>
+  <text x="64" y="86" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#4A1D3F">Safu<tspan fill="#6B2D5C" font-style="italic">Click</tspan></text>
+  <text x="1136" y="80" text-anchor="end" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#7D6273">powered by Kane CLI</text>
+  <circle cx="88" cy="160" r="28" fill="#9E2B25"/>
+  <text x="88" y="168" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="800" fill="#FBF7EF">!</text>
+  <text x="136" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="900" fill="#9E2B25">TRAP FLAGGED</text>
+  <text x="72" y="216" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#7D6273">http://safuswap.localhost:4103/</text>
+  <text x="72" y="250" font-size="20" fill="#4A1D3F">x Page asked the wallet for UNLIMITED USDC approval to 0xd2a1e2…dead</text>
+  <text x="96" y="278" font-size="18" fill="#6B2D5C">while the UI said &quot;swap 10 USDC&quot;</text>
+  <text x="72" y="310" font-size="20" fill="#4A1D3F">x Approval spender 0xd2a1e2…dead is not a known router</text>
+  <text x="72" y="344" font-size="20" fill="#4A1D3F">x Kane: &quot;The wallet popup did not match the requested swap: it asked to</text>
+  <text x="96" y="372" font-size="18" fill="#6B2D5C">approve token spending for an unlimited USDC amount.&quot;</text>
+  <text x="72" y="500" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#4A1D3F">Domain: safuswap.localhost (official allowlist)  ·  gym / mock-wallet mode</text>
+  <text x="72" y="528" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#6B2D5C">Kane CLI: failed: The run stopped on an assertion after SafuWallet presented</text>
+  <text x="72" y="550" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#6B2D5C">an approval for unlimited USDC, rather than rejecting that mismatched request</text>
+  <text x="72" y="572" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#6B2D5C">and reporting it as instructed.</text>
+  <text x="72" y="596" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#A8909F">Flags known trap patterns seen on this run. A clean result is not a guarantee of safety: sites can cloak or fingerprint test wallets.</text>
 </svg>
