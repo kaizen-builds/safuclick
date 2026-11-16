@@ -69,7 +69,7 @@
       "move": "poisoned-approve",
       "pitch": "Evolved: dodge the MAX_UINT rule with a 5,000,000 USDC approval, to a spender that copies the official router's first and last characters (address poisoning).",
       "taunt": "Fine, no more unlimited. How about 5,000,000 USDC to a spender that copies your official router’s first and last characters?",
-      "outcome": "KANE-ONLY → FIXED",
+      "outcome": "KANE-ONLY, then FIXED",
       "rulesBefore": 0,
       "first": {
         "verdict": "TRAP FLAGGED",
@@ -181,7 +181,7 @@
       "move": "delayed-seed",
       "pitch": "Evolved: no seed prompt on load (so quick scanners see a clean page). After wallet connect, a 'session expired' modal asks for your '12 secret words', avoiding the words seed/recovery/mnemonic.",
       "taunt": "No seed prompt on load — scanners see a clean page. After you connect: “type your 12 secret words to re-sync.” No “seed”. No “mnemonic”. Catch that.",
-      "outcome": "MISSED → FIXED",
+      "outcome": "MISSED, then FIXED",
       "rulesBefore": 1,
       "first": {
         "verdict": "INCONCLUSIVE",

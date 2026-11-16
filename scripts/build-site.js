@@ -51,7 +51,7 @@ const side = (e) => {
   return { verdict: e.verdict, rulesVersion: e.rulesVersion, reasons: (e.reasons || []).map((r) => ({ id: r.id, source: r.source, detail: r.detail })), kane: { status: e.kane?.status, one_liner: e.kane?.one_liner, credits: e.kane?.credits, test_url: e.kane?.test_url, steps: k.steps || [] } };
 };
 const rounds = loop.history.map((h) => ({
-  round: h.round, move: h.move, pitch: h.pitch, taunt: taunts[h.move] || null, outcome: h.outcome, rulesBefore: h.rulesBefore,
+  round: h.round, move: h.move, pitch: h.pitch, taunt: taunts[h.move] || null, outcome: String(h.outcome).replace(/\s*\u2192\s*/g, ', then '), rulesBefore: h.rulesBefore,
   first: side(h.first), builder: h.builder ? { changes: h.builder.changes, testsOk: h.builder.testsOk, rulesAfter: h.builder.rulesAfter } : null, recheck: side(h.recheck),
 }));
 writeJSON(p('site', 'data', 'arena.json'), { finishedAt: loop.finishedAt, credits: loop.credits, rounds });
